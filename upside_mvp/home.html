@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upside – Smart USDT Reward Platform | Earn Through Engagement</title>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="Upside is a smart USDT reward platform where users select packages, engage with ads, and earn rewards through a transparent and controlled system.">
+  <meta name="keywords" content="earn USDT, watch ads earn, USDT reward platform, upside earning, digital rewards system, cryptocurrency earnings">
+  <meta name="author" content="Upside Platform">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+
+  <!-- Tailwind & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkbg: '#0a0c10',
+            darkcard: '#111317',
+            accent: '#06b6d4',
+            accent_dark: '#0891b2',
+            warning: '#f59e0b',
+            danger: '#ef4444',
+            success: '#10b981'
+          },
+          animation: {
+            'fade-in': 'fadeIn 0.5s ease-in-out',
+            'slide-up': 'slideUp 0.7s ease-out',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 6s ease-in-out infinite'
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            },
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Custom gradients */
+    .gradient-cyan {
+      background: linear-gradient(145deg, #06b6d4, #0891b2);
+    }
+    
+    .gradient-glow {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .gradient-glow::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #06b6d4, #22d3ee, #06b6d4);
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    
+    .gradient-glow:hover::before {
+      opacity: 0.5;
+    }
+    
+    /* Package cards */
+    .package-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .package-card:hover {
+      transform: translateY(-8px);
+    }
+    
+    /* Feature cards */
+    .feature-card {
+      background: rgba(17, 19, 23, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+      border-color: #06b6d4;
+      background: rgba(30, 41, 59, 0.8);
+    }
+    
+    /* Floating animation */
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    /* USDT Badge */
+    .usdt-badge {
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: #06b6d4;
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    /* Warning badge */
+    .warning-badge {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+    }
+    
+    /* Responsive fixes */
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 2rem !important;
+      }
+      .package-card {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-darkbg text-gray-200 relative overflow-x-hidden">
+
+  <!-- NAVBAR - Fixed with blur -->
+  <nav class="border-b bg-darkbg/95 backdrop-blur-xl border-gray-800/50 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 gradient-cyan rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/20">
+          <i class="fas fa-crown text-white text-xl"></i>
+        </div>
+        <span class="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Upside</span>
+      </div>
+      <div class="flex items-center gap-2 sm:gap-4">
+        <a href="/login" class="text-gray-300 hover:text-cyan-400 transition px-3 py-2 text-sm sm:text-base">Login</a>
+        <a href="/register"
+           class="gradient-cyan text-white px-4 sm:px-6 py-2 rounded-full font-semibold hover:opacity-90 transition shadow-lg shadow-cyan-500/30 text-sm sm:text-base">
+          Get Started
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION - Full width image with overlay -->
+  <section class="relative py-20 sm:py-32 bg-cover bg-center" style="background-image: linear-gradient(rgba(10, 12, 16, 0.8), rgba(10, 12, 16, 0.9)), url('https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 text-center">
+      <!-- USDT Badge -->
+      <div class="inline-flex items-center gap-2 usdt-badge mb-6">
+        <i class="fas fa-coins"></i>
+        <span>USDT ONLY</span>
+      </div>
+      
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 sm:mb-6 leading-tight">
+        Earn Smarter With <span class="text-cyan-400">USDT</span>
+      </h1>
+
+      <p class="text-gray-300 max-w-3xl mx-auto mb-8 sm:mb-10 text-base sm:text-lg px-4">
+        Upside is a modern USDT reward platform where users select packages,
+        engage with daily advertisements, and receive rewards based on
+        verified participation — all secured by cryptocurrency.
+      </p>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4">
+        <a href="/register"
+           class="gradient-cyan text-white px-8 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:opacity-90 transition animate-fade-in shadow-lg shadow-cyan-500/30">
+          <i class="fas fa-rocket mr-2"></i>Start Earning USDT
+        </a>
+        <a href="#how-it-works"
+           class="border border-cyan-500/30 text-cyan-400 px-8 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:bg-cyan-500/10 transition animate-fade-in">
+          How It Works
+        </a>
+      </div>
+      
+      <!-- Stats -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mt-12 sm:mt-16 max-w-4xl mx-auto">
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold text-cyan-400">1 Lac+</div>
+          <div class="text-xs sm:text-sm text-gray-500">Min Deposit</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold text-cyan-400">6 Months</div>
+          <div class="text-xs sm:text-sm text-gray-500">Lock Period</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold text-cyan-400">25%</div>
+          <div class="text-xs sm:text-sm text-gray-500">Early Exit Fee</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-bold text-cyan-400">5 Ads</div>
+          <div class="text-xs sm:text-sm text-gray-500">Daily</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST FEATURES -->
+  <section class="py-12 sm:py-16 bg-darkcard/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div class="feature-card p-6 rounded-xl">
+          <div class="w-12 h-12 gradient-cyan rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-shield-alt text-white text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">USDT Only</h3>
+          <p class="text-gray-400 text-sm">All deposits and withdrawals in USDT only. No JazzCash, EasyPaisa, or bank transfers.</p>
+        </div>
+        <div class="feature-card p-6 rounded-xl">
+          <div class="w-12 h-12 gradient-cyan rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-clock text-white text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">6 Month Lock</h3>
+          <p class="text-gray-400 text-sm">Funds locked for 6 months. Early withdrawal subject to 25% fee.</p>
+        </div>
+        <div class="feature-card p-6 rounded-xl">
+          <div class="w-12 h-12 gradient-cyan rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-check-circle text-white text-xl"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Admin Approval</h3>
+          <p class="text-gray-400 text-sm">All activities verified by admin for maximum security.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PACKAGE TIERS - REDESIGNED WITH USDT FOCUS -->
+  <section class="py-16 sm:py-20 bg-gradient-to-b from-darkbg to-darkcard">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="usdt-badge mb-4 inline-block">
+          <i class="fas fa-cubes mr-1"></i> INVESTMENT TIERS
+        </span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mt-4">Choose Your <span class="text-cyan-400">USDT Package</span></h2>
+        <p class="text-gray-400 mt-4 max-w-2xl mx-auto text-sm sm:text-base px-4">Minimum deposit 1 Lac PKR (approx 360 USDT). All packages include 5 daily ads with package-based rewards.</p>
+      </div>
+
+      <!-- USDT Conversion Note -->
+      <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-2xl p-4 mb-8 max-w-3xl mx-auto text-center">
+        <i class="fas fa-info-circle text-cyan-400 mr-2"></i>
+        <span class="text-sm">All amounts shown in PKR. Actual payment in USDT at current market rate.</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 1 Lac Package -->
+        <div class="package-card bg-darkcard border border-gray-800 rounded-2xl p-6 hover:border-cyan-500/50 relative overflow-hidden group">
+          <div class="absolute -right-10 -top-10 w-20 h-20 bg-cyan-500/10 rounded-full group-hover:bg-cyan-500/20 transition"></div>
+          <div class="relative">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xl font-bold">Starter</h3>
+              <span class="usdt-badge text-xs">≈ 360 USDT</span>
+            </div>
+            <div class="text-3xl font-bold text-cyan-400 mb-2">1 Lac</div>
+            <div class="text-sm text-gray-500 mb-4">PKR</div>
+            
+            <ul class="space-y-3 mb-6 text-sm">
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>5 Ads Daily
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Daily Reward: 500 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Monthly: 15,000 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>6 Months: 90,000 PKR
+              </li>
+            </ul>
+            
+            <div class="border-t border-gray-800 pt-4 mt-4">
+              <div class="text-xs text-gray-500 mb-2">6 Month Return: <span class="text-green-400 font-bold">90%</span></div>
+              <a href="/register?package=1_lac" class="block w-full bg-gray-800 text-center py-3 rounded-full text-sm font-semibold hover:bg-cyan-500 hover:text-white transition">Select Package</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 Lac Package -->
+        <div class="package-card bg-darkcard border-2 border-cyan-500/30 rounded-2xl p-6 hover:border-cyan-500 relative overflow-hidden group">
+          <div class="absolute top-0 right-0">
+            <div class="bg-cyan-500 text-black text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">POPULAR</div>
+          </div>
+          <div class="relative">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xl font-bold">Growth</h3>
+              <span class="usdt-badge text-xs">≈ 1,080 USDT</span>
+            </div>
+            <div class="text-3xl font-bold text-cyan-400 mb-2">3 Lac</div>
+            <div class="text-sm text-gray-500 mb-4">PKR</div>
+            
+            <ul class="space-y-3 mb-6 text-sm">
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>5 Ads Daily
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Daily Reward: 1,500 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Monthly: 45,000 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>6 Months: 270,000 PKR
+              </li>
+            </ul>
+            
+            <div class="border-t border-gray-800 pt-4 mt-4">
+              <div class="text-xs text-gray-500 mb-2">6 Month Return: <span class="text-green-400 font-bold">90%</span></div>
+              <a href="/register?package=3_lac" class="block w-full bg-cyan-500 text-white text-center py-3 rounded-full text-sm font-semibold hover:bg-cyan-600 transition shadow-lg shadow-cyan-500/30">Select Package</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Lac Package -->
+        <div class="package-card bg-darkcard border border-gray-800 rounded-2xl p-6 hover:border-cyan-500/50 relative overflow-hidden group">
+          <div class="absolute -right-10 -top-10 w-20 h-20 bg-cyan-500/10 rounded-full group-hover:bg-cyan-500/20 transition"></div>
+          <div class="relative">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xl font-bold">Pro</h3>
+              <span class="usdt-badge text-xs">≈ 1,800 USDT</span>
+            </div>
+            <div class="text-3xl font-bold text-cyan-400 mb-2">5 Lac</div>
+            <div class="text-sm text-gray-500 mb-4">PKR</div>
+            
+            <ul class="space-y-3 mb-6 text-sm">
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>5 Ads Daily
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Daily Reward: 2,500 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Monthly: 75,000 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>6 Months: 450,000 PKR
+              </li>
+            </ul>
+            
+            <div class="border-t border-gray-800 pt-4 mt-4">
+              <div class="text-xs text-gray-500 mb-2">6 Month Return: <span class="text-green-400 font-bold">90%</span></div>
+              <a href="/register?package=5_lac" class="block w-full bg-gray-800 text-center py-3 rounded-full text-sm font-semibold hover:bg-cyan-500 hover:text-white transition">Select Package</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 Lac Package -->
+        <div class="package-card bg-darkcard border border-gray-800 rounded-2xl p-6 hover:border-cyan-500/50 relative overflow-hidden group">
+          <div class="absolute -right-10 -top-10 w-20 h-20 bg-cyan-500/10 rounded-full group-hover:bg-cyan-500/20 transition"></div>
+          <div class="relative">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xl font-bold">Premium</h3>
+              <span class="usdt-badge text-xs">≈ 3,600 USDT</span>
+            </div>
+            <div class="text-3xl font-bold text-cyan-400 mb-2">10 Lac</div>
+            <div class="text-sm text-gray-500 mb-4">PKR</div>
+            
+            <ul class="space-y-3 mb-6 text-sm">
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>5 Ads Daily
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Daily Reward: 5,000 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>Monthly: 150,000 PKR
+              </li>
+              <li class="flex items-center text-gray-300">
+                <i class="fas fa-check-circle text-cyan-400 mr-2 text-sm"></i>6 Months: 900,000 PKR
+              </li>
+            </ul>
+            
+            <div class="border-t border-gray-800 pt-4 mt-4">
+              <div class="text-xs text-gray-500 mb-2">6 Month Return: <span class="text-green-400 font-bold">90%</span></div>
+              <a href="/register?package=10_lac" class="block w-full bg-gray-800 text-center py-3 rounded-full text-sm font-semibold hover:bg-cyan-500 hover:text-white transition">Select Package</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Package Note -->
+      <div class="mt-8 text-center text-xs text-gray-500">
+        <i class="fas fa-info-circle mr-1 text-cyan-400"></i>
+        All rewards are credited after completing 5 daily ads. Rewards are based on package value.
+      </div>
+    </div>
+  </section>
+
+  <!-- WITHDRAWAL RULES - NEW SECTION -->
+  <section class="py-16 bg-darkcard/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <span class="usdt-badge mb-4 inline-block">
+            <i class="fas fa-money-bill-wave mr-1"></i> WITHDRAWAL RULES
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold mb-6">USDT <span class="text-cyan-400">Withdrawal System</span></h2>
+          
+          <div class="space-y-4">
+            <div class="flex items-start gap-3 p-4 bg-cyan-500/5 rounded-xl border border-cyan-500/10">
+              <div class="w-10 h-10 gradient-cyan rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-white font-bold">1</span>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1">6 Month Lock Period</h4>
+                <p class="text-sm text-gray-400">Funds are locked for 6 months from deposit date. No withdrawals during this period.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3 p-4 bg-warning/5 rounded-xl border border-warning/10">
+              <div class="w-10 h-10 bg-warning/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-warning font-bold">2</span>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1 text-warning">Early Withdrawal Fee: 25%</h4>
+                <p class="text-sm text-gray-400">If you withdraw before 6 months, 25% of withdrawal amount will be charged as fee.</p>
+                <div class="mt-2 p-2 bg-warning/10 rounded text-xs">
+                  <i class="fas fa-calculator mr-1"></i>
+                  Example: Withdraw 100 USDT → Fee: 25 USDT → You receive: 75 USDT
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex items-start gap-3 p-4 bg-green-500/5 rounded-xl border border-green-500/10">
+              <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-green-400 font-bold">3</span>
+              </div>
+              <div>
+                <h4 class="font-semibold mb-1 text-green-400">After 6 Months: No Fees</h4>
+                <p class="text-sm text-gray-400">Withdraw anytime after lock period with zero fees.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-6 p-4 bg-cyan-500/10 border border-cyan-500/30 rounded-xl">
+            <div class="flex items-center gap-2">
+              <i class="fas fa-coins text-cyan-400"></i>
+              <span class="font-semibold">Minimum Withdrawal:</span>
+              <span class="text-cyan-400 font-bold">5,000 PKR (≈ 18 USDT)</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="relative">
+          <div class="absolute -inset-2 bg-cyan-500/10 blur-2xl rounded-2xl"></div>
+          <div class="relative bg-darkcard border border-gray-800 rounded-2xl p-6">
+            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+              <i class="fas fa-clock text-cyan-400"></i>
+              Lock Period Example
+            </h3>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center p-3 bg-gray-800/50 rounded-lg">
+                <span>Deposit Date</span>
+                <span class="text-cyan-400 font-bold">Jan 15, 2026</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-gray-800/50 rounded-lg">
+                <span>Lock Ends</span>
+                <span class="text-green-400 font-bold">Jul 15, 2026</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-gray-800/50 rounded-lg">
+                <span>Early Withdrawal (Before Jul 15)</span>
+                <span class="text-warning font-bold">25% Fee</span>
+              </div>
+              <div class="flex justify-between items-center p-3 bg-gray-800/50 rounded-lg">
+                <span>Normal Withdrawal (After Jul 15)</span>
+                <span class="text-green-400 font-bold">0% Fee</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS - UPDATED -->
+  <section id="how-it-works" class="py-16 sm:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="usdt-badge mb-4 inline-block">
+          <i class="fas fa-cogs mr-1"></i> PLATFORM FLOW
+        </span>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold">How <span class="text-cyan-400">Upside</span> Works</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="feature-card p-6 rounded-xl text-center">
+          <div class="w-16 h-16 gradient-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-2xl font-bold">1</span>
+          </div>
+          <h4 class="text-lg font-semibold mb-2">Register</h4>
+          <p class="text-gray-400 text-sm">Create your account with basic details</p>
+        </div>
+
+        <div class="feature-card p-6 rounded-xl text-center">
+          <div class="w-16 h-16 gradient-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-2xl font-bold">2</span>
+          </div>
+          <h4 class="text-lg font-semibold mb-2">Select Package</h4>
+          <p class="text-gray-400 text-sm">Choose 1-10 Lac PKR package (USDT only)</p>
+        </div>
+
+        <div class="feature-card p-6 rounded-xl text-center">
+          <div class="w-16 h-16 gradient-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-2xl font-bold">3</span>
+          </div>
+          <h4 class="text-lg font-semibold mb-2">Watch 5 Ads Daily</h4>
+          <p class="text-gray-400 text-sm">Complete all 5 ads to earn daily reward</p>
+        </div>
+
+        <div class="feature-card p-6 rounded-xl text-center">
+          <div class="w-16 h-16 gradient-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-white text-2xl font-bold">4</span>
+          </div>
+          <h4 class="text-lg font-semibold mb-2">Withdraw USDT</h4>
+          <p class="text-gray-400 text-sm">After 6 months or with 25% early fee</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AD SYSTEM EXPLANATION -->
+  <section class="py-16 bg-darkcard/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="usdt-badge mb-4 inline-block">
+            <i class="fas fa-play-circle mr-1"></i> AD SYSTEM
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold mb-6">5 Ads Daily Per <span class="text-cyan-400">Package</span></h2>
+          <p class="text-gray-400 mb-6">Every package includes 5 daily ads. Rewards are based on your package value, not per ad.</p>
+          
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 gradient-cyan rounded-full flex items-center justify-center">
+                <i class="fas fa-check text-white"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold">Complete All 5 Ads</h4>
+                <p class="text-sm text-gray-500">Reward only credited after all 5 ads completed</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-warning/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-clock text-warning"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold">Partial Completion</h4>
+                <p class="text-sm text-gray-500">No reward if all 5 ads not completed</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-coins text-green-400"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold">Daily Reset</h4>
+                <p class="text-sm text-gray-500">New ads available every day at 12 AM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-darkcard border border-gray-800 rounded-xl p-4 text-center">
+            <div class="text-cyan-400 text-2xl font-bold mb-1">1 Lac</div>
+            <div class="text-sm text-gray-400 mb-2">Package</div>
+            <div class="text-green-400 font-bold">500 PKR</div>
+            <div class="text-xs text-gray-500">Daily Reward</div>
+          </div>
+          <div class="bg-darkcard border border-gray-800 rounded-xl p-4 text-center">
+            <div class="text-cyan-400 text-2xl font-bold mb-1">3 Lac</div>
+            <div class="text-sm text-gray-400 mb-2">Package</div>
+            <div class="text-green-400 font-bold">1,500 PKR</div>
+            <div class="text-xs text-gray-500">Daily Reward</div>
+          </div>
+          <div class="bg-darkcard border border-gray-800 rounded-xl p-4 text-center">
+            <div class="text-cyan-400 text-2xl font-bold mb-1">5 Lac</div>
+            <div class="text-sm text-gray-400 mb-2">Package</div>
+            <div class="text-green-400 font-bold">2,500 PKR</div>
+            <div class="text-xs text-gray-500">Daily Reward</div>
+          </div>
+          <div class="bg-darkcard border border-gray-800 rounded-xl p-4 text-center">
+            <div class="text-cyan-400 text-2xl font-bold mb-1">10 Lac</div>
+            <div class="text-sm text-gray-400 mb-2">Package</div>
+            <div class="text-green-400 font-bold">5,000 PKR</div>
+            <div class="text-xs text-gray-500">Daily Reward</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAYMENT METHODS - UPDATED TO USDT ONLY -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="usdt-badge mb-4 inline-block">
+          <i class="fas fa-credit-card mr-1"></i> PAYMENT METHOD
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4">Only <span class="text-cyan-400">USDT</span> Accepted</h2>
+        <p class="text-gray-400">All deposits and withdrawals processed in USDT (TRC20 network)</p>
+      </div>
+      
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-darkcard border-2 border-cyan-500/30 rounded-2xl p-8 text-center">
+          <div class="w-20 h-20 gradient-cyan rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-coins text-white text-3xl"></i>
+          </div>
+          <h3 class="text-2xl font-bold mb-2">USDT Only</h3>
+          <p class="text-gray-400 mb-6">JazzCash, EasyPaisa, and bank transfers are NOT accepted</p>
+          <div class="flex flex-wrap justify-center gap-3">
+            <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">TRC20</span>
+            <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">Minimum 1 Lac PKR</span>
+            <span class="px-4 py-2 bg-gray-800 rounded-full text-sm">Instant Deposit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUCCESS STORIES -->
+  <section class="py-16 bg-darkcard/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="usdt-badge mb-4 inline-block">
+          <i class="fas fa-star mr-1"></i> SUCCESS STORIES
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold">Real <span class="text-cyan-400">Earnings</span></h2>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="feature-card p-6 rounded-xl">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 gradient-cyan rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">A</span>
+            </div>
+            <div>
+              <h4 class="font-bold">Ahmed R.</h4>
+              <p class="text-xs text-gray-500">3 Lac Package</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-3">"Completed 6 months, withdrew 270,000 PKR with zero fees."</p>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-cyan-400">+90% Return</span>
+            <span class="text-gray-600">6 Months</span>
+          </div>
+        </div>
+        
+        <div class="feature-card p-6 rounded-xl">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 gradient-cyan rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">S</span>
+            </div>
+            <div>
+              <h4 class="font-bold">Sara K.</h4>
+              <p class="text-xs text-gray-500">5 Lac Package</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-3">"Withdrew early after 3 months, paid 25% fee but still profitable."</p>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-warning">-25% Fee</span>
+            <span class="text-gray-600">3 Months</span>
+          </div>
+        </div>
+        
+        <div class="feature-card p-6 rounded-xl">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 gradient-cyan rounded-full flex items-center justify-center">
+              <span class="text-white font-bold">M</span>
+            </div>
+            <div>
+              <h4 class="font-bold">M. Usman</h4>
+              <p class="text-xs text-gray-500">10 Lac Package</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-3">"Consistent daily earnings. Best passive USDT income platform."</p>
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-cyan-400">900K PKR</span>
+            <span class="text-gray-600">6 Months</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION - UPDATED -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12">
+        <span class="usdt-badge mb-4 inline-block">
+          <i class="fas fa-question-circle mr-1"></i> FAQ
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold">Frequently Asked <span class="text-cyan-400">Questions</span></h2>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="feature-card p-6 rounded-xl">
+          <h4 class="font-bold mb-2">Can I withdraw before 6 months?</h4>
+          <p class="text-gray-400 text-sm">Yes, but a 25% early withdrawal fee applies. For example, withdrawing 100 USDT before 6 months will incur 25 USDT fee, you receive 75 USDT.</p>
+        </div>
+        
+        <div class="feature-card p-6 rounded-xl">
+          <h4 class="font-bold mb-2">What payment methods are accepted?</h4>
+          <p class="text-gray-400 text-sm">Only USDT (TRC20 network) is accepted. JazzCash, EasyPaisa, and bank transfers are not supported.</p>
+        </div>
+        
+        <div class="feature-card p-6 rounded-xl">
+          <h4 class="font-bold mb-2">How do I earn daily rewards?</h4>
+          <p class="text-gray-400 text-sm">Watch all 5 ads daily. Rewards are credited only after completing all 5 ads. Rewards are based on your package value.</p>
+        </div>
+        
+        <div class="feature-card p-6 rounded-xl">
+          <h4 class="font-bold mb-2">What is the minimum withdrawal?</h4>
+          <p class="text-gray-400 text-sm">Minimum withdrawal is 5,000 PKR (approximately 18 USDT).</p>
+        </div>
+        
+        <div class="feature-card p-6 rounded-xl">
+          <h4 class="font-bold mb-2">What happens if I miss a day?</h4>
+          <p class="text-gray-400 text-sm">You miss that day's reward. You can continue the next day. No penalties, but no reward for incomplete days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="py-16 bg-gradient-to-r from-cyan-900/20 to-cyan-800/20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">Ready to Start <span class="text-cyan-400">Earning USDT?</span></h2>
+      <p class="text-gray-300 text-base sm:text-lg mb-8 max-w-2xl mx-auto">Join thousands of users earning passive income through verified ad engagement. Minimum deposit 1 Lac PKR in USDT.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/register"
+           class="gradient-cyan text-white px-8 sm:px-12 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:opacity-90 transition shadow-lg shadow-cyan-500/30">
+          <i class="fas fa-rocket mr-2"></i>Create Account
+        </a>
+        <a href="#how-it-works"
+           class="border border-cyan-500/30 text-cyan-400 px-8 sm:px-12 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg hover:bg-cyan-500/10 transition">
+          Learn More
+        </a>
+      </div>
+      <div class="mt-6 flex flex-wrap justify-center gap-4 text-xs text-gray-500">
+        <span><i class="fas fa-check-circle text-cyan-400 mr-1"></i>USDT Only</span>
+        <span><i class="fas fa-check-circle text-cyan-400 mr-1"></i>6 Month Lock</span>
+        <span><i class="fas fa-check-circle text-cyan-400 mr-1"></i>25% Early Fee</span>
+        <span><i class="fas fa-check-circle text-cyan-400 mr-1"></i>5 Ads Daily</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-gray-800 py-10 bg-darkcard">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8">
+        <div class="col-span-2 md:col-span-1">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 gradient-cyan rounded-lg flex items-center justify-center">
+              <i class="fas fa-crown text-white text-sm"></i>
+            </div>
+            <span class="text-lg font-bold">Upside</span>
+          </div>
+          <p class="text-gray-400 text-xs sm:text-sm">Earn USDT through verified digital engagement.</p>
+        </div>
+        <div>
+    <h4 class="font-bold mb-3 text-sm sm:text-base">Platform</h4>
+    <ul class="space-y-2 text-xs sm:text-sm text-gray-400">
+        <li><a href="#" onclick="redirectToLogin()" class="hover:text-cyan-400 transition">
+            <i class="fas fa-arrow-right text-cyan-400 text-xs mr-1"></i>Dashboard
+        </a></li>
+        <li><a href="#" onclick="redirectToLogin()" class="hover:text-cyan-400 transition">
+            <i class="fas fa-arrow-right text-cyan-400 text-xs mr-1"></i>Packages
+        </a></li>
+        <li><a href="#" onclick="redirectToLogin()" class="hover:text-cyan-400 transition">
+            <i class="fas fa-arrow-right text-cyan-400 text-xs mr-1"></i>Daily Ads
+        </a></li>
+        <li><a href="#" onclick="redirectToLogin()" class="hover:text-cyan-400 transition">
+            <i class="fas fa-arrow-right text-cyan-400 text-xs mr-1"></i>Withdraw
+        </a></li>
+    </ul>
+</div>
+
+<script>
+function redirectToLogin() {
+    if (confirm('Please login or register to access this page')) {
+        window.location.href = '/login';
+    }
+}
+</script>
+        <div>
+          <h4 class="font-bold mb-3 text-sm sm:text-base">Company</h4>
+          <ul class="space-y-2 text-xs sm:text-sm text-gray-400">
+            <li><a href="/about" class="hover:text-cyan-400">About Us</a></li>
+            <li><a href="/contact" class="hover:text-cyan-400">Contact</a></li>
+            
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-3 text-sm sm:text-base">Legal</h4>
+          <ul class="space-y-2 text-xs sm:text-sm text-gray-400">
+            <li><a href="/terms" class="hover:text-cyan-400">Terms</a></li>
+            <li><a href="/privacy" class="hover:text-cyan-400">Privacy</a></li>
+            <li><a href="/disclaimer" class="hover:text-cyan-400">Disclaimer</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-6 text-center text-xs text-gray-500">
+        <p>© 2026 Upside Platform. All rights reserved. USDT Only.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-20 right-4 w-10 h-10 gradient-cyan rounded-full flex items-center justify-center shadow-lg z-40 hover:scale-110 transition">
+    <i class="fas fa-arrow-up text-white"></i>
+  </button>
+</body>
+</html>
