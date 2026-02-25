@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reject Request</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <div class="max-w-4xl mx-auto p-6">
+        <div class="mb-6">
+            <a href="/admin/dashboard" class="text-blue-400 hover:text-blue-300">
+                ← Back to Dashboard
+            </a>
+        </div>
+        
+        <div class="bg-gray-800 rounded-xl p-6">
+            <h1 class="text-2xl font-bold mb-6">Reject Deposit Request</h1>
+            
+            <!-- Request Details -->
+            <div class="bg-gray-900/50 rounded-lg p-4 mb-6">
+                <h2 class="font-bold mb-3">Request Details:</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-gray-400 text-sm">User</p>
+                        <p class="font-medium">{{ request_data.name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Phone</p>
+                        <p class="font-medium">{{ request_data.phone }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Package</p>
+                        <p class="font-medium">{{ request_data.selected_package.replace('_', ' ').title() }}</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Amount</p>
+                        <p class="font-bold">{{ "{:,}".format(request_data.package_amount) }} PKR</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rejection Form -->
+            <form method="POST" action="/admin/reject/{{ request_id }}">
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2 font-medium">
+                        Reason for Rejection
+                    </label>
+                    <textarea 
+                        name="reason" 
+                        rows="4"
+                        class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 focus:border-red-500 focus:outline-none"
+                        placeholder="Enter reason for rejecting this deposit..."
+                        required></textarea>
+                    <p class="text-gray-400 text-sm mt-1">This reason will be saved in the database.</p>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button type="submit"
+                            class="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-lg font-bold">
+                        Confirm Rejection
+                    </button>
+                    
+                    <a href="/admin/dashboard"
+                       class="bg-gray-700 hover:bg-gray-600 px-6 py-3 rounded-lg font-medium">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

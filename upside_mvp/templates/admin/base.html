@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Panel - UPSIDE{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .sidebar {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="fixed top-4 right-4 z-50 space-y-2 max-w-md">
+                {% for category, message in messages %}
+                    <div class="p-4 rounded-lg shadow-lg border-l-4
+                        {% if category == 'success' %}bg-green-900/80 border-green-500
+                        {% elif category == 'error' %}bg-red-900/80 border-red-500
+                        {% elif category == 'warning' %}bg-yellow-900/80 border-yellow-500
+                        {% else %}bg-blue-900/80 border-blue-500{% endif %}">
+                        <div class="flex items-center">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}times-circle{% elif category == 'warning' %}exclamation-triangle{% else %}info-circle{% endif %} mr-3"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Sidebar and main content -->
+    <div class="flex">
+        <!-- Sidebar code here -->
+        
+        <main class="flex-1 ml-64 p-6">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-2xl font-bold">{% block page_title %}Dashboard{% endblock %}</h1>
+                    <p class="text-gray-400">{% block page_subtitle %}Admin Panel{% endblock %}</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-400">{{ datetime.datetime.now().strftime('%d %b, %Y %I:%M %p') }}</span>
+                </div>
+            </div>
+
+            <!-- Content -->
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        // Auto-hide flash messages
+        setTimeout(() => {
+            const flashes = document.querySelectorAll('.fixed.top-4.right-4 > div');
+            flashes.forEach(flash => {
+                flash.style.opacity = '0';
+                setTimeout(() => {
+                    if (flash.parentNode) {
+                        flash.parentNode.removeChild(flash);
+                    }
+                }, 300);
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

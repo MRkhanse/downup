@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>404 - Page Not Found | Upside</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Tailwind & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Professional System Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ---------- 🎨 CYAN THEME TOKENS ---------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --primary-light: #22d3ee;
+            --primary-glow: rgba(6, 182, 212, 0.2);
+            --bg-primary: #0a0c10;
+            --bg-secondary: #111317;
+            --bg-card: #1a1d24;
+            --bg-card-hover: #22262e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color-hover: rgba(6, 182, 212, 0.3);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --header-height: 64px;
+            --bottom-nav-height: 72px;
+            --sidebar-width: 280px;
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ---------- BASE RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ---------- RESPONSIVE CONTAINER ---------- */
+        .container-fluid {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid {
+                max-width: 640px;
+                padding-right: 1.5rem;
+                padding-left: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-fluid {
+                max-width: 768px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-fluid {
+                max-width: 1024px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-fluid {
+                max-width: 1280px;
+            }
+        }
+
+        /* ---------- PREMIUM HEADER ---------- */
+        .premium-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            height: var(--header-height);
+            width: 100%;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .logo-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 10px 15px -3px var(--primary-glow);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* ---------- HAMBURGER MENU ---------- */
+        .hamburger-modern {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .hamburger-modern span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: #fff;
+            border-radius: 2px;
+            left: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hamburger-modern span:nth-child(1) { top: 4px; }
+        .hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+        .hamburger-modern span:nth-child(3) { top: 18px; }
+
+        .hamburger-modern.active span:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+            background: var(--primary);
+        }
+
+        .hamburger-modern.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .hamburger-modern.active span:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+            background: var(--primary);
+        }
+
+        /* ---------- SIDE DRAWER ---------- */
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(17, 19, 23, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: calc(var(--safe-top) + 20px) 20px 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-drawer.active {
+            left: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- 404 STYLES ---------- */
+        .error-card {
+            background: rgba(17, 19, 23, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 48px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5);
+        }
+
+        .error-404 {
+            font-size: 8rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .glow-icon {
+            animation: float 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px var(--primary-glow));
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 100px;
+            padding: 14px 32px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 14px 32px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .suggestion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .suggestion-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .suggestion-item:hover {
+            background: rgba(6, 182, 212, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .suggestion-item i {
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .suggestion-item span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ---------- BOTTOM NAVIGATION ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(14, 16, 21, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: var(--safe-bottom);
+            z-index: 40;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 8px 0;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* ---------- MOBILE FIRST RESPONSIVE ---------- */
+        @media (max-width: 767px) {
+            .premium-header {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .header-content {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+            
+            .mobile-title {
+                max-width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 1.125rem;
+                font-weight: 700;
+            }
+            
+            .error-card {
+                padding: 2rem 1.5rem;
+                border-radius: 32px;
+                margin: 0 16px;
+            }
+            
+            .error-404 {
+                font-size: 5rem;
+            }
+            
+            .suggestion-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .action-buttons {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            
+            .action-buttons a {
+                width: 100% !important;
+            }
+            
+            body {
+                padding-bottom: 80px !important;
+            }
+            
+            .bottom-nav {
+                display: flex !important;
+            }
+            
+            h1 {
+                font-size: 1.75rem !important;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-only {
+                display: none !important;
+            }
+            
+            .desktop-only {
+                display: block !important;
+            }
+            
+            .action-buttons {
+                flex-direction: row !important;
+                gap: 16px !important;
+            }
+            
+            body {
+                padding-bottom: 0 !important;
+            }
+            
+            .bottom-nav {
+                display: none !important;
+            }
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide {
+            animation: slideUp 0.4s ease-out;
+        }
+
+        /* ---------- UTILITY CLASSES ---------- */
+        .hidden { display: none !important; }
+        .gradient-text {
+            background: linear-gradient(to right, white, #d1d5db);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .side-drawer {
+            left: -320px;
+        }
+        .side-drawer.active {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- === DEFAULT VALUES FOR UNDEFINED VARIABLES === -->
+    {% set withdrawals_count = withdrawals_count|default(0) %}
+    {% set pending_requests = pending_requests|default([]) %}
+    {% set pending_withdrawals = pending_withdrawals|default([]) %}
+    {% set notifications = notifications|default([]) %}
+    {% set total_users = total_users|default(0) %}
+    {% set active_users = active_users|default(0) %}
+    {% set withdrawals_amount = withdrawals_amount|default(0) %}
+    {% set pending_resets_count = pending_resets_count|default(0) %}
+    {% set notifications_count = notifications_count|default(0) %}
+
+    <!-- === DRAWER OVERLAY === -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="window.closeDrawer()"></div>
+
+    <!-- === SIDE DRAWER - USER/ADMIN MENU === -->
+    <aside id="sideDrawer" class="side-drawer">
+        <!-- Brand Header -->
+        <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+            <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <i class="fas fa-crown text-white text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold gradient-text">Upside</h2>
+                <p class="text-xs text-gray-400 mt-0.5">
+                    {% if session.get('admin_username') %}
+                        Administrator
+                    {% elif session.get('user_id') %}
+                        Member
+                    {% else %}
+                        Guest
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- User Profile (if logged in) -->
+        {% if session.get('admin_username') or session.get('user_id') %}
+        <div class="flex items-center gap-3 p-4 bg-white/5 rounded-2xl mb-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full flex items-center justify-center">
+                <span class="text-xl font-bold text-white">
+                    {% if session.get('admin_username') %}
+                        {{ session.get('admin_username', 'A')[0]|upper }}
+                    {% elif session.get('user_name') %}
+                        {{ session.get('user_name', 'U')[0]|upper }}
+                    {% else %}
+                        U
+                    {% endif %}
+                </span>
+            </div>
+            <div class="flex-1">
+                <p class="font-semibold">
+                    {% if session.get('admin_username') %}
+                        {{ session.get('admin_username', 'Admin') }}
+                    {% elif session.get('user_name') %}
+                        {{ session.get('user_name', 'User') }}
+                    {% endif %}
+                </p>
+                <p class="text-xs text-gray-400 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    Online
+                </p>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Navigation Menu -->
+        <nav class="space-y-1">
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Navigation</p>
+            
+            <a href="/" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Home</span>
+            </a>
+            
+            {% if session.get('admin_username') %}
+            <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-tachometer-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Admin Dashboard</span>
+            </a>
+            {% elif session.get('user_id') %}
+            <a href="/user-dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-tachometer-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            {% else %}
+            <a href="/login" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-sign-in-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Login</span>
+            </a>
+            <a href="/register" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-user-plus w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Register</span>
+            </a>
+            {% endif %}
+            
+            <a href="/support" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-headset w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Support</span>
+            </a>
+            
+            {% if session.get('admin_username') or session.get('user_id') %}
+            <div class="my-4 border-t border-white/5"></div>
+            <a href="/logout" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 transition-all group">
+                <i class="fas fa-sign-out-alt group-hover:rotate-180 transition-transform duration-500"></i>
+                <span class="font-medium">Logout</span>
+            </a>
+            {% endif %}
+        </nav>
+
+        <!-- Version Info -->
+        <div class="absolute bottom-8 left-0 right-0 text-center">
+            <p class="text-[11px] text-gray-600">Upside Platform v2.0.0</p>
+            <p class="text-[10px] text-gray-700 mt-1">© 2026 All rights reserved</p>
+        </div>
+    </aside>
+
+    <!-- === PREMIUM HEADER - FULLY RESPONSIVE === -->
+    <header class="premium-header">
+        <div class="container-fluid h-full">
+            <div class="header-content">
+                <!-- Left Section -->
+                <div class="header-left">
+                    <!-- Hamburger - Always visible on mobile -->
+                    <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    
+                    <!-- Logo & Title -->
+                    <div class="header-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-crown text-white text-sm"></i>
+                        </div>
+                        
+                        <!-- Desktop Title -->
+                        <div class="desktop-only" style="min-width: 0;">
+                            <h1 class="text-xl font-bold gradient-text truncate-text">404 - Page Not Found</h1>
+                            <p class="text-xs text-gray-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                                <span class="truncate-text">
+                                    {% if session.get('admin_username') %}
+                                        {{ session.get('admin_username') }}
+                                    {% elif session.get('user_name') %}
+                                        {{ session.get('user_name') }}
+                                    {% else %}
+                                        Guest
+                                    {% endif %}
+                                </span>
+                            </p>
+                        </div>
+                        
+                        <!-- Mobile Title -->
+                        <div class="mobile-only" style="min-width: 0;">
+                            <h1 class="mobile-title">404 Error</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="header-right">
+                    <!-- Time Badge - Desktop Only -->
+                    <div class="desktop-only px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 15, 2026' }}</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <i class="fas fa-clock text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%H:%M') if now else '14:30' }}</span>
+                    </div>
+                    
+                    <!-- Refresh Button -->
+                    <button onclick="location.reload()" 
+                            class="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all hover:rotate-180 duration-500">
+                        <i class="fas fa-sync-alt text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- === MAIN CONTENT === -->
+    <main class="container-fluid min-h-[calc(100vh-var(--header-height)-var(--bottom-nav-height))] flex items-center justify-center py-8">
+        
+        <!-- Error Card -->
+        <div class="error-card animate-fade">
+            
+            <!-- Animated Icon -->
+            <div class="glow-icon mb-6">
+                <i class="fas fa-exclamation-triangle text-7xl text-yellow-500"></i>
+            </div>
+
+            <!-- 404 Text -->
+            <div class="error-404">404</div>
+
+            <!-- Title -->
+            <h1 class="text-2xl md:text-3xl font-bold mb-3 gradient-text">Page Not Found</h1>
+
+            <!-- Description -->
+            <p class="text-gray-400 mb-8 max-w-md mx-auto text-sm md:text-base">
+                The page you're looking for doesn't exist or has been moved to another location.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons flex gap-4 justify-center mb-8">
+                <a href="javascript:history.back()" class="btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Go Back
+                </a>
+                <a href="/" class="btn-primary">
+                    <i class="fas fa-home"></i>
+                    Home Page
+                </a>
+            </div>
+
+            <!-- Quick Suggestions -->
+            <div class="suggestion-grid">
+                <a href="/" class="suggestion-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/support" class="suggestion-item">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
+                </a>
+                <a href="/packages" class="suggestion-item">
+                    <i class="fas fa-box"></i>
+                    <span>Packages</span>
+                </a>
+                <a href="/contact" class="suggestion-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+            </div>
+
+            <!-- Error Reference -->
+            <p class="text-xs text-gray-600 mt-6">
+                <i class="fas fa-info-circle mr-1 text-cyan-400"></i>
+                Reference: 404_ERROR_PAGE_NOT_FOUND
+            </p>
+        </div>
+    </main>
+
+    <!-- === BOTTOM NAVIGATION - MOBILE === -->
+    <nav class="bottom-nav mobile-only">
+        <a href="/" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="/packages" class="nav-item">
+            <i class="fas fa-box"></i>
+            <span>Packages</span>
+        </a>
+        
+        {% if session.get('admin_username') %}
+        <a href="/admin/dashboard" class="nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Admin</span>
+        </a>
+        {% elif session.get('user_id') %}
+        <a href="/user-dashboard" class="nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+        {% else %}
+        <a href="/login" class="nav-item">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+        </a>
+        {% endif %}
+        
+        <a href="/support" class="nav-item">
+            <i class="fas fa-headset"></i>
+            <span>Support</span>
+        </a>
+        
+        <a href="/contact" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+        </a>
+    </nav>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.toggle('active');
+                overlay.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+            }
+        };
+
+        window.closeDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.remove('active');
+                overlay.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+
+        // Close drawer on route change
+        window.addEventListener('popstate', window.closeDrawer);
+    </script>
+
+    <style>
+        @media (max-width: 767px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom, 0);
+            }
+        }
+    </style>
+</body>
+</html>

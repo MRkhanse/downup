@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>Support Tickets | Upside Admin</title>
+    
+    <!-- Preload Resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Tailwind & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Professional System Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ---------- 🎨 CYAN THEME TOKENS ---------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --primary-light: #22d3ee;
+            --primary-glow: rgba(6, 182, 212, 0.2);
+            --bg-primary: #0a0c10;
+            --bg-secondary: #111317;
+            --bg-card: #1a1d24;
+            --bg-card-hover: #22262e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color-hover: rgba(6, 182, 212, 0.3);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --header-height: 64px;
+            --bottom-nav-height: 72px;
+            --sidebar-width: 280px;
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ---------- BASE RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ---------- RESPONSIVE CONTAINER ---------- */
+        .container-fluid {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid {
+                max-width: 640px;
+                padding-right: 1.5rem;
+                padding-left: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-fluid {
+                max-width: 768px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-fluid {
+                max-width: 1024px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-fluid {
+                max-width: 1280px;
+            }
+        }
+
+        /* ---------- PREMIUM HEADER ---------- */
+        .premium-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            height: var(--header-height);
+            width: 100%;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .logo-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 10px 15px -3px var(--primary-glow);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* ---------- HAMBURGER MENU ---------- */
+        .hamburger-modern {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .hamburger-modern span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: #fff;
+            border-radius: 2px;
+            left: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hamburger-modern span:nth-child(1) { top: 4px; }
+        .hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+        .hamburger-modern span:nth-child(3) { top: 18px; }
+
+        .hamburger-modern.active span:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+            background: var(--primary);
+        }
+
+        .hamburger-modern.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .hamburger-modern.active span:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+            background: var(--primary);
+        }
+
+        /* ---------- SIDE DRAWER ---------- */
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(17, 19, 23, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: calc(var(--safe-top) + 20px) 20px 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-drawer.active {
+            left: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- STATS CARDS ---------- */
+        .stat-card {
+            background: rgba(26, 29, 36, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.25s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(34, 38, 46, 0.9);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 640px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+        }
+
+        /* ---------- TICKET CARD ---------- */
+        .ticket-card {
+            background: rgba(26, 29, 36, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.25s ease;
+        }
+
+        .ticket-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-open {
+            background: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .status-progress {
+            background: rgba(6, 182, 212, 0.15);
+            color: #22d3ee;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .status-closed {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        /* ---------- TABS ---------- */
+        .tabs-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        /* ---------- BUTTONS ---------- */
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 100px;
+            padding: 12px 24px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--primary-glow);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ---------- BOTTOM NAVIGATION ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(14, 16, 21, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: var(--safe-bottom);
+            z-index: 40;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 8px 0;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slideIn {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* ---------- RESPONSIVE UTILITIES ---------- */
+        .mobile-only { display: flex; }
+        .desktop-only { display: none; }
+
+        /* ---------- MOBILE (320px - 767px) ---------- */
+        @media (max-width: 767px) {
+            .premium-header {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .header-content {
+                padding-left: 16px;
+                padding-right: 16px;
+                width: 100%;
+            }
+            
+            .mobile-title {
+                max-width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 1.125rem;
+                font-weight: 700;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr !important;
+                gap: 12px !important;
+            }
+            
+            .ticket-card {
+                padding: 16px !important;
+            }
+            
+            .ticket-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px !important;
+            }
+            
+            .ticket-actions {
+                width: 100% !important;
+            }
+            
+            .ticket-actions a {
+                width: 100% !important;
+                justify-content: center !important;
+            }
+            
+            .tabs-container {
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                scrollbar-width: none !important;
+            }
+            
+            .tabs-container::-webkit-scrollbar {
+                display: none !important;
+            }
+            
+            .tab-btn {
+                padding: 8px 16px !important;
+                font-size: 13px !important;
+            }
+            
+            .user-info {
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+            }
+            
+            body {
+                padding-bottom: 80px !important;
+            }
+            
+            .bottom-nav {
+                display: flex !important;
+            }
+        }
+
+        /* ---------- TABLET (768px+) ---------- */
+        @media (min-width: 768px) {
+            .mobile-only { display: none !important; }
+            .desktop-only { display: block; }
+            
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 16px !important;
+            }
+            
+            body { padding-bottom: 0 !important; }
+            .bottom-nav { display: none !important; }
+        }
+
+        /* ---------- UTILITY CLASSES ---------- */
+        .hidden { display: none !important; }
+        .gradient-text {
+            background: linear-gradient(to right, white, #d1d5db);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .truncate-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .side-drawer {
+            left: -320px;
+        }
+        .side-drawer.active {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- === DEFAULT VALUES FOR UNDEFINED VARIABLES === -->
+    {% set withdrawals_count = withdrawals_count|default(0) %}
+    {% set pending_requests = pending_requests|default([]) %}
+    {% set pending_withdrawals = pending_withdrawals|default([]) %}
+    {% set notifications = notifications|default([]) %}
+    {% set notifications_count = notifications_count|default(0) %}
+    {% set open_tickets = open_tickets|default([]) %}
+    {% set in_progress_tickets = in_progress_tickets|default([]) %}
+    {% set closed_tickets = closed_tickets|default([]) %}
+
+    <!-- === DRAWER OVERLAY === -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="window.closeDrawer()"></div>
+
+    <!-- === SIDE DRAWER - ADMIN MENU === -->
+    <aside id="sideDrawer" class="side-drawer">
+        <!-- Admin Profile -->
+        <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <span class="text-2xl font-bold text-white">{{ session.admin_username[0]|upper if session.admin_username else 'A' }}</span>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold gradient-text">{{ session.admin_username|default('Admin') }}</h2>
+                <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    Administrator
+                </p>
+            </div>
+        </div>
+        
+        <!-- Menu Items -->
+        <nav class="space-y-1">
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Main Menu</p>
+            
+            <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            
+            <a href="/admin/users" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-users w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Users</span>
+            </a>
+            
+            <a href="/admin/ads" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-ad w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Manage Ads</span>
+                {% if notifications|length > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ notifications|length }}</span>
+                {% endif %}
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Support</p>
+            
+            <a href="/admin/support-tickets" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <i class="fas fa-headset w-5"></i>
+                <span class="font-medium">Support Tickets</span>
+                {% if open_tickets|length > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ open_tickets|length }}</span>
+                {% endif %}
+            </a>
+            
+            <a href="/admin/usdt-address" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-wallet w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">USDT Address</span>
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Settings</p>
+            
+            <a href="/admin/requests/approved" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-check-circle w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Approved</span>
+            </a>
+            
+            <a href="/admin/requests/rejected" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-times-circle w-5 text-red-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Rejected</span>
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <a href="/admin/logout" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 transition-all group">
+                <i class="fas fa-sign-out-alt group-hover:rotate-180 transition-transform duration-500"></i>
+                <span class="font-medium">Logout</span>
+            </a>
+        </nav>
+        
+        <!-- Version Info -->
+        <div class="absolute bottom-8 left-0 right-0 text-center">
+            <p class="text-[11px] text-gray-600">Upside Admin v2.0.0</p>
+            <p class="text-[10px] text-gray-700 mt-1">© 2026 All rights reserved</p>
+        </div>
+    </aside>
+
+    <!-- === PREMIUM HEADER - FULLY RESPONSIVE === -->
+    <header class="premium-header">
+        <div class="container-fluid h-full">
+            <div class="header-content">
+                <!-- Left Section -->
+                <div class="header-left">
+                    <!-- Hamburger - Always visible on mobile -->
+                    <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    
+                    <!-- Logo & Title -->
+                    <div class="header-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-headset text-white text-sm"></i>
+                        </div>
+                        
+                        <!-- Desktop Title -->
+                        <div class="desktop-only" style="min-width: 0;">
+                            <h1 class="text-xl font-bold gradient-text truncate-text">Support Tickets</h1>
+                            <p class="text-xs text-gray-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                                <span class="truncate-text">{{ session.admin_username|default('Admin') }} · Active</span>
+                            </p>
+                        </div>
+                        
+                        <!-- Mobile Title -->
+                        <div class="mobile-only" style="min-width: 0;">
+                            <h1 class="mobile-title">Support</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="header-right">
+                    <!-- Time Badge - Desktop Only -->
+                    <div class="desktop-only px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 14, 2026' }}</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <i class="fas fa-clock text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%H:%M') if now else '14:30' }}</span>
+                    </div>
+                    
+                    <!-- Refresh Button -->
+                    <button onclick="location.reload()" 
+                            class="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all hover:rotate-180 duration-500">
+                        <i class="fas fa-sync-alt text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- === FLASH MESSAGES === -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="container-fluid mt-4">
+            {% for category, message in messages %}
+            <div class="flex items-center justify-between p-4 rounded-xl mb-2 animate-slideIn
+                {% if category == 'success' %}bg-gradient-to-r from-green-500/90 to-green-600/90 text-white
+                {% elif category == 'error' %}bg-gradient-to-r from-red-500/90 to-red-600/90 text-white
+                {% else %}bg-gradient-to-r from-cyan-500/90 to-cyan-600/90 text-white{% endif %}">
+                <div class="flex items-center gap-2">
+                    <i class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+                    <span class="text-sm">{{ message }}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="hover:opacity-80">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- === MAIN CONTENT === -->
+    <main class="container-fluid py-6 pb-28 md:pb-8">
+        
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Open Tickets</p>
+                        <p class="text-2xl md:text-3xl font-bold text-yellow-400">{{ open_tickets|length }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-clock text-yellow-400 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">In Progress</p>
+                        <p class="text-2xl md:text-3xl font-bold text-cyan-400">{{ in_progress_tickets|length }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-cyan-500/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-spinner text-cyan-400 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-400 text-sm">Closed</p>
+                        <p class="text-2xl md:text-3xl font-bold text-green-400">{{ closed_tickets|length }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-check-circle text-green-400 text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <button onclick="showTab('open')" class="tab-btn active">
+                <i class="fas fa-clock mr-2"></i>Open ({{ open_tickets|length }})
+            </button>
+            <button onclick="showTab('progress')" class="tab-btn">
+                <i class="fas fa-spinner mr-2"></i>In Progress ({{ in_progress_tickets|length }})
+            </button>
+            <button onclick="showTab('closed')" class="tab-btn">
+                <i class="fas fa-check-circle mr-2"></i>Closed ({{ closed_tickets|length }})
+            </button>
+        </div>
+
+        <!-- Open Tickets Tab -->
+        <div id="tab-open" class="tab-content block">
+            {% if open_tickets %}
+                {% for ticket in open_tickets %}
+                <div class="ticket-card mb-4 animate-slideIn">
+                    <div class="ticket-header flex flex-col md:flex-row justify-between items-start gap-4">
+                        <div class="flex-1 w-full">
+                            <div class="flex flex-wrap items-center gap-2 mb-3">
+                                <span class="status-badge status-open">
+                                    <i class="fas fa-clock"></i> Open
+                                </span>
+                                <span class="text-xs text-gray-500 bg-white/5 px-3 py-1 rounded-full">#{{ ticket.id }}</span>
+                                <span class="text-xs text-gray-500">
+                                    <i class="far fa-calendar mr-1"></i>{{ ticket.created_at[:10] }}
+                                </span>
+                            </div>
+                            
+                            <h3 class="font-bold text-lg mb-2">{{ ticket.subject }}</h3>
+                            <p class="text-gray-400 text-sm mb-4">{{ ticket.message[:150] }}{% if ticket.message|length > 150 %}...{% endif %}</p>
+                            
+                            <div class="user-info flex flex-wrap items-center gap-4 text-xs text-gray-500">
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-user text-cyan-400"></i>
+                                    {{ ticket.user_name }}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-phone text-green-400"></i>
+                                    {{ ticket.user_phone }}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-clock text-yellow-400"></i>
+                                    {{ ticket.created_at[11:16] }}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-actions w-full md:w-auto">
+                            <a href="/admin/support-ticket/{{ ticket.id }}" 
+                               class="btn-primary w-full md:w-auto">
+                                <i class="fas fa-reply"></i>
+                                Respond
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="ticket-card text-center py-12">
+                    <div class="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-green-400 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">All Clear!</h3>
+                    <p class="text-gray-500">No open tickets at the moment</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- In Progress Tab -->
+        <div id="tab-progress" class="tab-content hidden">
+            {% if in_progress_tickets %}
+                {% for ticket in in_progress_tickets %}
+                <div class="ticket-card mb-4 animate-slideIn">
+                    <div class="ticket-header flex flex-col md:flex-row justify-between items-start gap-4">
+                        <div class="flex-1 w-full">
+                            <div class="flex flex-wrap items-center gap-2 mb-3">
+                                <span class="status-badge status-progress">
+                                    <i class="fas fa-spinner"></i> In Progress
+                                </span>
+                                <span class="text-xs text-gray-500 bg-white/5 px-3 py-1 rounded-full">#{{ ticket.id }}</span>
+                                <span class="text-xs text-gray-500">
+                                    <i class="far fa-calendar mr-1"></i>{{ ticket.updated_at[:10] }}
+                                </span>
+                            </div>
+                            
+                            <h3 class="font-bold text-lg mb-2">{{ ticket.subject }}</h3>
+                            <p class="text-gray-400 text-sm mb-4">{{ ticket.message[:150] }}...</p>
+                            
+                            <div class="user-info flex flex-wrap items-center gap-4 text-xs text-gray-500 mb-3">
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-user text-cyan-400"></i>
+                                    {{ ticket.user_name }}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-phone text-green-400"></i>
+                                    {{ ticket.user_phone }}
+                                </span>
+                            </div>
+                            
+                            {% if ticket.admin_response %}
+                            <div class="mt-2 p-3 bg-cyan-500/5 border border-cyan-500/20 rounded-xl">
+                                <span class="text-cyan-400 text-xs font-medium flex items-center gap-1 mb-1">
+                                    <i class="fas fa-reply"></i>
+                                    Your Response:
+                                </span>
+                                <p class="text-gray-400 text-sm">{{ ticket.admin_response[:100] }}...</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="ticket-actions w-full md:w-auto">
+                            <a href="/admin/support-ticket/{{ ticket.id }}" 
+                               class="btn-primary w-full md:w-auto">
+                                <i class="fas fa-edit"></i>
+                                Update
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="ticket-card text-center py-12">
+                    <div class="w-20 h-20 bg-cyan-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-spinner text-cyan-400 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">No Tickets In Progress</h3>
+                    <p class="text-gray-500">All tickets are either open or closed</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Closed Tickets Tab -->
+        <div id="tab-closed" class="tab-content hidden">
+            {% if closed_tickets %}
+                {% for ticket in closed_tickets %}
+                <div class="ticket-card mb-4 opacity-75 hover:opacity-100 transition-all">
+                    <div class="ticket-header flex flex-col md:flex-row justify-between items-start gap-4">
+                        <div class="flex-1 w-full">
+                            <div class="flex flex-wrap items-center gap-2 mb-3">
+                                <span class="status-badge status-closed">
+                                    <i class="fas fa-check-circle"></i> Closed
+                                </span>
+                                <span class="text-xs text-gray-500 bg-white/5 px-3 py-1 rounded-full">#{{ ticket.id }}</span>
+                                <span class="text-xs text-gray-500">
+                                    <i class="far fa-calendar mr-1"></i>{{ ticket.closed_at[:10] if ticket.closed_at else ticket.updated_at[:10] }}
+                                </span>
+                            </div>
+                            
+                            <h3 class="font-bold text-lg text-gray-300 mb-2">{{ ticket.subject }}</h3>
+                            <p class="text-gray-500 text-sm mb-4">{{ ticket.message[:150] }}...</p>
+                            
+                            <div class="user-info flex items-center gap-4 text-xs text-gray-600">
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-user"></i>
+                                    {{ ticket.user_name }}
+                                </span>
+                                {% if ticket.resolved_by %}
+                                <span class="flex items-center gap-1">
+                                    <i class="fas fa-check-circle text-green-500/50"></i>
+                                    Resolved by: {{ ticket.resolved_by }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-actions w-full md:w-auto">
+                            <a href="/admin/support-ticket/{{ ticket.id }}" 
+                               class="btn-outline w-full md:w-auto">
+                                <i class="fas fa-eye"></i>
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="ticket-card text-center py-12">
+                    <div class="w-20 h-20 bg-gray-600/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-archive text-gray-500 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">No Closed Tickets</h3>
+                    <p class="text-gray-500">Closed tickets will appear here</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- === BOTTOM NAVIGATION - MOBILE === -->
+    <nav class="bottom-nav mobile-only">
+        <a href="/admin/dashboard" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="/admin/users" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+        
+        <a href="/admin/ads" class="nav-item">
+            <i class="fas fa-ad"></i>
+            <span>Ads</span>
+            {% if notifications|length > 0 %}
+            <span class="nav-badge">{{ notifications|length }}</span>
+            {% endif %}
+        </a>
+        
+        <a href="/admin/support-tickets" class="nav-item active">
+            <i class="fas fa-headset"></i>
+            <span>Support</span>
+            {% if open_tickets|length > 0 %}
+            <span class="nav-badge">{{ open_tickets|length }}</span>
+            {% endif %}
+        </a>
+        
+        <a href="/admin/usdt-address" class="nav-item">
+            <i class="fas fa-wallet"></i>
+            <span>USDT</span>
+        </a>
+    </nav>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        // Default values for undefined variables
+        window.AdminDashboard = window.AdminDashboard || {};
+        
+        // Drawer controls
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.toggle('active');
+                overlay.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+            }
+        };
+        
+        window.closeDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.remove('active');
+                overlay.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+        
+        // Tab switching
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Close drawer on route change
+        window.addEventListener('popstate', window.closeDrawer);
+        
+        // Auto-hide flash messages
+        setTimeout(() => {
+            document.querySelectorAll('.flash-message').forEach(msg => {
+                msg.style.transition = 'opacity 0.5s';
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500);
+            });
+        }, 5000);
+    </script>
+
+    <style>
+        @media (max-width: 767px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom, 0);
+            }
+        }
+    </style>
+</body>
+</html>

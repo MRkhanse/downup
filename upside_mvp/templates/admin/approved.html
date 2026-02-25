@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>Approved Requests • Upside Admin</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Tailwind & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Professional System Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ---------- 🎨 CYAN THEME TOKENS ---------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --primary-light: #22d3ee;
+            --primary-glow: rgba(6, 182, 212, 0.2);
+            --bg-primary: #0a0c10;
+            --bg-secondary: #111317;
+            --bg-card: #1a1d24;
+            --bg-card-hover: #22262e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color-hover: rgba(6, 182, 212, 0.3);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --header-height: 64px;
+            --bottom-nav-height: 72px;
+            --sidebar-width: 280px;
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ---------- BASE RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ---------- RESPONSIVE CONTAINER ---------- */
+        .container-fluid {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid {
+                max-width: 640px;
+                padding-right: 1.5rem;
+                padding-left: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-fluid {
+                max-width: 768px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-fluid {
+                max-width: 1024px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-fluid {
+                max-width: 1280px;
+            }
+        }
+
+        /* ---------- PREMIUM HEADER ---------- */
+        .premium-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            height: var(--header-height);
+            width: 100%;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .logo-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 10px 15px -3px var(--primary-glow);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* ---------- HAMBURGER MENU ---------- */
+        .hamburger-modern {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .hamburger-modern span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: #fff;
+            border-radius: 2px;
+            left: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hamburger-modern span:nth-child(1) { top: 4px; }
+        .hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+        .hamburger-modern span:nth-child(3) { top: 18px; }
+
+        .hamburger-modern.active span:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+            background: var(--primary);
+        }
+
+        .hamburger-modern.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .hamburger-modern.active span:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+            background: var(--primary);
+        }
+
+        /* ---------- SIDE DRAWER ---------- */
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(17, 19, 23, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: calc(var(--safe-top) + 20px) 20px 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-drawer.active {
+            left: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- TABLE STYLES ---------- */
+        .glass-table {
+            background: rgba(17, 19, 23, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table-row {
+            transition: all 0.2s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .table-row:hover {
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-approved {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .package-badge {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .btn-view {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-view:hover {
+            background: rgba(6, 182, 212, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* ---------- BOTTOM NAVIGATION ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(14, 16, 21, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: var(--safe-bottom);
+            z-index: 40;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 8px 0;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* ---------- MOBILE FIRST RESPONSIVE ---------- */
+        @media (max-width: 767px) {
+            .premium-header {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .header-content {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+            
+            .mobile-title {
+                max-width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 1.125rem;
+                font-weight: 700;
+            }
+            
+            /* Table to Cards Conversion */
+            .desktop-table {
+                display: none !important;
+            }
+            
+            .mobile-cards {
+                display: block !important;
+            }
+            
+            .approved-card {
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 20px;
+                padding: 16px;
+                margin-bottom: 16px;
+                transition: all 0.2s ease;
+            }
+            
+            .approved-card:hover {
+                border-color: var(--primary);
+                background: var(--bg-card-hover);
+            }
+            
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 16px;
+            }
+            
+            .card-user {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .user-avatar {
+                width: 48px;
+                height: 48px;
+                background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+                border-radius: 16px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 20px;
+                font-weight: 700;
+            }
+            
+            .card-info-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+            
+            .info-chip {
+                background: rgba(255, 255, 255, 0.03);
+                border-radius: 12px;
+                padding: 12px;
+            }
+            
+            .chip-label {
+                font-size: 11px;
+                color: #9ca3af;
+                margin-bottom: 4px;
+            }
+            
+            .chip-value {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            
+            .txid-box {
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 12px;
+                padding: 12px;
+                font-family: monospace;
+                font-size: 12px;
+                word-break: break-all;
+                margin-bottom: 16px;
+            }
+            
+            body {
+                padding-bottom: 80px !important;
+            }
+            
+            .bottom-nav {
+                display: flex !important;
+            }
+            
+            .back-button {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 12px !important;
+                background: rgba(6, 182, 212, 0.1) !important;
+                border-radius: 100px !important;
+                margin-bottom: 16px !important;
+                color: var(--primary) !important;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-only {
+                display: none !important;
+            }
+            
+            .desktop-only {
+                display: block !important;
+            }
+            
+            .mobile-cards {
+                display: none !important;
+            }
+            
+            .desktop-table {
+                display: block !important;
+            }
+            
+            body {
+                padding-bottom: 0 !important;
+            }
+            
+            .bottom-nav {
+                display: none !important;
+            }
+        }
+
+        /* ---------- UTILITY CLASSES ---------- */
+        .hidden { display: none !important; }
+        .gradient-text {
+            background: linear-gradient(to right, white, #d1d5db);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .truncate-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .side-drawer {
+            left: -320px;
+        }
+        .side-drawer.active {
+            left: 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide {
+            animation: slideIn 0.3s ease-out;
+        }
+    </style>
+</head>
+
+<body>
+       <!-- === FIX UNDEFINED VARIABLES === -->
+{% set pending_requests = pending_requests if pending_requests is not none and pending_requests is iterable else [] %}
+{% set withdrawals_count = withdrawals_count|default(0) %}
+{% set notifications_count = notifications_count|default(0) %}
+{% set pending_resets_count = pending_resets_count|default(0) %}
+   <!-- === DRAWER OVERLAY === -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="window.closeDrawer()"></div>
+
+    <!-- === SIDE DRAWER - FIXED VERSION === -->
+<aside id="sideDrawer" class="side-drawer">
+    <!-- Scrollable Content -->
+    <div class="h-full overflow-y-auto pb-32">
+        <!-- Brand Header -->
+        <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <i class="fas fa-crown text-white text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Upside</h2>
+                <p class="text-xs text-gray-400 mt-0.5">Administrator</p>
+            </div>
+        </div>
+
+        <!-- User Profile -->
+        <div class="flex items-center gap-3 p-4 bg-white/5 rounded-2xl mb-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                <span class="text-xl font-bold text-white">{{ session.get('admin_username', 'A')[0]|upper }}</span>
+            </div>
+            <div class="flex-1">
+                <p class="font-semibold">{{ session.get('admin_username', 'Admin') }}</p>
+                <p class="text-xs text-gray-400 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    Online
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="space-y-1">
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Main</p>
+            
+            <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            
+            <a href="/admin/users" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-users w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Users</span>
+                <span class="ml-auto bg-blue-500/20 text-blue-400 text-xs px-2.5 py-1 rounded-full">{{ total_users|default(0) }}</span>
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Requests</p>
+            
+            <a href="/admin/dashboard#deposits" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-money-check-alt w-5 text-yellow-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Deposits</span>
+                {% if pending_requests|length > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full min-w-[24px] text-center">
+                    {{ pending_requests|length }}
+                </span>
+                {% endif %}
+            </a>
+            
+            <a href="/admin/dashboard#withdrawals" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-wallet w-5 text-purple-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Withdrawals</span>
+                {% if withdrawals_count > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ withdrawals_count }}</span>
+                {% endif %}
+            </a>
+            
+            <a href="/admin/ads" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-ad w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Ad Manager</span>
+                {% if notifications_count > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ notifications_count }}</span>
+                {% endif %}
+            </a>
+            
+            <a href="/admin/password-resets" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-key w-5 text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Password Reset</span>
+                {% if pending_resets_count > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ pending_resets_count }}</span>
+                {% endif %}
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Settings</p>
+            
+            <a href="/admin/usdt-address" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-wallet w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">USDT Address</span>
+                <span class="ml-auto bg-yellow-500/20 text-yellow-400 text-xs px-2.5 py-1 rounded-full">Admin</span>
+            </a>
+            
+            <a href="/admin/requests/approved" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-check-circle w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Approved</span>
+            </a>
+            
+            <a href="/admin/requests/rejected" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-times-circle w-5 text-red-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Rejected</span>
+            </a>
+
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Privacy</p><br>
+            
+            <a href="/admin/change-password" 
+           class="flex items-center justify-center gap-2 w-full py-2.5 mb-3 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 rounded-xl transition-all">
+            <i class="fas fa-key"></i>
+            <span class="font-medium">Change Password</span>
+        </a><br>
+            
+            <!-- Logout Button -->
+        <a href="/admin/logout" 
+           class="flex items-center justify-center gap-3 w-full py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 transition-all group">
+            <i class="fas fa-sign-out-alt group-hover:rotate-180 transition-transform duration-500"></i>
+            <span class="font-medium">Sign Out</span>
+        </a>
+            <div class="absolute bottom-0 left-0 right-0 bg-[rgba(17,19,23,0.98)] backdrop-blur-sm border-t border-white/10 p-4">
+        <!-- Version Info -->
+          <!-- Fixed Bottom Section -->
+        <div class="mt-3 text-center">
+            <p class="text-[10px] text-gray-600">Upside Platform v2.0.0</p>
+            <p class="text-[9px] text-gray-700">© 2026 All rights reserved</p>
+        </div>
+      </div>
+         
+        </nav>
+    </div> 
+</aside>
+
+    <!-- === PREMIUM HEADER - FULLY RESPONSIVE === -->
+    <header class="premium-header">
+        <div class="container-fluid h-full">
+            <div class="header-content">
+                <!-- Left Section -->
+                <div class="header-left">
+                    <!-- Hamburger - Always visible on mobile -->
+                    <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    
+                    <!-- Logo & Title -->
+                    <div class="header-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-check-circle text-white text-sm"></i>
+                        </div>
+                        
+                        <!-- Desktop Title -->
+                        <div class="desktop-only" style="min-width: 0;">
+                            <h1 class="text-xl font-bold gradient-text truncate-text">Approved Requests</h1>
+                            <p class="text-xs text-gray-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                                <span class="truncate-text">{{ session.get('admin_username', 'Admin') }} · Admin</span>
+                            </p>
+                        </div>
+                        
+                        <!-- Mobile Title -->
+                        <div class="mobile-only" style="min-width: 0;">
+                            <h1 class="mobile-title">Approved</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="header-right">
+                    <!-- Time Badge - Desktop Only -->
+                    <div class="desktop-only px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 15, 2026' }}</span>
+                       </div>
+                    
+                    <!-- Back Button (Desktop) -->
+                    <a href="/admin/dashboard" class="desktop-only bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    
+                    <!-- Refresh Button -->
+                    <button onclick="location.reload()" 
+                            class="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all hover:rotate-180 duration-500">
+                        <i class="fas fa-sync-alt text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- === MAIN CONTENT === -->
+    <main class="container-fluid py-6 pb-28 md:pb-8">
+        
+        <!-- Back Button - Mobile -->
+        <div class="mb-6 mobile-only">
+            <a href="/admin/dashboard" class="back-button inline-flex items-center justify-center w-full text-cyan-400 hover:text-cyan-300 transition-all">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Dashboard
+            </a>
+        </div>
+
+        <!-- Stats Card -->
+        <div class="glass-table p-4 md:p-6 mb-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check-circle text-green-400 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 text-sm">Total Approved</p>
+                        <p class="text-2xl md:text-3xl font-bold text-green-400">{{ requests|length }}</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-gray-400 text-sm">Total Amount</p>
+                    <p class="text-xl font-bold text-cyan-400">
+                        {% set total = 0 %}
+                        {% for req in requests %}
+                            {% set total = total + req.package_amount %}
+                        {% endfor %}
+                        {{ "{:,}".format(total) }} PKR
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Approved Requests -->
+        <div class="glass-table overflow-hidden animate-slide">
+            <div class="table-header p-4 md:p-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-lg md:text-xl font-bold flex items-center gap-2">
+                        <i class="fas fa-check-circle text-green-400"></i>
+                        Approved Deposit Requests
+                    </h2>
+                    <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-xs font-medium">
+                        {{ requests|length }} Approved
+                    </span>
+                </div>
+            </div>
+            
+            {% if requests %}
+                <!-- Desktop Table View -->
+                <div class="desktop-table overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-white/5">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">ID</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">User</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Package</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Amount</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Transaction ID</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Screenshot</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5">
+                            {% for req in requests %}
+                            <tr class="table-row">
+                                <td class="px-6 py-4">
+                                    <span class="font-mono text-sm bg-white/5 px-2 py-1 rounded-lg">#{{ req.id }}</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-user text-cyan-400 text-xs"></i>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium">{{ req.name }}</p>
+                                            <p class="text-xs text-gray-500">{{ req.phone }}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="package-badge">
+                                        {{ req.selected_package.replace('_', ' ').title() }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="font-bold text-green-400">{{ "{:,}".format(req.package_amount) }} PKR</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <code class="text-xs font-mono bg-black/30 px-2 py-1 rounded-lg">{{ req.deposit_tx_id[:12] }}...</code>
+                                </td>
+                                <td class="px-6 py-4">
+                                    {% if req.deposit_screenshot %}
+                                    <a href="/admin/view-screenshot/{{ req.deposit_screenshot }}" 
+                                       target="_blank"
+                                       class="btn-view">
+                                        <i class="fas fa-image"></i>
+                                        View
+                                    </a>
+                                    {% else %}
+                                    <span class="px-3 py-1 bg-gray-700/50 text-gray-400 rounded-full text-xs">
+                                        <i class="fas fa-times mr-1"></i>No SS
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-400">
+                                    <i class="far fa-calendar mr-1"></i>{{ req.created_at[:10] }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="status-badge status-approved">
+                                        <i class="fas fa-check-circle"></i>
+                                        Approved
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Card View -->
+                <div class="mobile-cards p-4 space-y-4">
+                    {% for req in requests %}
+                    <div class="approved-card animate-slide">
+                        <!-- Card Header -->
+                        <div class="card-header">
+                            <div class="card-user">
+                                <div class="user-avatar">
+                                    {{ req.name[0]|upper }}
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-base">{{ req.name }}</h3>
+                                    <p class="text-xs text-gray-400 flex items-center gap-1">
+                                        <i class="fas fa-phone text-cyan-400"></i>
+                                        {{ req.phone }}
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="status-badge status-approved">
+                                <i class="fas fa-check-circle"></i>
+                                Approved
+                            </span>
+                        </div>
+
+                        <!-- Info Grid -->
+                        <div class="card-info-grid">
+                            <div class="info-chip">
+                                <div class="chip-label">Package</div>
+                                <div class="chip-value">
+                                    <span class="package-badge">
+                                        {{ req.selected_package.replace('_', ' ').title() }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="info-chip">
+                                <div class="chip-label">Amount</div>
+                                <div class="chip-value text-green-400 font-bold">
+                                    {{ "{:,}".format(req.package_amount) }} PKR
+                                </div>
+                            </div>
+                            <div class="info-chip">
+                                <div class="chip-label">Date</div>
+                                <div class="chip-value text-sm">
+                                    <i class="far fa-calendar mr-1 text-cyan-400"></i>
+                                    {{ req.created_at[:10] }}
+                                </div>
+                            </div>
+                            <div class="info-chip">
+                                <div class="chip-label">ID</div>
+                                <div class="chip-value font-mono text-sm">#{{ req.id }}</div>
+                            </div>
+                        </div>
+
+                        <!-- TXID Box -->
+                        <div class="txid-box">
+                            <div class="text-xs text-gray-500 mb-1">Transaction ID</div>
+                            <code class="text-xs font-mono break-all">{{ req.deposit_tx_id }}</code>
+                        </div>
+
+                        <!-- Screenshot Button -->
+                        <div class="flex gap-3">
+                            {% if req.deposit_screenshot %}
+                            <a href="/admin/view-screenshot/{{ req.deposit_screenshot }}" 
+                               target="_blank"
+                               class="flex-1 btn-view justify-center">
+                                <i class="fas fa-image"></i>
+                                View Screenshot
+                            </a>
+                            {% else %}
+                            <div class="flex-1 px-3 py-2 bg-gray-700/50 text-gray-400 rounded-xl text-sm text-center">
+                                <i class="fas fa-times mr-1"></i>No Screenshot
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="p-12 text-center">
+                    <div class="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check-circle text-green-400 text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">No Approved Requests</h3>
+                    <p class="text-gray-500 max-w-md mx-auto">All approved deposit requests will appear here</p>
+                    <a href="/admin/dashboard" class="inline-block mt-4 text-cyan-400 hover:text-cyan-300">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- === BOTTOM NAVIGATION - MOBILE === -->
+    <nav class="bottom-nav mobile-only">
+        <a href="/admin/dashboard" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="/admin/dashboard#deposits" class="nav-item">
+            <i class="fas fa-money-check-alt"></i>
+            <span>Deposits</span>
+            {% if pending_requests|length > 0 %}
+            <span class="nav-badge">{{ pending_requests|length }}</span>
+            {% endif %}
+        </a>
+        
+        <a href="/admin/users" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+        
+        <a href="/admin/ads" class="nav-item">
+            <i class="fas fa-ad"></i>
+            <span>Ads</span>
+            {% if notifications|length > 0 %}
+            <span class="nav-badge">{{ notifications|length }}</span>
+            {% endif %}
+        </a>
+        
+        <a href="/admin/requests/approved" class="nav-item active">
+            <i class="fas fa-check-circle"></i>
+            <span>Approved</span>
+        </a>
+    </nav>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.toggle('active');
+                overlay.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+            }
+        };
+
+        window.closeDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.remove('active');
+                overlay.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+
+        // Close drawer on route change
+        window.addEventListener('popstate', window.closeDrawer);
+    </script>
+
+    <style>
+        @media (max-width: 767px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom, 0);
+            }
+        }
+    </style>
+</body>
+</html>

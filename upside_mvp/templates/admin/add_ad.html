@@ -1,0 +1,682 @@
+<!-- === DEFAULT VALUES FOR ALL VARIABLES === -->
+{% set withdrawals_count = withdrawals_count|default(0) %}
+{% set pending_requests = pending_requests|default([]) %}
+{% set pending_withdrawals = pending_withdrawals|default([]) %}
+{% set notifications = notifications|default([]) %}
+{% set total_users = total_users|default(0) %}
+{% set active_users = active_users|default(0) %}
+{% set withdrawals_amount = withdrawals_amount|default(0) %}
+{% set pending_resets_count = pending_resets_count|default(0) %}
+{% set notifications_count = notifications_count|default(0) %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>Add New Real Ad | Upside Admin</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Tailwind & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Professional System Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ---------- 🎨 CYAN THEME TOKENS ---------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --primary-light: #22d3ee;
+            --primary-glow: rgba(6, 182, 212, 0.2);
+            --bg-primary: #0a0c10;
+            --bg-secondary: #111317;
+            --bg-card: #1a1d24;
+            --bg-card-hover: #22262e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color-hover: rgba(6, 182, 212, 0.3);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --header-height: 64px;
+            --bottom-nav-height: 72px;
+            --sidebar-width: 280px;
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ---------- BASE RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ---------- RESPONSIVE CONTAINER ---------- */
+        .container-fluid {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid { max-width: 640px; padding-right: 1.5rem; padding-left: 1.5rem; }
+        }
+        @media (min-width: 768px) {
+            .container-fluid { max-width: 768px; padding-right: 2rem; padding-left: 2rem; }
+        }
+        @media (min-width: 1024px) {
+            .container-fluid { max-width: 1024px; padding-right: 2rem; padding-left: 2rem; }
+        }
+        @media (min-width: 1280px) {
+            .container-fluid { max-width: 1280px; }
+        }
+
+        /* ---------- PREMIUM HEADER ---------- */
+        .premium-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            height: var(--header-height);
+            width: 100%;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 0; }
+        .header-logo { display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1; }
+        
+        .logo-icon {
+            width: 2.25rem; height: 2.25rem;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border-radius: 0.75rem;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 10px 15px -3px var(--primary-glow);
+        }
+
+        .header-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+
+        /* ---------- HAMBURGER MENU ---------- */
+        .hamburger-modern {
+            width: 24px; height: 24px; position: relative; cursor: pointer; flex-shrink: 0;
+        }
+        .hamburger-modern span {
+            display: block; position: absolute; height: 2px; width: 100%;
+            background: #fff; border-radius: 2px; left: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hamburger-modern span:nth-child(1) { top: 4px; }
+        .hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+        .hamburger-modern span:nth-child(3) { top: 18px; }
+        .hamburger-modern.active span:nth-child(1) {
+            top: 11px; transform: rotate(45deg); background: var(--primary);
+        }
+        .hamburger-modern.active span:nth-child(2) {
+            opacity: 0; transform: translateX(-10px);
+        }
+        .hamburger-modern.active span:nth-child(3) {
+            top: 11px; transform: rotate(-45deg); background: var(--primary);
+        }
+
+        /* ---------- SIDE DRAWER ---------- */
+        .side-drawer {
+            position: fixed; top: 0; left: -320px; width: 280px; height: 100vh;
+            background: rgba(17, 19, 23, 0.98); backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color); z-index: 100;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: calc(var(--safe-top) + 20px) 20px 20px;
+            overflow-y: auto; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .side-drawer.active { left: 0; }
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(4px); z-index: 99;
+            opacity: 0; visibility: hidden; transition: all 0.25s ease;
+        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
+
+        /* ---------- FORM STYLES ---------- */
+        .form-card {
+            background: rgba(17, 19, 23, 0.8); backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color); border-radius: 32px;
+            transition: all 0.25s ease;
+        }
+        .form-card:hover { border-color: var(--primary-glow); box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4); }
+
+        .input-field {
+            width: 100%; background: rgba(26, 29, 36, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 16px;
+            padding: 14px 18px; color: white; font-size: 16px;
+            transition: all 0.25s ease;
+        }
+        .input-field:focus {
+            outline: none; border-color: var(--primary);
+            background: rgba(30, 41, 59, 0.9); box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+        .input-field:hover {
+            background: rgba(30, 41, 59, 0.7); border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .input-label {
+            display: block; color: #d1d5db; font-size: 14px; font-weight: 500; margin-bottom: 8px;
+        }
+        .input-label i { color: var(--primary); margin-right: 6px; font-size: 13px; }
+
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: white; border-radius: 100px; padding: 16px 32px;
+            font-weight: 600; font-size: 18px; transition: all 0.25s ease;
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 8px; width: 100%; border: none; cursor: pointer;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px var(--primary-glow); }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px; padding: 14px 28px; font-weight: 500;
+            transition: all 0.25s ease; display: inline-flex; align-items: center;
+            gap: 8px; color: white; text-decoration: none;
+        }
+        .btn-outline:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+
+        .hint-text { color: #6b7280; font-size: 12px; margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+        .hint-text i { color: var(--primary); font-size: 12px; }
+
+        /* ---------- BOTTOM NAVIGATION ---------- */
+        .bottom-nav-glass {
+            position: fixed; bottom: 0; left: 0; right: 0; height: var(--bottom-nav-height);
+            background: rgba(14, 16, 21, 0.95); backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-around; align-items: center;
+            padding-bottom: var(--safe-bottom); z-index: 40;
+        }
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            flex: 1; padding: 8px 0; color: #9ca3af; transition: all 0.2s ease;
+            position: relative; text-decoration: none;
+        }
+        .nav-item.active { color: var(--primary); }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .nav-item span { font-size: 11px; font-weight: 500; }
+
+        .badge-pending {
+            position: absolute; top: 2px; right: 20px; background: #ef4444;
+            color: white; font-size: 10px; min-width: 18px; height: 18px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide { animation: slideIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+
+        /* ---------- RESPONSIVE UTILITIES ---------- */
+        .mobile-only { display: flex; }
+        .desktop-only { display: none; }
+
+        @media (max-width: 767px) {
+            .premium-header { width: 100%; padding: 0; }
+            .header-content { padding-left: 16px; padding-right: 16px; width: 100%; }
+            .mobile-title { max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.125rem; font-weight: 700; }
+            .form-card { padding: 20px !important; }
+            h1.text-2xl { font-size: 1.5rem !important; }
+            .grid-cols-1.md\:grid-cols-2 { grid-template-columns: 1fr !important; gap: 16px !important; }
+            .input-field { padding: 14px 16px !important; font-size: 16px !important; }
+            .back-button { width: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 12px !important; background: rgba(6, 182, 212, 0.1) !important; border-radius: 100px !important; margin-bottom: 16px !important; color: var(--primary) !important; text-decoration: none !important; }
+            .bottom-nav-glass { display: flex; }
+            body { padding-bottom: 80px; }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-only { display: none !important; }
+            .desktop-only { display: block; }
+            .grid-cols-1.md\:grid-cols-2 { grid-template-columns: repeat(2, 1fr) !important; gap: 20px !important; }
+            body { padding-bottom: 0; }
+        }
+
+        /* ---------- UTILITY CLASSES ---------- */
+        .hidden { display: none !important; }
+        .gradient-text {
+            background: linear-gradient(to right, white, #d1d5db);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .truncate-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .side-drawer { left: -320px; }
+        .side-drawer.active { left: 0; }
+
+        /* Remove spinner from number input */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none; appearance: none; margin: 0;
+        }
+        input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+        
+        /* Info Box Style */
+        .info-box { background: rgba(6, 182, 212, 0.05); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 20px; padding: 16px; }
+        
+        /* Preview Box */
+        .preview-box {
+            background: #1a1d24;
+            border: 2px dashed #374151;
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #9ca3af;
+        }
+        .preview-box.has-preview {
+            border: 2px solid var(--primary);
+            background: #000;
+            padding: 0;
+            overflow: hidden;
+        }
+        .preview-iframe {
+            width: 100%;
+            height: 200px;
+            border: none;
+        }
+        .preview-video {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- === DRAWER OVERLAY === -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="window.closeDrawer()"></div>
+
+    <!-- === SIDE DRAWER - FIXED VERSION === -->
+    <aside id="sideDrawer" class="side-drawer">
+        <div class="h-full overflow-y-auto pb-32">
+            <!-- Brand Header -->
+            <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <i class="fas fa-crown text-white text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">Upside</h2>
+                    <p class="text-xs text-gray-400 mt-0.5">Administrator</p>
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div class="flex items-center gap-3 p-4 bg-white/5 rounded-2xl mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                    <span class="text-xl font-bold text-white">{{ session.get('admin_username', 'A')[0]|upper }}</span>
+                </div>
+                <div class="flex-1">
+                    <p class="font-semibold">{{ session.get('admin_username', 'Admin') }}</p>
+                    <p class="text-xs text-gray-400 flex items-center gap-1">
+                        <span class="w-2 h-2 bg-green-400 rounded-full"></span> Online
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="space-y-1">
+                <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Main</p>
+                <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a href="/admin/users" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-users w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Users</span>
+                    <span class="ml-auto bg-blue-500/20 text-blue-400 text-xs px-2.5 py-1 rounded-full">{{ total_users|default(0) }}</span>
+                </a>
+                
+                <div class="my-4 border-t border-white/5"></div>
+                <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Requests</p>
+                <a href="/admin/dashboard#deposits" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+    <i class="fas fa-money-check-alt w-5 text-yellow-400 group-hover:scale-110 transition-transform"></i>
+    <span class="font-medium">Deposits</span>
+    {% if pending_requests > 0 %}  <!-- Changed -->
+        <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ pending_requests }}</span>
+    {% endif %}
+</a>
+                <a href="/admin/dashboard#withdrawals" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-wallet w-5 text-purple-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Withdrawals</span>
+                    {% if withdrawals_count > 0 %}
+                    <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ withdrawals_count }}</span>
+                    {% endif %}
+                </a>
+                <a href="/admin/ads" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-ad w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Ad Manager</span>
+                    {% if notifications_count > 0 %}
+                    <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ notifications_count }}</span>
+                    {% endif %}
+                </a>
+                <a href="/admin/password-resets" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-key w-5 text-indigo-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Password Reset</span>
+                    {% if pending_resets_count > 0 %}
+                    <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ pending_resets_count }}</span>
+                    {% endif %}
+                </a>
+                
+                <div class="my-4 border-t border-white/5"></div>
+                <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Settings</p>
+                <a href="/admin/usdt-address" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-wallet w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">USDT Address</span>
+                    <span class="ml-auto bg-yellow-500/20 text-yellow-400 text-xs px-2.5 py-1 rounded-full">Admin</span>
+                </a>
+                <a href="/admin/requests/approved" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-check-circle w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Approved</span>
+                </a>
+                <a href="/admin/requests/rejected" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                    <i class="fas fa-times-circle w-5 text-red-400 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Rejected</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Fixed Bottom Section -->
+        <div class="absolute bottom-0 left-0 right-0 bg-[rgba(17,19,23,0.98)] backdrop-blur-sm border-t border-white/10 p-4">
+            <a href="/admin/change-password" class="flex items-center justify-center gap-2 w-full py-2.5 mb-3 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 rounded-xl transition-all">
+                <i class="fas fa-key"></i> <span class="font-medium">Change Password</span>
+            </a>
+            <a href="/admin/logout" class="flex items-center justify-center gap-3 w-full py-3 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 rounded-xl text-red-400 transition-all group">
+                <i class="fas fa-sign-out-alt group-hover:rotate-180 transition-transform duration-500"></i> <span class="font-medium">Sign Out</span>
+            </a>
+            <div class="mt-3 text-center">
+                <p class="text-[10px] text-gray-600">Upside Platform v2.0.0</p>
+                <p class="text-[9px] text-gray-700">© 2026 All rights reserved</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- === PREMIUM HEADER - FULLY RESPONSIVE === -->
+    <header class="premium-header">
+        <div class="container-fluid h-full">
+            <div class="header-content">
+                <!-- Left Section -->
+                <div class="header-left">
+                    <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <div class="header-logo">
+                        <div class="logo-icon"><i class="fas fa-plus-circle text-white text-sm"></i></div>
+                        <div class="desktop-only" style="min-width:0;">
+                            <h1 class="text-xl font-bold gradient-text truncate-text">Create New Ad</h1>
+                            <p class="text-xs text-gray-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                                <span class="truncate-text">{{ session.get('admin_username', 'Admin') }} · Active</span>
+                            </p>
+                        </div>
+                        <div class="mobile-only" style="min-width:0;">
+                            <h1 class="mobile-title">Add New Ad</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="desktop-only px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 14, 2026' }}</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <i class="fas fa-clock text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%H:%M') if now else '14:30' }}</span>
+                    </div>
+                    <button onclick="location.reload()" class="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all hover:rotate-180 duration-500">
+                        <i class="fas fa-sync-alt text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- === MAIN CONTENT === -->
+    <main class="container-fluid py-6 pb-28 md:pb-8 fade-in">
+        
+        <!-- Back Button -->
+        <div class="mb-6">
+            <a href="/admin/ads" class="back-button inline-flex items-center text-cyan-400 hover:text-cyan-300 transition-all group">
+                <i class="fas fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                <span class="desktop-only">Back to Ads</span>
+                <span class="mobile-only">← Back to Ads</span>
+            </a>
+        </div>
+
+        <!-- Main Form Card -->
+        <div class="form-card p-6 md:p-8 max-w-4xl mx-auto">
+            
+            <!-- Header -->
+            <div class="flex items-center gap-3 mb-8 pb-6 border-b border-white/5">
+                <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <i class="fas fa-ad text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold gradient-text">Create Real Advertisement</h1>
+                    <p class="text-sm text-gray-400 mt-1">Fill in the details below</p>
+                </div>
+            </div>
+            
+            <!-- INFO BOX -->
+            <div class="info-box mb-6">
+                <div class="flex items-start gap-3">
+                    <i class="fas fa-info-circle text-cyan-400 text-xl mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold text-cyan-300 mb-2">Reward System</h3>
+                        <p class="text-sm text-gray-400 mb-2">
+                            <span class="text-yellow-400 font-bold">Note:</span> Rewards are based on user's package, NOT per ad.
+                        </p>
+                        <ul class="text-xs text-gray-500 space-y-1 list-disc list-inside">
+                            <li>1 Lac: <span class="text-green-400">500 PKR</span> daily total (5 ads)</li>
+                            <li>3 Lac: <span class="text-green-400">1,500 PKR</span> daily total (5 ads)</li>
+                            <li>5 Lac: <span class="text-green-400">2,500 PKR</span> daily total (5 ads)</li>
+                            <li>10 Lac: <span class="text-green-400">5,000 PKR</span> daily total (5 ads)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form -->
+            <form method="POST" action="/admin/ads/add" enctype="multipart/form-data">
+                
+                <!-- Ad Name -->
+                <div class="mb-4">
+                    <label class="input-label"><i class="fas fa-tag"></i> Ad Name <span class="text-red-400">*</span></label>
+                    <input type="text" name="ad_name" class="input-field" placeholder="e.g., Summer Sale 2026" required autofocus>
+                </div>
+                
+                <!-- Ad Type -->
+                <div class="mb-4">
+                    <label class="input-label"><i class="fas fa-film"></i> Ad Type <span class="text-red-400">*</span></label>
+                    <select name="ad_type" id="adType" class="input-field" required>
+                        <option value="youtube">📺 YouTube Video</option>
+                        <option value="vimeo">🎥 Vimeo Video</option>
+                        <option value="direct">🎬 Direct MP4 Video</option>
+                        <option value="image">🖼️ Image Ad</option>
+                        <option value="iframe">🌐 Iframe Embed</option>
+                        <option value="html">💻 Custom HTML</option>
+                    </select>
+                </div>
+                
+                <!-- URL Field -->
+                <div id="urlField" class="mb-4">
+                    <label class="input-label"><i class="fas fa-link"></i> Ad URL</label>
+                    <input type="url" name="ad_url" id="adUrl" class="input-field" placeholder="https://youtube.com/watch?v=...">
+                    <div class="hint-text mt-1" id="urlHint">For YouTube/Vimeo/Direct videos</div>
+                </div>
+                
+                <!-- Embed Code Field -->
+                <div id="embedField" class="mb-4 hidden">
+                    <label class="input-label"><i class="fas fa-code"></i> Embed Code</label>
+                    <textarea name="embed_code" id="embedCode" rows="4" class="input-field" placeholder="<iframe src='...'></iframe>"></textarea>
+                </div>
+                
+                <!-- Thumbnail Upload -->
+                <div class="mb-4">
+                    <label class="input-label"><i class="fas fa-image"></i> Thumbnail (Optional)</label>
+                    <input type="file" name="thumbnail" accept="image/*" class="input-field p-2">
+                </div>
+                
+                <!-- Duration -->
+                <div class="mb-4">
+                    <label class="input-label"><i class="fas fa-hourglass-half"></i> Duration (seconds)</label>
+                    <div class="relative">
+                        <input type="number" name="duration" value="30" min="5" max="300" step="5" class="input-field pr-16">
+                        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm">sec</span>
+                    </div>
+                </div>
+                
+                <!-- Preview -->
+                <div class="mb-6">
+                    <label class="input-label"><i class="fas fa-eye"></i> Live Preview</label>
+                    <div id="previewContainer" class="preview-box">
+                        <i class="fas fa-eye-slash text-3xl text-gray-600 mb-2"></i>
+                        <p class="text-gray-500">Preview will appear here</p>
+                    </div>
+                </div>
+                
+                <!-- Submit -->
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-plus-circle"></i> Create Advertisement
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- === BOTTOM NAVIGATION - MOBILE === -->
+    <nav class="bottom-nav-glass mobile-only">
+        <!-- In bottom navigation section -->
+<a href="/admin/dashboard#deposits" class="nav-item">
+    <i class="fas fa-money-check-alt"></i><span>Deposits</span>
+    {% if pending_requests > 0 %}  <!-- Changed from pending_requests|length -->
+        <span class="badge-pending">{{ pending_requests }}</span>
+    {% endif %}
+</a>
+        <a href="/admin/users" class="nav-item"><i class="fas fa-users"></i><span>Users</span></a>
+        <a href="/admin/ads" class="nav-item active"><i class="fas fa-ad"></i><span>Ads</span>
+            {% if notifications|length > 0 %}<span class="badge-pending">{{ notifications|length }}</span>{% endif %}
+        </a>
+        <a href="/admin/usdt-address" class="nav-item"><i class="fas fa-wallet"></i><span>USDT</span></a>
+    </nav>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        window.toggleDrawer = function() {
+            document.getElementById('sideDrawer').classList.toggle('active');
+            document.getElementById('drawerOverlay').classList.toggle('active');
+            document.getElementById('hamburger').classList.toggle('active');
+            document.body.style.overflow = document.getElementById('sideDrawer').classList.contains('active') ? 'hidden' : '';
+        };
+        window.closeDrawer = function() {
+            document.getElementById('sideDrawer').classList.remove('active');
+            document.getElementById('drawerOverlay').classList.remove('active');
+            document.getElementById('hamburger').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        window.addEventListener('popstate', window.closeDrawer);
+
+        // Preview Functionality
+        const adType = document.getElementById('adType');
+        const urlField = document.getElementById('urlField');
+        const embedField = document.getElementById('embedField');
+        const urlInput = document.getElementById('adUrl');
+        const embedInput = document.getElementById('embedCode');
+        const previewContainer = document.getElementById('previewContainer');
+
+        function updateFields() {
+            const type = adType.value;
+            
+            // Show/hide appropriate fields
+            if (type === 'html' || type === 'iframe') {
+                urlField.classList.add('hidden');
+                embedField.classList.remove('hidden');
+            } else {
+                urlField.classList.remove('hidden');
+                embedField.classList.add('hidden');
+            }
+            
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const type = adType.value;
+            const url = urlInput.value;
+            const embed = embedInput.value;
+            
+            let previewHtml = '';
+            
+            if (type === 'youtube' && url) {
+                // Extract YouTube ID
+                const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+                if (match) {
+                    previewHtml = `<iframe class="preview-iframe" src="https://www.youtube.com/embed/${match[1]}" frameborder="0" allowfullscreen></iframe>`;
+                }
+            } else if (type === 'vimeo' && url) {
+                const match = url.match(/(?:vimeo\.com\/|player\.vimeo\.com\/video\/)([0-9]+)/);
+                if (match) {
+                    previewHtml = `<iframe class="preview-iframe" src="https://player.vimeo.com/video/${match[1]}" frameborder="0" allowfullscreen></iframe>`;
+                }
+            } else if (type === 'direct' && url) {
+                previewHtml = `<video class="preview-video" controls><source src="${url}" type="video/mp4"></video>`;
+            } else if (type === 'image' && url) {
+                previewHtml = `<img src="${url}" class="max-h-48 mx-auto object-contain" alt="Preview">`;
+            } else if ((type === 'iframe' || type === 'html') && embed) {
+                previewHtml = embed;
+            } else {
+                previewContainer.className = 'preview-box';
+                previewContainer.innerHTML = '<i class="fas fa-eye-slash text-3xl text-gray-600 mb-2"></i><p class="text-gray-500">Preview will appear here</p>';
+                return;
+            }
+            
+            previewContainer.className = 'preview-box has-preview';
+            previewContainer.innerHTML = previewHtml;
+        }
+
+        adType.addEventListener('change', updateFields);
+        urlInput.addEventListener('input', updatePreview);
+        embedInput.addEventListener('input', updatePreview);
+
+        // Form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const duration = parseInt(document.querySelector('input[name="duration"]').value);
+            if (duration < 5) {
+                e.preventDefault();
+                alert('❌ Duration must be at least 5 seconds');
+            }
+            if (duration > 300) {
+                e.preventDefault();
+                alert('❌ Duration cannot exceed 300 seconds (5 minutes)');
+            }
+        });
+    </script>
+</body>
+</html>

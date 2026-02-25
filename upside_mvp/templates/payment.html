@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deposit Funds | Upside</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  
+  <!-- Preload Critical Resources -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Clipboard Library -->
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
+  
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(145deg, #0a0c10 0%, #0e1217 100%);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* ---------- PREMIUM HEADER STYLES ---------- */
+.premium-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 12, 16, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    height: 64px;
+    width: 100%;
+}
+
+.container-fluid {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 100%;
+}
+
+@media (min-width: 640px) {
+    .container-fluid {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .container-fluid {
+        padding: 0 2rem;
+    }
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.logo-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: linear-gradient(145deg, #06b6d4, #0891b2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* ---------- HAMBURGER MENU ---------- */
+.hamburger-modern {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.hamburger-modern span {
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    left: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-modern span:nth-child(1) { top: 4px; }
+.hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+.hamburger-modern span:nth-child(3) { top: 18px; }
+
+.hamburger-modern.active span:nth-child(1) {
+    top: 11px;
+    transform: rotate(45deg);
+    background: #06b6d4;
+}
+
+.hamburger-modern.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.hamburger-modern.active span:nth-child(3) {
+    top: 11px;
+    transform: rotate(-45deg);
+    background: #06b6d4;
+}
+
+/* ---------- RESPONSIVE UTILITIES ---------- */
+@media (min-width: 768px) {
+    .desktop-only {
+        display: block !important;
+    }
+    .mobile-only {
+        display: none !important;
+    }
+    .desktop-only-inline {
+        display: inline !important;
+    }
+    .md\:flex {
+        display: flex !important;
+    }
+    .hidden.md\:flex {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .desktop-only {
+        display: none !important;
+    }
+    .mobile-only {
+        display: block !important;
+    }
+    .desktop-only-inline {
+        display: none !important;
+    }
+    .hidden.md\:flex {
+        display: none !important;
+    }
+    .md\:px-4 {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}
+
+/* ---------- MOBILE OPTIMIZATIONS ---------- */
+@media (max-width: 640px) {
+    .header-left {
+        gap: 0.5rem;
+    }
+    .header-logo {
+        gap: 0.25rem;
+    }
+    .logo-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+    .header-right {
+        gap: 0.5rem;
+    }
+    .w-10.h-10 {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+@media (max-width: 374px) {
+    .header-content {
+        gap: 0.25rem;
+    }
+    .logo-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    .w-10.h-10 {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+/* ---------- UTILITY CLASSES ---------- */
+.gradient-text {
+    background: linear-gradient(to right, white, #d1d5db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.whitespace-nowrap {
+    white-space: nowrap;
+}
+
+.bg-white\/5 {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.border-white\/10 {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.text-cyan-400 {
+    color: #06b6d4;
+}
+
+.bg-red-500\/10 {
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.border-red-500\/30 {
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.text-red-400 {
+    color: #f87171;
+}
+
+.hover\:bg-red-500\/20:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+.hover\:rotate-180:hover {
+    transform: rotate(180deg);
+}
+
+.transition-all {
+    transition: all 0.25s ease;
+}
+
+.duration-500 {
+    transition-duration: 0.5s;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+/* ---------- SIDE DRAWER (for reference) ---------- */
+.side-drawer {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 280px;
+    height: 100vh;
+    background: rgba(17, 19, 23, 0.98);
+    backdrop-filter: blur(16px);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 100;
+    transition: left 0.3s ease;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.side-drawer.active {
+    left: 0;
+}
+
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+}
+
+.drawer-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+    /* ---------- 🎨 CYAN THEME ---------- */
+    :root {
+      --primary: #06b6d4;
+      --primary-dark: #0891b2;
+      --primary-light: #22d3ee;
+      --primary-glow: rgba(6, 182, 212, 0.2);
+    }
+    
+    /* ---------- 📱 SIDE DRAWER ---------- */
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(17, 19, 23, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 100;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 20px;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    .side-drawer.active {
+      left: 0;
+    }
+    
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+    
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* ---------- 🍔 HAMBURGER MENU ---------- */
+    .hamburger {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      cursor: pointer;
+      z-index: 60;
+    }
+    
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: white;
+      border-radius: 2px;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger span:nth-child(1) { top: 4px; }
+    .hamburger span:nth-child(2) { top: 11px; width: 70%; }
+    .hamburger span:nth-child(3) { top: 18px; }
+    
+    .hamburger.active span:nth-child(1) {
+      top: 11px;
+      transform: rotate(45deg);
+      background: var(--primary);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      top: 11px;
+      transform: rotate(-45deg);
+      background: var(--primary);
+    }
+    
+    /* ---------- 📱 BOTTOM NAVIGATION ---------- */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: rgba(17, 19, 23, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+      z-index: 40;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 8px 0;
+      color: #9ca3af;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+    }
+    
+    .nav-item.active {
+      color: var(--primary);
+    }
+    
+    .nav-item i {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    
+    .nav-item span {
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    /* ---------- 🎨 CUSTOM STYLES ---------- */
+    .glass-card {
+      background: rgba(17, 19, 23, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 32px;
+      transition: all 0.25s ease;
+    }
+    
+    .glass-card:hover {
+      border-color: var(--primary-glow);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+    }
+    
+    .package-card {
+      background: linear-gradient(145deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.05));
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 20px;
+      padding: 20px;
+    }
+    
+    .address-box {
+      background: rgba(26, 29, 36, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 16px;
+      transition: all 0.25s ease;
+    }
+    
+    .address-box:hover {
+      border-color: var(--primary);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+      color: white;
+      border-radius: 100px;
+      padding: 14px 24px;
+      font-weight: 600;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--primary-glow);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 100px;
+      padding: 12px 20px;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+    
+    .btn-outline:hover {
+      background: var(--primary-glow);
+    }
+    
+    .input-field {
+      width: 100%;
+      background: rgba(26, 29, 36, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 14px 18px;
+      color: white;
+      font-size: 16px;
+      transition: all 0.25s ease;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(30, 41, 59, 0.9);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+    
+    .file-input {
+      width: 100%;
+      background: rgba(26, 29, 36, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 12px;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+    
+    .file-input::file-selector-button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 100px;
+      padding: 8px 16px;
+      margin-right: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .instruction-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .instruction-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 14px;
+    }
+    
+    .instruction-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .instruction-list li i {
+      color: var(--primary);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    
+    /* ---------- 📱 MOBILE FIRST RESPONSIVE ---------- */
+    @media (max-width: 767px) {
+      /* Hide desktop elements */
+      .desktop-only {
+        display: none !important;
+      }
+      
+      /* Show mobile elements */
+      .mobile-only {
+        display: flex !important;
+      }
+      
+      /* Deposit card */
+      .deposit-card {
+        padding: 20px !important;
+        margin: 0 12px !important;
+      }
+      
+      h2.text-4xl {
+        font-size: 2rem !important;
+      }
+      
+      /* Address section */
+      .address-row {
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+      
+      #usdtAddress {
+        font-size: 14px !important;
+        word-break: break-all !important;
+      }
+      
+      #copyBtn {
+        width: 100% !important;
+      }
+      
+      /* Add bottom padding for nav */
+      body {
+        padding-bottom: 80px !important;
+      }
+      
+      /* Center content */
+      .flex.items-center.justify-center {
+        align-items: flex-start !important;
+        padding-top: 12px !important;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .mobile-only {
+        display: none !important;
+      }
+      
+      .desktop-only {
+        display: block !important;
+      }
+      
+      body {
+        padding-bottom: 0 !important;
+      }
+      
+      .deposit-card {
+        padding: 32px !important;
+      }
+    }
+    
+    /* ---------- UTILITY CLASSES ---------- */
+    .hidden { display: none !important; }
+    .gradient-text {
+      background: linear-gradient(to right, white, #d1d5db);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    /* Flash Messages */
+    .flash-message {
+      animation: slideIn 0.3s ease-out;
+      border-radius: 100px;
+      padding: 12px 24px;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-slideUp {
+      animation: slideInUp 0.4s ease-out;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+
+<body>
+  
+  <!-- === DRAWER OVERLAY === -->
+  <div id="drawerOverlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+
+  <!-- === SIDE DRAWER - USER MENU === -->
+  <aside id="sideDrawer" class="side-drawer">
+    <!-- User Profile -->
+    <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+      <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+        <span class="text-2xl font-bold text-white">{{ user.name[0]|upper if user and user.name else 'U' }}</span>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold gradient-text">{{ user.name if user else 'User' }}</h2>
+        <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+          <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+          {{ user.phone if user else 'Not logged in' }}
+        </p>
+      </div>
+    </div>
+    
+    <!-- Menu Items -->
+    <nav class="space-y-1">
+      <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Main Menu</p>
+      
+      <a href="/user-dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+        <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+        <span class="font-medium">Dashboard</span>
+      </a>
+      
+      <a href="/deposit" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+        <i class="fas fa-plus-circle w-5"></i>
+        <span class="font-medium">Add Funds</span>
+      </a>
+      
+      <a href="/withdraw" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+        <i class="fas fa-money-bill-transfer w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+        <span class="font-medium">Withdraw</span>
+      </a>
+      
+      <div class="my-4 border-t border-white/5"></div>
+      
+      <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Account</p>
+      
+      <a href="/profile" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+        <i class="fas fa-user-circle w-5 text-purple-400 group-hover:scale-110 transition-transform"></i>
+        <span class="font-medium">Profile</span>
+      </a>
+      
+     
+      
+      <a href="/support" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+        <i class="fas fa-headset w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+        <span class="font-medium">Support</span>
+      </a>
+      
+      <div class="my-4 border-t border-white/5"></div>
+      
+      <a href="/logout" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 transition-all group">
+        <i class="fas fa-sign-out-alt group-hover:rotate-180 transition-transform duration-500"></i>
+        <span class="font-medium">Logout</span>
+      </a>
+    </nav>
+    
+    <!-- Version Info -->
+    <div class="absolute bottom-8 left-0 right-0 text-center">
+      <p class="text-[11px] text-gray-600">Upside Platform v2.0.0</p>
+      <p class="text-[10px] text-gray-700 mt-1">© 2026 All rights reserved</p>
+    </div>
+  </aside>
+
+ <!-- === UNIVERSAL PREMIUM HEADER - SAB PAGES KE LIYE === -->
+<header class="premium-header">
+    <div class="container-fluid h-full">
+        <div class="header-content">
+            <!-- Left Section -->
+            <div class="header-left">
+                <!-- Hamburger - Always visible -->
+                <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Logo & Title -->
+                <div class="header-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-crown text-white text-sm"></i>
+                    </div>
+                    
+                    <!-- ✅ DESKTOP TITLE - Page name ke hisaab se change karo -->
+                    <div class="desktop-only" style="min-width: 0;">
+                        <h1 class="text-xl font-bold gradient-text truncate">
+                            {% if request.path == '/user-dashboard' %}Dashboard
+                            {% elif request.path == '/profile' %}My Profile
+                            {% elif request.path == '/deposit' %}Deposit Funds
+                            {% elif request.path == '/withdraw' %}Withdraw USDT
+                            {% elif request.path == '/support' %}Support Center
+                            {% elif request.path == '/about' %}About Us
+                            {% elif request.path == '/contact' %}Contact Us
+                            {% elif request.path == '/terms' %}Terms & Conditions
+                            {% elif request.path == '/privacy' %}Privacy Policy
+                            {% elif request.path == '/disclaimer' %}Disclaimer
+                            {% elif request.path == '/packages' %}Investment Packages
+                            {% elif request.path == '/transaction-history' %}Transaction History
+                            {% else %}Upside Platform
+                            {% endif %}
+                        </h1>
+                    </div>
+                    
+                    <!-- ✅ MOBILE TITLE - Sirf "Upside" (sab jagah same) -->
+                    <div class="mobile-only" style="min-width: 0;">
+                        <h1 class="text-lg font-bold gradient-text truncate">Upside</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section -->
+            <div class="header-right">
+                <!-- Time Badge - Desktop Only -->
+                <div class="desktop-only flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm">
+                    <i class="fas fa-calendar-alt text-cyan-400"></i>
+                    <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 15, 2026' }}</span>
+                    <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                    <i class="fas fa-clock text-cyan-400"></i>
+                    <span class="whitespace-nowrap">{{ now.strftime('%H:%M') if now else '14:30' }}</span>
+                </div>
+                
+                <!-- Refresh Button - Desktop par visible, mobile par optional -->
+                <button onclick="location.reload()" 
+                        class="hidden md:flex w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl items-center justify-center transition-all hover:rotate-180 duration-500">
+                    <i class="fas fa-sync-alt text-gray-300"></i>
+                </button>
+                
+                <!-- Logout Button - Icon + text on desktop, icon only on mobile -->
+                <a href="/logout" 
+                   class="flex items-center justify-center gap-2 px-3 md:px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-sm font-medium transition-all">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="desktop-only-inline">Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+  <!-- === FLASH MESSAGES === -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="max-w-2xl mx-auto px-4 mt-4">
+      {% for category, message in messages %}
+      <div class="flash-message flex items-center justify-between p-4 rounded-xl mb-2 animate-slideIn
+          {% if category == 'success' %}bg-gradient-to-r from-green-500/90 to-green-600/90 text-white
+          {% else %}bg-gradient-to-r from-red-500/90 to-red-600/90 text-white{% endif %}">
+        <div class="flex items-center gap-2">
+          <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+          <span class="text-sm">{{ message }}</span>
+        </div>
+        <button onclick="this.parentElement.remove()" class="hover:opacity-80">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- === MAIN CONTENT === -->
+  <div class="min-h-screen flex items-center justify-center px-4 py-6 pb-24 md:pb-8">
+    <div class="glass-card deposit-card w-full max-w-2xl p-6 md:p-8 animate-slideUp">
+      
+      <!-- Header -->
+      <div class="text-center mb-6">
+        <h2 class="text-3xl md:text-4xl font-bold mb-2" style="color: var(--primary);">Deposit Funds</h2>
+        <p class="text-gray-400">Welcome <span class="font-semibold text-white">{{ user.name if user else 'User' }}</span></p>
+      </div>
+      
+      <!-- Package Summary -->
+      <div class="package-card mb-6">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-box text-cyan-400"></i>
+          <h3 class="text-lg font-bold text-cyan-400">Selected Package</h3>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <p class="text-gray-400 text-sm">Package</p>
+            <p class="font-semibold text-lg">{{ user.selected_package.replace("_"," ").title() if user.selected_package else 'N/A' }}</p>
+          </div>
+          <div>
+            <p class="text-gray-400 text-sm">Amount</p>
+            <p class="font-semibold text-lg text-cyan-400">{{ user.package_amount if user.package_amount else '0' }} PKR</p>
+          </div>
+          <div>
+            <p class="text-gray-400 text-sm">Daily Reward</p>
+            <p class="font-semibold text-lg text-green-400">{{ user.daily_reward if user.daily_reward else '0' }} PKR</p>
+          </div>
+          <div>
+            <p class="text-gray-400 text-sm">Network</p>
+            <p class="font-semibold text-lg">USDT (TRC20)</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Payment Instructions -->
+      <div class="bg-white/5 rounded-2xl p-5 mb-6">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="fas fa-info-circle text-cyan-400"></i>
+          <h3 class="font-bold text-cyan-400">Instructions (English / اردو)</h3>
+        </div>
+        
+        <ul class="instruction-list">
+          <li>
+            <i class="fas fa-circle text-[6px]"></i>
+            <span>Deposit the exact amount via USDT (TRC20) / عین رقم جمع کریں</span>
+          </li>
+          <li>
+            <i class="fas fa-circle text-[6px]"></i>
+            <span>Daily reward is total, not per ad / یومیہ انعام کل ہے، فی اشتہار نہیں</span>
+          </li>
+          <li>
+            <i class="fas fa-circle text-[6px]"></i>
+            <span>Saturday & Sunday are off / ہفتہ و اتوار کو چھٹی</span>
+          </li>
+          <li>
+            <i class="fas fa-circle text-[6px]"></i>
+            <span>Admin approval required / ایڈمن کی منظوری ضروری ہے</span>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- USDT Address with Copy Button -->
+      <div class="address-box mb-6">
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-qrcode text-cyan-400"></i>
+          <label class="text-gray-300 text-sm font-medium">USDT TRC20 Address (Admin Controlled)</label>
+        </div>
+        
+        <div class="address-row flex items-center gap-3">
+          <div id="usdtAddress" class="flex-1 text-cyan-400 font-mono text-sm md:text-base bg-black/30 p-3 rounded-xl border border-white/5 break-all">
+            {{ usdt_address }}
+          </div>
+          
+          <button type="button" 
+                  id="copyBtn"
+                  class="btn-outline px-6 py-3 flex items-center gap-2 whitespace-nowrap">
+            <i class="far fa-copy"></i>
+            Copy
+          </button>
+        </div>
+        
+        <!-- Copy Status -->
+        <p id="copyStatus" class="text-xs text-green-500 mt-2 hidden flex items-center gap-1">
+          <i class="fas fa-check-circle"></i>
+          Address copied to clipboard!
+        </p>
+        
+        <p class="text-xs text-gray-500 mt-3 flex items-center gap-1">
+          <i class="fas fa-shield-alt text-cyan-400"></i>
+          Always verify address before sending
+        </p>
+      </div>
+      
+      <!-- Transaction Proof Form -->
+      <form action="/submit-deposit" method="POST" enctype="multipart/form-data" class="space-y-5">
+        <div>
+          <label class="block text-gray-400 text-sm mb-2 flex items-center gap-2">
+            <i class="fas fa-hashtag text-cyan-400"></i>
+            Transaction ID
+          </label>
+          <input type="text" name="tx_id" required 
+                 placeholder="Enter your transaction ID"
+                 class="input-field">
+        </div>
+        
+        <div>
+          <label class="block text-gray-400 text-sm mb-2 flex items-center gap-2">
+            <i class="fas fa-camera text-cyan-400"></i>
+            Upload Screenshot
+          </label>
+          <input type="file" name="screenshot" accept="image/*" required
+                 class="file-input">
+          <p class="text-xs text-gray-500 mt-2">
+            <i class="fas fa-info-circle"></i>
+            Max size: 5MB (JPG, PNG, GIF)
+          </p>
+        </div>
+        
+        <button type="submit" class="btn-primary mt-6">
+          <i class="fas fa-paper-plane"></i>
+          Submit Deposit Request
+        </button>
+      </form>
+      
+      <!-- Warning -->
+      <div class="mt-6 text-center">
+        <p class="text-yellow-500 text-sm flex items-center justify-center gap-2">
+          <i class="fas fa-exclamation-triangle"></i>
+          Send exact amount only
+        </p>
+        <p class="text-gray-600 text-xs mt-2">
+          <i class="fas fa-clock"></i>
+          Processing time: 5-30 minutes after admin approval
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- === BOTTOM NAVIGATION - MOBILE === -->
+  <nav class="bottom-nav mobile-only">
+    <a href="/user-dashboard" class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    
+    <a href="/deposit" class="nav-item active">
+      <i class="fas fa-plus-circle"></i>
+      <span>Deposit</span>
+    </a>
+    
+    <a href="/withdraw" class="nav-item">
+      <i class="fas fa-money-bill-transfer"></i>
+      <span>Withdraw</span>
+    </a>
+    
+    <a href="/support" class="nav-item">
+      <i class="fas fa-headset"></i>
+      <span>Support</span>
+    </a>
+
+    <a href="/profile" class="nav-item">
+      <i class="fas fa-user"></i>
+      <span>Profile</span>
+    </a>
+    
+    
+  </nav>
+
+  <!-- === JAVASCRIPT === -->
+  <script>
+    // Drawer controls
+    function toggleDrawer() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      const hamburger = document.getElementById('hamburger');
+      
+      drawer.classList.toggle('active');
+      overlay.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+    }
+    
+    function closeDrawer() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      const hamburger = document.getElementById('hamburger');
+      
+      drawer.classList.remove('active');
+      overlay.classList.remove('active');
+      hamburger.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Close drawer on route change
+    window.addEventListener('popstate', closeDrawer);
+    
+    // Auto-hide flash messages
+    setTimeout(() => {
+      document.querySelectorAll('.flash-message').forEach(msg => {
+        msg.style.transition = 'opacity 0.5s';
+        msg.style.opacity = '0';
+        setTimeout(() => msg.remove(), 500);
+      });
+    }, 5000);
+    
+    // Clipboard functionality
+    const clipboard = new ClipboardJS('#copyBtn');
+    
+    clipboard.on('success', function(e) {
+      const status = document.getElementById('copyStatus');
+      status.classList.remove('hidden');
+      
+      const btn = document.getElementById('copyBtn');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      
+      setTimeout(() => {
+        status.classList.add('hidden');
+        btn.innerHTML = originalText;
+      }, 2000);
+      
+      e.clearSelection();
+    });
+    
+    clipboard.on('error', function() {
+      const address = document.getElementById('usdtAddress').textContent;
+      navigator.clipboard.writeText(address).then(() => {
+        alert('Address copied to clipboard!');
+      });
+    });
+    
+    // Select on click for manual copy
+    document.getElementById('usdtAddress').addEventListener('click', function() {
+      const range = document.createRange();
+      range.selectNodeContents(this);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    });
+  </script>
+
+  <style>
+    @media (max-width: 767px) {
+      .bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom, 0);
+      }
+    }
+  </style>
+</body>
+</html>

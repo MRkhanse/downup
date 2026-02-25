@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>Update Balance - Admin Panel | Upside</title>
+    
+    <!-- Preload Critical Resources -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(145deg, #0a0c10 0%, #0e1217 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+        
+        .glass-card {
+            background: rgba(17, 19, 23, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.25s ease;
+        }
+        
+        .balance-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-locked {
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .badge-unlocked {
+            background: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .badge-withdrawable {
+            background: rgba(6, 182, 212, 0.1);
+            color: #22d3ee;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        
+        .input-field {
+            width: 100%;
+            background: rgba(26, 29, 36, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.25s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #06b6d4;
+            background: rgba(30, 41, 59, 0.9);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(145deg, #06b6d4, #0891b2);
+            color: white;
+            border-radius: 100px;
+            padding: 14px 28px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(6, 182, 212, 0.2);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 14px 28px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .action-radio {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .action-radio.selected {
+            border-color: #06b6d4 !important;
+            background: rgba(6, 182, 212, 0.1) !important;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flash-message {
+            animation: slideIn 0.3s ease-out;
+            border-radius: 100px;
+            padding: 12px 24px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+        
+        .tab-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <div class="mb-8">
+            <a href="/admin/users" class="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 mb-4 transition-all group">
+                <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                <span>Back to Users</span>
+            </a>
+            <h1 class="text-2xl md:text-3xl font-bold" style="background: linear-gradient(to right, white, #d1d5db); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Update User Balance</h1>
+            <p class="text-gray-400 mt-1">Manage balances for <span class="text-cyan-400 font-medium">{{ user.name }}</span></p>
+        </div>
+
+        <!-- User Info Card -->
+        <div class="glass-card p-6 mb-6">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-user-circle text-cyan-400"></i>
+                User Information
+            </h2>
+            
+            <!-- Calculate lock status in template -->
+            {% set today = now.date().isoformat() if now else '' %}
+            {% set lock_until = user.package_lock_until if user.package_lock_until else None %}
+            {% set is_locked = lock_until and lock_until|string > today %}
+            {% set is_unlocked = lock_until and lock_until|string <= today %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Left Column - Basic Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                        <div class="w-10 h-10 bg-cyan-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-xs">Name</p>
+                            <p class="font-medium text-lg">{{ user.name }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                        <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-phone text-green-400"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-xs">Phone</p>
+                            <p class="font-medium">{{ user.phone }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+                        <div class="w-10 h-10 {% if user.is_active == 1 %}bg-green-500/20{% else %}bg-red-500/20{% endif %} rounded-full flex items-center justify-center">
+                            <i class="fas {% if user.is_active == 1 %}fa-check-circle text-green-400{% else %}fa-times-circle text-red-400{% endif %}"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-xs">Status</p>
+                            <span class="font-medium {% if user.is_active == 1 %}text-green-400{% else %}text-red-400{% endif %}">
+                                {{ 'Active' if user.is_active == 1 else 'Inactive' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Column - Balance Info -->
+                <div class="space-y-4">
+                    <!-- EARNINGS BALANCE -->
+                    <div class="flex items-center justify-between p-4 bg-gradient-to-r from-green-500/10 to-green-600/5 rounded-xl border border-green-500/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-coins text-green-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Earnings Balance</p>
+                                <p class="text-lg font-bold text-green-400">{{ "{:,}".format(user.withdrawable_balance|default(0)) }} PKR</p>
+                                <span class="text-[10px] text-green-500/70">Withdrawable Anytime</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 rounded-full text-[10px]">
+                                <i class="fas fa-check-circle"></i> Available
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- PACKAGE BALANCE CARD -->
+                    <div class="flex items-center justify-between p-4 bg-gradient-to-r from-purple-500/10 to-purple-600/5 rounded-xl border {% if is_unlocked %}border-green-500/30{% else %}border-purple-500/30{% endif %}" id="packageBalanceCard">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 {% if is_unlocked %}bg-green-500/20{% else %}bg-purple-500/20{% endif %} rounded-full flex items-center justify-center" id="packageIcon">
+                                <i class="fas {% if is_unlocked %}fa-unlock-alt{% else %}fa-lock{% endif %} {% if is_unlocked %}text-green-400{% else %}text-purple-400{% endif %} text-xl" id="packageIconSymbol"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400">Package Amount</p>
+                                <p class="text-lg font-bold {% if is_unlocked %}text-green-400{% else %}text-purple-400{% endif %}" id="packageAmount">{{ "{:,}".format(user.package_amount|default(0)) }} PKR</p>
+                                
+                                <!-- Status Badge -->
+                                <span class="inline-flex items-center gap-1 text-[10px] {% if is_unlocked %}text-green-400{% else %}text-purple-400{% endif %}" id="packageStatus">
+                                    <i class="fas {% if is_unlocked %}fa-unlock-alt{% else %}fa-clock{% endif %}" id="statusIcon"></i>
+                                    <span id="statusText">
+                                        {% if is_unlocked %}
+                                            Unlocked - Can Update
+                                        {% elif is_locked %}
+                                            Locked until {{ lock_until }}
+                                        {% else %}
+                                            No Lock Set
+                                        {% endif %}
+                                    </span>
+                                </span>
+                                
+                                <!-- TIMER - Only show when locked -->
+                                {% if is_locked and lock_until %}
+                                <div class="mt-2 flex items-center gap-2">
+                                    <i class="fas fa-hourglass-half text-purple-400 animate-pulse text-xs"></i>
+                                    <span class="text-xs font-mono bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded-full" 
+                                          id="lockCountdown" 
+                                          data-until="{{ lock_until }}">
+                                        Calculating...
+                                    </span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="inline-flex items-center gap-1 px-2 py-1 {% if is_unlocked %}bg-green-500/20 text-green-400{% else %}bg-purple-500/20 text-purple-400{% endif %} rounded-full text-[10px]" id="lockBadge">
+                                <i class="fas {% if is_unlocked %}fa-check-circle{% else %}fa-clock{% endif %}" id="badgeIcon"></i>
+                                <span id="badgeText">{% if is_unlocked %}Unlocked{% else %}Locked{% endif %}</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div id="progressContainer" class="{% if not is_locked %}hidden{% endif %}">
+                        {% if lock_until and is_locked %}
+                            <div class="mt-2 p-3 bg-white/5 rounded-lg">
+                                <div class="flex justify-between text-[10px] text-gray-500 mb-1">
+                                    <span>Lock Status</span>
+                                    <span class="text-purple-400">Locked</span>
+                                </div>
+                                <p class="text-[10px] text-gray-600 mt-2">
+                                    <i class="fas fa-info-circle mr-1 text-cyan-400"></i>
+                                    Unlocks on: <span id="unlockDate">{{ lock_until }}</span>
+                                </p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Summary Row -->
+            <div class="mt-6 pt-4 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div class="text-center">
+                    <p class="text-gray-500 text-xs">Total Balance</p>
+                    <p class="font-bold text-lg">{{ "{:,}".format((user.withdrawable_balance|default(0) + user.package_amount|default(0))) }} PKR</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-500 text-xs">Earnings</p>
+                    <p class="font-bold text-green-400" id="summaryEarnings">{{ "{:,}".format(user.withdrawable_balance|default(0)) }} PKR</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-500 text-xs">Package</p>
+                    <p class="font-bold {% if is_unlocked %}text-green-400{% else %}text-purple-400{% endif %}" id="summaryPackage">{{ "{:,}".format(user.package_amount|default(0)) }} PKR</p>
+                </div>
+                <div class="text-center">
+                    <p class="text-gray-500 text-xs">Status</p>
+                    <span class="inline-flex items-center gap-1 text-sm" id="summaryStatus">
+                        {% if is_unlocked %}
+                        <span class="text-green-400"><i class="fas fa-unlock-alt"></i> Unlocked</span>
+                        {% else %}
+                        <span class="text-purple-400"><i class="fas fa-lock"></i> Locked</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Update Balance Form -->
+<div class="glass-card p-6 mb-8">
+    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+        <i class="fas fa-edit text-cyan-400"></i>
+        Update Balance
+    </h2>
+    
+    <!-- DUAL BALANCE TABS - FIXED -->
+    <div class="flex gap-2 mb-6 border-b border-white/5 pb-4">
+        <button type="button" 
+                id="tabEarnings"
+                onclick="switchBalanceTab('earnings')"
+                class="tab-button flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 
+                       bg-green-500/20 text-green-400 border border-green-500/30
+                       hover:bg-green-500/30 hover:scale-[1.02] active:scale-[0.98]">
+            <i class="fas fa-coins mr-2"></i> Earnings Balance
+            <span class="ml-2 text-xs opacity-75">{{ "{:,}".format(user.withdrawable_balance|default(0)) }} PKR</span>
+        </button>
+        
+        <button type="button" 
+        id="tabPackage"
+        onclick="switchBalanceTab('package')"
+        class="tab-button flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 
+               bg-purple-500/20 text-purple-400 border border-purple-500/30
+               hover:bg-purple-500/30 hover:scale-[1.02] active:scale-[0.98]"
+        id="tabPackage">
+    <i class="fas fa-box mr-2"></i> Package Balance
+    <span class="ml-2 text-xs opacity-75">{{ "{:,}".format(user.package_amount|default(0)) }} PKR</span>
+</button>
+    </div>
+    
+    <!-- Info Bars -->
+    <div id="earningsInfo" class="flex items-center justify-between bg-green-500/10 border border-green-500/20 rounded-xl p-4 mb-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-coins text-green-400 text-xl"></i>
+            </div>
+            <div>
+                <p class="font-semibold text-sm text-green-400">Earnings Balance</p>
+                <p class="text-xs text-gray-500">
+                    Current: <span class="text-green-400 font-bold" id="earningsCurrent">{{ "{:,}".format(user.withdrawable_balance|default(0)) }} PKR</span>
+                </p>
+            </div>
+        </div>
+        <div class="text-right">
+            <p class="text-xs text-gray-500">Type</p>
+            <p class="font-bold text-green-400">Withdrawable Anytime</p>
+        </div>
+    </div>
+    
+    <div id="packageInfo" class="hidden flex items-center justify-between bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 mb-6">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">
+                <i class="fas fa-box text-purple-400 text-xl"></i>
+            </div>
+            <div>
+                <p class="font-semibold text-sm text-purple-400">Package Balance</p>
+                <p class="text-xs text-gray-500">
+                    Current: <span class="text-purple-400 font-bold" id="packageCurrent">{{ "{:,}".format(user.package_amount|default(0)) }} PKR</span>
+                </p>
+            </div>
+        </div>
+        <div class="text-right">
+            <p class="text-xs text-gray-500">Status</p>
+            <p class="font-bold" id="packageInfoStatus">
+                {% if is_unlocked %}
+                <span class="text-green-400">Unlocked ✓</span>
+                {% else %}
+                <span class="text-red-400">Locked 🔒</span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    
+    <form method="POST" action="/admin/user/update-balance/{{ user.id }}" id="balanceForm">
+        <!-- Hidden field for balance type -->
+        <input type="hidden" name="balance_type" id="balanceType" value="earnings">
+        
+        <!-- Amount -->
+        <div class="mb-6">
+            <label class="block text-gray-300 mb-2 font-medium" id="amountLabel">Amount (PKR)</label>
+            <input type="number" 
+                   name="amount" 
+                   id="amount"
+                   min="1" 
+                   class="input-field text-2xl font-bold"
+                   placeholder="Enter amount"
+                   required>
+        </div>
+        
+        <!-- Action Selection -->
+        <div class="mb-6">
+            <label class="block text-gray-300 mb-3 font-medium" id="actionLabel">Action for <span id="balanceName">Earnings</span></label>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Add to Balance -->
+                <label class="action-radio p-4 bg-white/5 border border-green-500/30 rounded-xl cursor-pointer hover:bg-green-500/10 transition-all 
+                       hover:shadow-lg hover:shadow-green-500/10" 
+                       onclick="selectAction('add')" 
+                       id="action-add">
+                    <input type="radio" name="action" value="add" class="hidden" checked>
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-plus-circle text-green-400"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-green-400" id="addText">Add to Balance</p>
+                            <p class="text-xs text-gray-400 mt-1" id="addDesc">Increases user's balance</p>
+                        </div>
+                    </div>
+                </label>
+                
+                <!-- Deduct from Balance -->
+                <label class="action-radio p-4 bg-white/5 border border-red-500/30 rounded-xl cursor-pointer hover:bg-red-500/10 transition-all 
+                       hover:shadow-lg hover:shadow-red-500/10" 
+                       onclick="selectAction('deduct')" 
+                       id="action-deduct">
+                    <input type="radio" name="action" value="subtract" class="hidden">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center">
+                            <i class="fas fa-minus-circle text-red-400"></i>
+                        </div>
+                        <div>
+                            <p class="font-medium text-red-400" id="deductText">Deduct from Balance</p>
+                            <p class="text-xs text-gray-400 mt-1" id="deductDesc">Decreases user's balance</p>
+                        </div>
+                    </div>
+                </label>
+            </div>
+            
+            <!-- Dynamic Note -->
+            <div class="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg" id="packageNote">
+                <p class="text-xs text-yellow-300 flex items-start gap-2">
+                    <i class="fas fa-info-circle mt-0.5"></i>
+                    <span id="noteText"><strong>Note:</strong> Package amount ({{ "{:,}".format(user.package_amount|default(0)) }} PKR) is {% if is_locked %}locked until {{ lock_until }}{% else %}unlocked{% endif %}. Package can only be updated when unlocked.</span>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Reason -->
+        <div class="mb-6">
+            <label class="block text-gray-300 mb-2 font-medium">Reason for Transaction</label>
+            <textarea 
+                name="reason" 
+                id="reason"
+                rows="3" 
+                class="input-field"
+                placeholder="Enter reason for updating balance..."
+                required></textarea>
+            <p class="text-gray-400 text-sm mt-2">
+                This reason will be recorded in the transaction history.
+            </p>
+        </div>
+        
+        <!-- Submit Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-end pt-4 border-t border-white/5">
+            <a href="/admin/users" class="btn-secondary justify-center hover:bg-white/10">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+            <button type="submit" class="btn-primary justify-center hover:shadow-lg hover:shadow-cyan-500/20" id="submitBtn">
+                <i class="fas fa-save"></i> <span id="submitText">Update Earnings Balance</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+        <!-- Recent Transactions -->
+        {% if transactions %}
+        <div class="glass-card p-6">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-history text-cyan-400"></i>
+                Recent Balance Transactions
+            </h2>
+            <div class="space-y-3">
+                {% for trans in transactions %}
+                <div class="p-4 bg-white/5 rounded-lg border border-gray-700 relative group hover:border-cyan-500/30 transition-all">
+                    <a href="/admin/transaction/delete/{{ trans.id }}" 
+                       onclick="return confirm('Delete transaction #{{ trans.id }}?')"
+                       class="absolute top-2 right-2 w-8 h-8 bg-red-500/20 hover:bg-red-500/30 rounded-lg flex items-center justify-center text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                       title="Delete">
+                        <i class="fas fa-trash-alt text-sm"></i>
+                    </a>
+                    
+                    <div class="pr-10">
+                        <div class="flex items-center gap-2 mb-1">
+                            <i class="fas {% if trans.transaction_type == 'credit' %}fa-plus-circle text-green-400{% else %}fa-minus-circle text-red-400{% endif %}"></i>
+                            <span class="font-medium {% if trans.transaction_type == 'credit' %}text-green-400{% else %}text-red-400{% endif %}">
+                                {% if trans.transaction_type == 'credit' %}Added{% else %}Deducted{% endif %}
+                            </span>
+                            <span class="font-bold">{{ "{:,}".format(trans.amount) }} PKR</span>
+                            <span class="text-xs px-2 py-1 rounded-full {% if trans.balance_type == 'package' %}bg-purple-500/20 text-purple-400{% else %}bg-green-500/20 text-green-400{% endif %}">
+                                {{ trans.balance_type|title }}
+                            </span>
+                        </div>
+                        
+                        <p class="text-gray-400 text-sm">{{ trans.reason }}</p>
+                        <p class="text-gray-500 text-xs mt-2">
+                            By {{ trans.admin_username }} • {{ trans.created_at }}
+                        </p>
+                        <div class="mt-2 text-xs">
+                            <span class="text-gray-500">Previous: {{ "{:,}".format(trans.previous_balance) }} PKR</span>
+                            <span class="mx-2">→</span>
+                            <span class="text-green-400 font-bold">{{ "{:,}".format(trans.new_balance) }} PKR</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="fixed top-4 right-4 left-4 md:left-auto md:w-96 z-50 space-y-2">
+            {% for category, message in messages %}
+            <div class="flash-message flex items-center justify-between
+                {% if category == 'success' %}bg-gradient-to-r from-green-500/90 to-green-600/90 text-white
+                {% elif category == 'error' %}bg-gradient-to-r from-red-500/90 to-red-600/90 text-white
+                {% else %}bg-gradient-to-r from-cyan-500/90 to-cyan-600/90 text-white{% endif %}">
+                <div class="flex items-center gap-2">
+                    <i class="fas {% if category == 'success' %}fa-check-circle{% elif category == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+                    <span>{{ message }}</span>
+                </div>
+                <button onclick="this.parentElement.remove()" class="hover:opacity-80">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+<!-- Store data in HTML attributes -->
+<div id="server-data" 
+     data-unlocked="{% if is_unlocked %}true{% else %}false{% endif %}"
+     data-locked="{% if is_locked %}true{% else %}false{% endif %}"
+     data-lock-until="{{ lock_until|default('') }}"
+     data-earnings="{{ user.withdrawable_balance|default(0) }}"
+     data-package="{{ user.package_amount|default(0) }}"
+     style="display: none;">
+</div>
+    <!-- JavaScript -->
+    <script>
+       // Read data from HTML attributes
+const serverDataElement = document.getElementById('server-data');
+const serverData = {
+    isUnlocked: serverDataElement.dataset.unlocked === 'true',
+    isLocked: serverDataElement.dataset.locked === 'true',
+    lockUntil: serverDataElement.dataset.lockUntil,
+    earningsBalance: parseInt(serverDataElement.dataset.earnings) || 0,
+    packageBalance: parseInt(serverDataElement.dataset.package) || 0
+};
+
+        // ===== GLOBAL VARIABLES =====
+        let currentBalanceTab = 'earnings';
+        let isPackageUnlocked = serverData.isUnlocked;
+        let isPackageLocked = serverData.isLocked;
+        let lockUntil = serverData.lockUntil;
+        let earningsBalance = serverData.earningsBalance;
+        let packageBalance = serverData.packageBalance;
+
+        // ===== TAB SWITCHING FUNCTION =====
+        function switchBalanceTab(tab) {
+            // Check if trying to switch to package tab while locked
+            if (tab === 'package' && !isPackageUnlocked) {
+                alert('❌ Package is still locked. Cannot update package balance.');
+                return;
+            }
+            
+            currentBalanceTab = tab;
+            const balanceTypeInput = document.getElementById('balanceType');
+            if (balanceTypeInput) balanceTypeInput.value = tab;
+            
+            const isEarnings = tab === 'earnings';
+            
+            // Update tab styles
+            const tabEarnings = document.getElementById('tabEarnings');
+            const tabPackage = document.getElementById('tabPackage');
+            
+            if (tabEarnings) {
+                tabEarnings.className = isEarnings ? 
+                    'tab-button flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30 hover:scale-[1.02] active:scale-[0.98]' :
+                    'tab-button flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 bg-green-500/20 text-purple-400 border border-green-500/30 hover:bg-green-500/30 hover:scale-[1.02] active:scale-[0.98]';
+            }
+            
+            if (tabPackage) {
+                tabPackage.className = !isEarnings ? 
+                    'tab-button flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 bg-purple-500/20 text-purple-400 border border-purple-500/30 hover:bg-purple-500/30 hover:scale-[1.02] active:scale-[0.98]' :
+                    'tab-button flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 bg-purple-500/20 text-green-400 border border-purple-500/30 hover:bg-purple-500/30 hover:scale-[1.02] active:scale-[0.98]';
+            }
+            
+            // Show/hide info sections
+            const earningsInfo = document.getElementById('earningsInfo');
+            const packageInfo = document.getElementById('packageInfo');
+            
+            if (earningsInfo) earningsInfo.classList.toggle('hidden', !isEarnings);
+            if (packageInfo) packageInfo.classList.toggle('hidden', isEarnings);
+            
+            // Update text labels
+            const balanceName = document.getElementById('balanceName');
+            const submitText = document.getElementById('submitText');
+            const addText = document.getElementById('addText');
+            const deductText = document.getElementById('deductText');
+            const addDesc = document.getElementById('addDesc');
+            const deductDesc = document.getElementById('deductDesc');
+            
+            if (balanceName) balanceName.innerText = isEarnings ? 'Earnings' : 'Package';
+            if (submitText) submitText.innerText = isEarnings ? 'Update Earnings Balance' : 'Update Package Balance';
+            if (addText) addText.innerText = isEarnings ? 'Add to Earnings' : 'Add to Package';
+            if (deductText) deductText.innerText = isEarnings ? 'Deduct from Earnings' : 'Deduct from Package';
+            if (addDesc) addDesc.innerText = isEarnings ? 'Increases user\'s withdrawable earnings' : 'Increases user\'s package amount';
+            if (deductDesc) deductDesc.innerText = isEarnings ? 'Decreases user\'s withdrawable earnings' : 'Decreases user\'s package amount';
+            
+            // Update note
+            const noteText = document.getElementById('noteText');
+            if (noteText) {
+                let status = isPackageUnlocked ? '✅ UNLOCKED' : '🔒 LOCKED';
+                let lockInfo = isPackageLocked && lockUntil ? 'locked until ' + lockUntil : 'unlocked';
+                noteText.innerHTML = '<strong>Note:</strong> Package amount (' + packageBalance.toLocaleString() + ' PKR) is ' + lockInfo + '. Package can only be updated when unlocked. Current status: ' + status + '.';
+            }
+        }
+
+        // ===== ACTION SELECTION =====
+        function selectAction(action) {
+            const addCard = document.getElementById('action-add');
+            const deductCard = document.getElementById('action-deduct');
+            
+            if (!addCard || !deductCard) return;
+            
+            // Reset both cards
+            addCard.classList.remove('border-green-500/30', 'bg-green-500/5', 'border-red-500/30', 'bg-red-500/5');
+            deductCard.classList.remove('border-green-500/30', 'bg-green-500/5', 'border-red-500/30', 'bg-red-500/5');
+            
+            const addRadio = document.querySelector('input[name="action"][value="add"]');
+            const subtractRadio = document.querySelector('input[name="action"][value="subtract"]');
+            
+            if (action === 'add') {
+                addCard.classList.add('border-green-500/30', 'bg-green-500/5');
+                if (addRadio) addRadio.checked = true;
+            } else {
+                deductCard.classList.add('border-red-500/30', 'bg-red-500/5');
+                if (subtractRadio) subtractRadio.checked = true;
+            }
+        }
+
+        // ===== TIMER FUNCTION =====
+function startPackageTimer() {
+    const timerElement = document.getElementById('lockCountdown');
+    if (!timerElement) return;
+    
+    const untilStr = timerElement.getAttribute('data-until');
+    if (!untilStr || untilStr === 'None' || untilStr === '') return;
+    
+    const unlockDate = new Date(untilStr.replace(' ', 'T'));
+    
+    function updateTimer() {
+        const now = new Date();
+        const diff = unlockDate - now;
+        
+        if (diff <= 0) {
+            // Package unlocked
+            timerElement.textContent = 'Unlocked!';
+            timerElement.style.color = '#4ade80';
+            
+            // Call the update function
+            updateUIForUnlock();
+            
+            return;
+        }
+        
+        // Calculate and display time
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        let timeString = days > 0 ? `${days}d ${hours}h ${minutes}m` :
+                        hours > 0 ? `${hours}h ${minutes}m ${seconds}s` :
+                        minutes > 0 ? `${minutes}m ${seconds}s` :
+                        `${seconds}s`;
+        
+        timerElement.textContent = timeString;
+    }
+    
+    updateTimer();
+    setInterval(updateTimer, 1000);
+}
+
+        /// ===== UPDATE UI FOR UNLOCK =====
+function updateUIForUnlock() {
+    console.log('🔓 Package Unlocked - Updating UI');
+    
+    // Update global variables
+    isPackageUnlocked = true;
+    isPackageLocked = false;
+    
+    // Update summary status
+    const summaryStatus = document.getElementById('summaryStatus');
+    if (summaryStatus) {
+        summaryStatus.innerHTML = '<span class="text-green-400"><i class="fas fa-unlock-alt"></i> Unlocked</span>';
+    }
+    
+    // Update package info status
+    const packageInfoStatus = document.getElementById('packageInfoStatus');
+    if (packageInfoStatus) {
+        packageInfoStatus.innerHTML = '<span class="text-green-400">Unlocked ✓</span>';
+    }
+    
+    // Update package amount color
+    const packageAmount = document.getElementById('packageAmount');
+    if (packageAmount) {
+        packageAmount.className = 'text-lg font-bold text-green-400';
+    }
+    
+    // Update summary package
+    const summaryPackage = document.getElementById('summaryPackage');
+    if (summaryPackage) {
+        summaryPackage.className = 'font-bold text-green-400';
+    }
+    
+    // Update icon
+    const packageIconSymbol = document.getElementById('packageIconSymbol');
+    if (packageIconSymbol) {
+        packageIconSymbol.className = 'fas fa-unlock-alt text-green-400 text-xl';
+    }
+    
+    // Update status elements
+    const statusIcon = document.getElementById('statusIcon');
+    if (statusIcon) statusIcon.className = 'fas fa-unlock-alt';
+    
+    const badgeIcon = document.getElementById('badgeIcon');
+    if (badgeIcon) badgeIcon.className = 'fas fa-check-circle';
+    
+    const statusText = document.getElementById('statusText');
+    if (statusText) statusText.textContent = 'Unlocked - Can Update';
+    
+    const badgeText = document.getElementById('badgeText');
+    if (badgeText) badgeText.textContent = 'Unlocked';
+    
+    // Update package card border
+    const packageBalanceCard = document.getElementById('packageBalanceCard');
+    if (packageBalanceCard) {
+        packageBalanceCard.className = packageBalanceCard.className.replace('border-purple-500/30', 'border-green-500/30');
+    }
+    
+    // CRITICAL FIX: Update the package tab - ENABLE IT COMPLETELY
+    const tabPackage = document.getElementById('tabPackage');
+    if (tabPackage) {
+        // Remove disabled attribute
+        tabPackage.removeAttribute('disabled');
+        
+        // Remove all disabling classes
+        tabPackage.classList.remove('opacity-50', 'cursor-not-allowed', 'pointer-events-none', 'package-locked');
+        
+        // Update the tab styling to show it's enabled
+        tabPackage.className = 'tab-button flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 bg-purple-500/20 text-purple-400 border border-purple-500/30 hover:bg-purple-500/30 hover:scale-[1.02] active:scale-[0.98]';
+        
+        console.log('✅ Package tab enabled');
+    }
+    
+    // Hide progress container
+    const progressContainer = document.getElementById('progressContainer');
+    if (progressContainer) progressContainer.classList.add('hidden');
+    
+    // Update the note text
+    const noteText = document.getElementById('noteText');
+    if (noteText) {
+        noteText.innerHTML = '<strong>Note:</strong> Package amount (' + packageBalance.toLocaleString() + ' PKR) is unlocked. Package can be updated now. Current status: ✅ UNLOCKED.';
+    }
+}
+
+        // ===== FORM VALIDATION =====
+        function setupFormValidation() {
+            const form = document.getElementById('balanceForm');
+            if (!form) return;
+            
+            form.addEventListener('submit', function(e) {
+                const balanceType = document.getElementById('balanceType')?.value;
+                const amount = document.getElementById('amount')?.value;
+                const reason = document.getElementById('reason')?.value;
+                const submitBtn = document.getElementById('submitBtn');
+                
+                if (!amount || parseInt(amount) <= 0) {
+                    e.preventDefault();
+                    alert('❌ Please enter a valid amount');
+                    return false;
+                }
+                
+                if (!reason || reason.trim() === '') {
+                    e.preventDefault();
+                    alert('❌ Please enter a reason for this transaction');
+                    return false;
+                }
+                
+                // CRITICAL CHECK: Prevent package updates when locked
+                if (balanceType === 'package' && !isPackageUnlocked) {
+                    e.preventDefault();
+                    alert('❌ Package is still locked. Cannot update package balance.');
+                    return false;
+                }
+                
+                // Show loading
+                if (submitBtn) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                    submitBtn.disabled = true;
+                }
+                
+                return true;
+            });
+        }
+
+        // ===== INITIALIZE EVERYTHING =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded - Package Unlocked:', isPackageUnlocked);
+    
+    // Start timer
+    startPackageTimer();
+    
+    // Set default action
+    selectAction('add');
+    
+    // Setup form validation
+    setupFormValidation();
+    
+    // Make functions globally available
+    window.switchBalanceTab = switchBalanceTab;
+    window.selectAction = selectAction;
+    
+    // Auto-hide flash messages
+    setTimeout(() => {
+        document.querySelectorAll('.flash-message').forEach(msg => {
+            msg.style.transition = 'opacity 0.5s';
+            msg.style.opacity = '0';
+            setTimeout(() => msg.remove(), 500);
+        });
+    }, 5000);
+    
+    // CRITICAL FIX: If package is already unlocked, update UI immediately
+    if (isPackageUnlocked) {
+        console.log('🔓 Package already unlocked on load - enabling tab');
+        updateUIForUnlock();
+    }
+    
+    // Force check lock status every 5 seconds as backup
+    setInterval(() => {
+        if (isPackageUnlocked) {
+            // Make sure tab stays enabled
+            const tabPackage = document.getElementById('tabPackage');
+            if (tabPackage && tabPackage.disabled) {
+                console.log('⚠️ Package tab was disabled but should be enabled - fixing');
+                updateUIForUnlock();
+            }
+        }
+    }, 5000);
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>View Ticket #{{ ticket.id }} - Upside Admin</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Tailwind & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Professional System Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ---------- 🎨 CYAN THEME TOKENS ---------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --primary-light: #22d3ee;
+            --primary-glow: rgba(6, 182, 212, 0.2);
+            --bg-primary: #0a0c10;
+            --bg-secondary: #111317;
+            --bg-card: #1a1d24;
+            --bg-card-hover: #22262e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color-hover: rgba(6, 182, 212, 0.3);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --header-height: 64px;
+            --bottom-nav-height: 72px;
+            --sidebar-width: 280px;
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ---------- BASE RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ---------- RESPONSIVE CONTAINER ---------- */
+        .container-fluid {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid {
+                max-width: 640px;
+                padding-right: 1.5rem;
+                padding-left: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-fluid {
+                max-width: 768px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-fluid {
+                max-width: 1024px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-fluid {
+                max-width: 1280px;
+            }
+        }
+
+        /* ---------- PREMIUM HEADER ---------- */
+        .premium-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            height: var(--header-height);
+            width: 100%;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .logo-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 10px 15px -3px var(--primary-glow);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        /* ---------- HAMBURGER MENU ---------- */
+        .hamburger-modern {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .hamburger-modern span {
+            display: block;
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: #fff;
+            border-radius: 2px;
+            left: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hamburger-modern span:nth-child(1) { top: 4px; }
+        .hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+        .hamburger-modern span:nth-child(3) { top: 18px; }
+
+        .hamburger-modern.active span:nth-child(1) {
+            top: 11px;
+            transform: rotate(45deg);
+            background: var(--primary);
+        }
+
+        .hamburger-modern.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .hamburger-modern.active span:nth-child(3) {
+            top: 11px;
+            transform: rotate(-45deg);
+            background: var(--primary);
+        }
+
+        /* ---------- SIDE DRAWER ---------- */
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(17, 19, 23, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: calc(var(--safe-top) + 20px) 20px 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-drawer.active {
+            left: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- TICKET DETAIL STYLES ---------- */
+        .glass-card {
+            background: rgba(17, 19, 23, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            transition: all 0.25s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--primary-glow);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .status-badge {
+            padding: 8px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-open {
+            background: rgba(234, 179, 8, 0.15);
+            color: #facc15;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        .status-progress {
+            background: rgba(6, 182, 212, 0.15);
+            color: #22d3ee;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .status-closed {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        @media (min-width: 640px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            color: #9ca3af;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-radius: 100px;
+            padding: 14px 28px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--primary-glow);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            border-radius: 100px;
+            padding: 14px 28px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 12px 24px;
+            font-weight: 500;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .message-box {
+            background: rgba(26, 29, 36, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        /* ---------- BOTTOM NAVIGATION ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(14, 16, 21, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: var(--safe-bottom);
+            z-index: 40;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 8px 0;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 20px;
+            background: #ef4444;
+            color: white;
+            font-size: 9px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slideIn {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* ---------- RESPONSIVE UTILITIES ---------- */
+        .mobile-only { display: flex; }
+        .desktop-only { display: none; }
+
+        /* ---------- MOBILE (320px - 767px) ---------- */
+        @media (max-width: 767px) {
+            .premium-header {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .header-content {
+                padding-left: 16px;
+                padding-right: 16px;
+                width: 100%;
+            }
+            
+            .mobile-title {
+                max-width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 1.125rem;
+                font-weight: 700;
+            }
+            
+            .glass-card {
+                padding: 20px !important;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+            
+            .status-badge {
+                margin-top: 8px !important;
+            }
+            
+            .back-button {
+                width: 100% !important;
+                justify-content: center !important;
+                padding: 12px !important;
+                background: rgba(6, 182, 212, 0.1) !important;
+                border-radius: 100px !important;
+                margin-bottom: 16px !important;
+            }
+            
+            .action-buttons {
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+            
+            .action-buttons button,
+            .action-buttons a {
+                width: 100% !important;
+                justify-content: center !important;
+            }
+            
+            select {
+                width: 100% !important;
+            }
+            
+            .bottom-nav {
+                display: flex !important;
+            }
+            
+            body {
+                padding-bottom: 80px !important;
+            }
+        }
+
+        /* ---------- TABLET (768px+) ---------- */
+        @media (min-width: 768px) {
+            .mobile-only { display: none !important; }
+            .desktop-only { display: block; }
+            
+            .action-buttons {
+                flex-direction: row !important;
+                gap: 12px !important;
+            }
+            
+            body { padding-bottom: 0 !important; }
+            .bottom-nav { display: none !important; }
+        }
+
+        /* ---------- TOUCH OPTIMIZATIONS ---------- */
+        @media (hover: none) and (pointer: coarse) {
+            .btn-primary:hover, .btn-danger:hover, .btn-outline:hover {
+                transform: none;
+            }
+        }
+
+        /* ---------- UTILITY CLASSES ---------- */
+        .hidden { display: none !important; }
+        .gradient-text {
+            background: linear-gradient(to right, white, #d1d5db);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .truncate-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .side-drawer {
+            left: -320px;
+        }
+        .side-drawer.active {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- === DEFAULT VALUES FOR UNDEFINED VARIABLES === -->
+    {% set withdrawals_count = withdrawals_count|default(0) %}
+    {% set pending_requests = pending_requests|default([]) %}
+    {% set pending_withdrawals = pending_withdrawals|default([]) %}
+    {% set notifications = notifications|default([]) %}
+    {% set notifications_count = notifications_count|default(0) %}
+    {% set open_tickets = open_tickets|default([]) %}
+    {% set in_progress_tickets = in_progress_tickets|default([]) %}
+    {% set closed_tickets = closed_tickets|default([]) %}
+
+    <!-- === DRAWER OVERLAY === -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="window.closeDrawer()"></div>
+
+    <!-- === SIDE DRAWER - ADMIN MENU === -->
+    <aside id="sideDrawer" class="side-drawer">
+        <!-- Admin Profile -->
+        <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+            <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <span class="text-2xl font-bold text-white">{{ session.admin_username[0]|upper if session.admin_username else 'A' }}</span>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold gradient-text">{{ session.admin_username|default('Admin') }}</h2>
+                <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    Administrator
+                </p>
+            </div>
+        </div>
+        
+        <!-- Menu Items -->
+        <nav class="space-y-1">
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Main Menu</p>
+            
+            <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            
+            <a href="/admin/users" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-users w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Users</span>
+            </a>
+            
+            <a href="/admin/ads" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-ad w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Manage Ads</span>
+                {% if notifications|length > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ notifications|length }}</span>
+                {% endif %}
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Support</p>
+            
+            <a href="/admin/support-tickets" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <i class="fas fa-headset w-5"></i>
+                <span class="font-medium">Support Tickets</span>
+                {% if open_tickets|length > 0 %}
+                <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">{{ open_tickets|length }}</span>
+                {% endif %}
+            </a>
+            
+            <a href="/admin/usdt-address" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-wallet w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">USDT Address</span>
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Settings</p>
+            
+            <a href="/admin/requests/approved" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-check-circle w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Approved</span>
+            </a>
+            
+            <a href="/admin/requests/rejected" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-times-circle w-5 text-red-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Rejected</span>
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <a href="/admin/logout" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 transition-all group">
+                <i class="fas fa-sign-out-alt group-hover:rotate-180 transition-transform duration-500"></i>
+                <span class="font-medium">Logout</span>
+            </a>
+        </nav>
+        
+        <!-- Version Info -->
+        <div class="absolute bottom-8 left-0 right-0 text-center">
+            <p class="text-[11px] text-gray-600">Upside Admin v2.0.0</p>
+            <p class="text-[10px] text-gray-700 mt-1">© 2026 All rights reserved</p>
+        </div>
+    </aside>
+
+    <!-- === PREMIUM HEADER - FULLY RESPONSIVE === -->
+    <header class="premium-header">
+        <div class="container-fluid h-full">
+            <div class="header-content">
+                <!-- Left Section -->
+                <div class="header-left">
+                    <!-- Hamburger - Always visible on mobile -->
+                    <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    
+                    <!-- Logo & Title -->
+                    <div class="header-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-ticket text-white text-sm"></i>
+                        </div>
+                        
+                        <!-- Desktop Title -->
+                        <div class="desktop-only" style="min-width: 0;">
+                            <h1 class="text-xl font-bold gradient-text truncate-text">Ticket #{{ ticket.id }}</h1>
+                            <p class="text-xs text-gray-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                                <span class="truncate-text">{{ session.admin_username|default('Admin') }} · Active</span>
+                            </p>
+                        </div>
+                        
+                        <!-- Mobile Title -->
+                        <div class="mobile-only" style="min-width: 0;">
+                            <h1 class="mobile-title">Ticket #{{ ticket.id }}</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="header-right">
+                    <!-- Time Badge - Desktop Only -->
+                    <div class="desktop-only px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 14, 2026' }}</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <i class="fas fa-clock text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%H:%M') if now else '14:30' }}</span>
+                    </div>
+                    
+                    <!-- Refresh Button -->
+                    <button onclick="location.reload()" 
+                            class="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all hover:rotate-180 duration-500">
+                        <i class="fas fa-sync-alt text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- === MAIN CONTENT === -->
+    <main class="container-fluid py-6 pb-28 md:pb-8">
+        
+        <!-- Back Button -->
+        <div class="mb-6">
+            <a href="/admin/support-tickets" class="back-button inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-all group">
+                <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                <span>Back to Tickets</span>
+            </a>
+        </div>
+
+        <!-- Ticket Details Card -->
+        <div class="glass-card p-6 md:p-8 mb-6 animate-slideIn">
+            
+            <!-- Header with Status -->
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-bold gradient-text mb-2">Ticket #{{ ticket.id }}</h1>
+                    <p class="text-gray-400 text-lg">{{ ticket.subject }}</p>
+                </div>
+                
+                <span class="status-badge 
+                    {% if ticket.status == 'open' %}status-open
+                    {% elif ticket.status == 'in_progress' %}status-progress
+                    {% else %}status-closed{% endif %}">
+                    <i class="fas 
+                        {% if ticket.status == 'open' %}fa-clock
+                        {% elif ticket.status == 'in_progress' %}fa-spinner fa-spin
+                        {% else %}fa-check-circle{% endif %}">
+                    </i>
+                    {{ ticket.status|replace('_', ' ')|title }}
+                </span>
+            </div>
+
+            <!-- User Info Grid -->
+            <div class="info-grid mb-6">
+                <div class="info-item">
+                    <span class="info-label">User Name</span>
+                    <span class="info-value flex items-center gap-2">
+                        <i class="fas fa-user text-cyan-400 text-xs"></i>
+                        {{ ticket.user_name }}
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone</span>
+                    <span class="info-value flex items-center gap-2">
+                        <i class="fas fa-phone text-green-400 text-xs"></i>
+                        {{ ticket.user_phone }}
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Submitted</span>
+                    <span class="info-value flex items-center gap-2">
+                        <i class="fas fa-calendar text-yellow-400 text-xs"></i>
+                        {{ ticket.created_at[:16] }}
+                    </span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Last Updated</span>
+                    <span class="info-value flex items-center gap-2">
+                        <i class="fas fa-clock text-cyan-400 text-xs"></i>
+                        {{ ticket.updated_at[:16] }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- User Message -->
+            <div class="mb-8">
+                <h3 class="font-bold mb-3 flex items-center gap-2 text-lg">
+                    <i class="fas fa-user-circle text-cyan-400"></i>
+                    User Message
+                </h3>
+                <div class="message-box">
+                    <p class="text-gray-300">{{ ticket.message }}</p>
+                </div>
+            </div>
+
+            <!-- Admin Response Section -->
+            <div class="border-t border-white/5 pt-6">
+                <h3 class="font-bold mb-4 flex items-center gap-2 text-lg">
+                    <i class="fas fa-reply text-cyan-400"></i>
+                    Admin Response
+                </h3>
+                
+                <form method="POST" class="space-y-4">
+                    <textarea name="response" rows="6" 
+                              class="w-full bg-[#0e1217] border border-white/10 rounded-xl p-4 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 transition-all"
+                              placeholder="Type your response here...">{{ ticket.admin_response if ticket.admin_response }}</textarea>
+                    
+                    <!-- Action Buttons - With Delete Function -->
+                    <div class="action-buttons flex flex-col md:flex-row gap-3">
+                        <select name="status" class="bg-[#0e1217] border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500">
+                            <option value="in_progress" {% if ticket.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                            <option value="closed" {% if ticket.status == 'closed' %}selected{% endif %}>Close Ticket</option>
+                        </select>
+                        
+                        <button type="submit" class="btn-primary flex-1">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Response
+                        </button>
+                        
+                        <!-- 🔥 DELETE BUTTON ADDED HERE -->
+                        <button type="button" 
+        id="deleteTicketBtn"
+        data-ticket-id="{{ ticket.id }}"
+        class="btn-danger flex-1">
+    <i class="fas fa-trash-alt"></i>
+    Delete Ticket
+</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Close without response (Only if not closed) -->
+        {% if ticket.status != 'closed' %}
+        <div class="text-center">
+            <a href="/admin/support-ticket/close/{{ ticket.id }}" 
+               onclick="return confirmClose()"
+               class="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 text-sm transition-colors">
+                <i class="fas fa-times-circle"></i>
+                Close Ticket without Response
+            </a>
+        </div>
+        {% endif %}
+    </main>
+
+    <!-- === BOTTOM NAVIGATION - MOBILE === -->
+    <nav class="bottom-nav mobile-only">
+        <a href="/admin/dashboard" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="/admin/users" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+        
+        <a href="/admin/ads" class="nav-item">
+            <i class="fas fa-ad"></i>
+            <span>Ads</span>
+            {% if notifications|length > 0 %}
+            <span class="nav-badge">{{ notifications|length }}</span>
+            {% endif %}
+        </a>
+        
+        <a href="/admin/support-tickets" class="nav-item active">
+            <i class="fas fa-headset"></i>
+            <span>Support</span>
+            {% if open_tickets|length > 0 %}
+            <span class="nav-badge">{{ open_tickets|length }}</span>
+            {% endif %}
+        </a>
+        
+        <a href="/admin/usdt-address" class="nav-item">
+            <i class="fas fa-wallet"></i>
+            <span>USDT</span>
+        </a>
+    </nav>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        // Drawer controls
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.toggle('active');
+                overlay.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+            }
+        };
+        
+        window.closeDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.remove('active');
+                overlay.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+        
+        // 🔥 CLEAN APPROACH - Data attributes
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteBtn = document.getElementById('deleteTicketBtn');
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', function(e) {
+                const ticketId = this.dataset.ticketId;
+                if (confirm('⚠️ Delete Ticket #' + ticketId + '\n\nAre you sure you want to permanently delete this ticket?\n\nThis action cannot be undone.')) {
+                    window.location.href = '/admin/support-ticket/delete/' + ticketId;
+                }
+            });
+        }
+    });
+        
+        function confirmClose() {
+            return confirm('Close this ticket without sending a response?');
+        }
+        
+        // Close drawer on route change
+        window.addEventListener('popstate', window.closeDrawer);
+        
+        // Auto-hide flash messages
+        setTimeout(() => {
+            document.querySelectorAll('.flash-message').forEach(msg => {
+                msg.style.transition = 'opacity 0.5s';
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500);
+            });
+        }, 5000);
+    </script>
+
+    <style>
+        @media (max-width: 767px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom, 0);
+            }
+        }
+    </style>
+</body>
+</html>

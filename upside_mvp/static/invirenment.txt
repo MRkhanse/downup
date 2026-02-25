@@ -1,0 +1,82 @@
+UPSIDE
+--static
+     --images folder
+     --upload folder
+     --invirenment.txt
+--templates
+     --admin folder
+            --admin_dashboard.html
+            --admin_login.html
+     --user  folder
+            --user_dashboard.html
+     --home.html
+     --package.html
+     --payment.html
+     --pending.html
+     --signin.html
+     --signup.html
+     --
+--app.py
+--database
+
+
+
+
+
+
+
+upside_mvp/
+├── app.py (updated with secure routes)
+├── urls.py (central URL configuration)
+├── secure_routes.py (routing helpers)
+├── secure_decorators.py (security decorators)
+├── .env (environment variables)
+├── templates/
+│   ├── 404.html
+│   ├── about.html
+│   ├── contact.html
+│   ├── debug_notification.html
+│   ├── deposit_rejected.html
+│   ├── disclaimers.html
+│   ├── forgot_password.html
+│   ├── home.html
+│   ├── package.html
+│   ├── payment.html
+│   ├── pending.html
+│   ├── privacy.html
+│   ├── request_rejected.html
+│   ├── signin.html
+│   ├── signup.html
+│   ├── terms.html
+│   └── admin/
+│       ├── add_ad.html
+│       ├── ads.html
+│       ├── approved.html
+│       ├── base.html
+│       ├── change_admin_password.html
+│       ├── dashboard.html
+│       ├── deposits_pending.html
+│       ├── edit_ad.html
+│       ├── login.html
+│       ├── password_resets.html
+│       ├── reject_form.html
+│       ├── rejected.html
+│       ├── set_password.html
+│       ├── sidebar.html
+│       ├── statistics.html
+│       ├── support_tickets.html
+│       ├── update_balance.html
+│       ├── usdt_address.html
+│       ├── user_detail.html
+│       ├── users.html
+│       ├── view_screenshot.html
+│       ├── view_ticket.html
+│       └── withdrawals.html
+│   └── user/
+│       ├── change_password.html
+│       ├── deposit_rejected.html
+│       ├── profile.html
+│       ├── support.html
+│       ├── user_dashboard.html
+│       ├── watch_ad.html
+│       └── withdraw.html

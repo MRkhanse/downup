@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>Privacy Policy • Upside Platform</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Tailwind & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Professional System Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ---------- 🎨 CYAN THEME TOKENS ---------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --primary-light: #22d3ee;
+            --primary-glow: rgba(6, 182, 212, 0.2);
+            --bg-primary: #0a0c10;
+            --bg-secondary: #111317;
+            --bg-card: #1a1d24;
+            --bg-card-hover: #22262e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color-hover: rgba(6, 182, 212, 0.3);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --header-height: 64px;
+            --bottom-nav-height: 72px;
+            --sidebar-width: 280px;
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ---------- BASE RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ---------- RESPONSIVE CONTAINER ---------- */
+        .container-fluid {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid {
+                max-width: 640px;
+                padding-right: 1.5rem;
+                padding-left: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-fluid {
+                max-width: 768px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-fluid {
+                max-width: 1024px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-fluid {
+                max-width: 1280px;
+            }
+        }
+
+        /* ---------- PREMIUM HEADER ---------- */  /* ---------- PREMIUM HEADER STYLES ---------- */
+.premium-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 12, 16, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    height: 64px;
+    width: 100%;
+}
+
+.container-fluid {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 100%;
+}
+
+@media (min-width: 640px) {
+    .container-fluid {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .container-fluid {
+        padding: 0 2rem;
+    }
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.logo-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: linear-gradient(145deg, #06b6d4, #0891b2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* ---------- HAMBURGER MENU ---------- */
+.hamburger-modern {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.hamburger-modern span {
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    left: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-modern span:nth-child(1) { top: 4px; }
+.hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+.hamburger-modern span:nth-child(3) { top: 18px; }
+
+.hamburger-modern.active span:nth-child(1) {
+    top: 11px;
+    transform: rotate(45deg);
+    background: #06b6d4;
+}
+
+.hamburger-modern.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.hamburger-modern.active span:nth-child(3) {
+    top: 11px;
+    transform: rotate(-45deg);
+    background: #06b6d4;
+}
+
+/* ---------- RESPONSIVE UTILITIES ---------- */
+@media (min-width: 768px) {
+    .desktop-only {
+        display: block !important;
+    }
+    .mobile-only {
+        display: none !important;
+    }
+    .desktop-only-inline {
+        display: inline !important;
+    }
+    .md\:flex {
+        display: flex !important;
+    }
+    .hidden.md\:flex {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .desktop-only {
+        display: none !important;
+    }
+    .mobile-only {
+        display: block !important;
+    }
+    .desktop-only-inline {
+        display: none !important;
+    }
+    .hidden.md\:flex {
+        display: none !important;
+    }
+    .md\:px-4 {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}
+
+/* ---------- MOBILE OPTIMIZATIONS ---------- */
+@media (max-width: 640px) {
+    .header-left {
+        gap: 0.5rem;
+    }
+    .header-logo {
+        gap: 0.25rem;
+    }
+    .logo-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+    .header-right {
+        gap: 0.5rem;
+    }
+    .w-10.h-10 {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+@media (max-width: 374px) {
+    .header-content {
+        gap: 0.25rem;
+    }
+    .logo-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    .w-10.h-10 {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+        /* ---------- SIDE DRAWER ---------- */
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(17, 19, 23, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: calc(var(--safe-top) + 20px) 20px 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-drawer.active {
+            left: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- LEGAL PAGES STYLES ---------- */
+        .glass-card {
+            background: rgba(17, 19, 23, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            transition: all 0.25s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--primary-glow);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .legal-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .legal-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .legal-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .legal-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #d1d5db;
+        }
+
+        .legal-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .legal-numbered {
+            list-style: none;
+            counter-reset: legal-counter;
+            padding: 0;
+        }
+
+        .legal-numbered li {
+            counter-increment: legal-counter;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            color: #d1d5db;
+        }
+
+        .legal-numbered li::before {
+            content: counter(legal-counter) ".";
+            color: var(--primary);
+            font-weight: 600;
+            position: absolute;
+            left: 0;
+        }
+
+        .highlight-box {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .usdt-badge {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--primary);
+        }
+
+        .last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 100px;
+        }
+
+        /* ---------- BOTTOM NAVIGATION ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(14, 16, 21, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: var(--safe-bottom);
+            z-index: 40;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 8px 0;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* ---------- MOBILE FIRST RESPONSIVE ---------- */
+        @media (max-width: 767px) {
+            .premium-header {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .header-content {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+            
+            .mobile-title {
+                max-width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 1.125rem;
+                font-weight: 700;
+            }
+            
+            .glass-card {
+                padding: 1.5rem !important;
+            }
+            
+            .section-title {
+                font-size: 1.25rem;
+            }
+            
+            .legal-list li, .legal-numbered li {
+                font-size: 0.9rem;
+            }
+            
+            .highlight-box {
+                padding: 1rem;
+            }
+            
+            body {
+                padding-bottom: 80px !important;
+            }
+            
+            .bottom-nav {
+                display: flex !important;
+            }
+            
+            .legal-nav {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 0.5rem;
+            }
+            
+            .legal-nav a {
+                white-space: nowrap;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-only {
+                display: none !important;
+            }
+            
+            .desktop-only {
+                display: block !important;
+            }
+            
+            body {
+                padding-bottom: 0 !important;
+            }
+            
+            .bottom-nav {
+                display: none !important;
+            }
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* ---------- UTILITY CLASSES ---------- */
+        .hidden { display: none !important; }
+        .gradient-text {
+            background: linear-gradient(to right, white, #d1d5db);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .side-drawer {
+            left: -320px;
+        }
+        .side-drawer.active {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- === DEFAULT VALUES FOR UNDEFINED VARIABLES === -->
+    {% set withdrawals_count = withdrawals_count|default(0) %}
+    {% set pending_requests = pending_requests|default([]) %}
+    {% set pending_withdrawals = pending_withdrawals|default([]) %}
+    {% set notifications = notifications|default([]) %}
+    {% set total_users = total_users|default(0) %}
+    {% set active_users = active_users|default(0) %}
+    {% set withdrawals_amount = withdrawals_amount|default(0) %}
+    {% set pending_resets_count = pending_resets_count|default(0) %}
+    {% set notifications_count = notifications_count|default(0) %}
+
+    <!-- === DRAWER OVERLAY === -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="window.closeDrawer()"></div>
+
+    <!-- === SIDE DRAWER - USER MENU === -->
+    <aside id="sideDrawer" class="side-drawer">
+        <!-- Brand Header -->
+        <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+            <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <i class="fas fa-crown text-white text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold gradient-text">Upside</h2>
+                <p class="text-xs text-gray-400 mt-0.5">
+                    {% if session.get('admin_username') %}
+                        Administrator
+                    {% elif session.get('user_id') %}
+                        Member
+                    {% else %}
+                        Guest
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- User Profile (if logged in) -->
+        {% if session.get('admin_username') or session.get('user_id') %}
+        <div class="flex items-center gap-3 p-4 bg-white/5 rounded-2xl mb-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full flex items-center justify-center">
+                <span class="text-xl font-bold text-white">
+                    {% if session.get('admin_username') %}
+                        {{ session.get('admin_username', 'A')[0]|upper }}
+                    {% elif session.get('user_name') %}
+                        {{ session.get('user_name', 'U')[0]|upper }}
+                    {% else %}
+                        U
+                    {% endif %}
+                </span>
+            </div>
+            <div class="flex-1">
+                <p class="font-semibold">
+                    {% if session.get('admin_username') %}
+                        {{ session.get('admin_username', 'Admin') }}
+                    {% elif session.get('user_name') %}
+                        {{ session.get('user_name', 'User') }}
+                    {% endif %}
+                </p>
+                <p class="text-xs text-gray-400 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    Online
+                </p>
+            </div>
+        </div>
+        {% endif %}
+      
+        <!-- Navigation Menu -->
+        <nav class="space-y-1">
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Navigation</p>
+            
+            <a href="/" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Home</span>
+            </a>
+            
+            
+            
+            
+            
+            <a href="/contact" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-envelope w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Contact</span>
+            </a>
+            
+            <a href="/support" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-headset w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Support</span>
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Legal</p>
+            
+            <a href="/terms" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-file-contract w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Terms</span>
+            </a>
+            
+            <a href="/privacy" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-lock w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Privacy</span>
+            </a>
+            
+            <a href="/disclaimer" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <i class="fas fa-exclamation-triangle w-5 text-yellow-400"></i>
+                <span class="font-medium">Disclaimer</span>
+            </a>
+            
+            {% if session.get('admin_username') %}
+            <div class="my-4 border-t border-white/5"></div>
+            <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-tachometer-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Admin Dashboard</span>
+            </a>
+            {% elif session.get('user_id') %}
+            <div class="my-4 border-t border-white/5"></div>
+            <a href="/user-dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-tachometer-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            {% else %}
+            <div class="my-4 border-t border-white/5"></div>
+            <a href="/login" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-sign-in-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Login</span>
+            </a>
+            <a href="/register" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-user-plus w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Register</span>
+            </a>
+            {% endif %}
+            
+           
+        </nav>
+        <!-- Version Info -->
+        <div class="absolute bottom-4 left-0 right-0 text-center">
+            <p class="text-[11px] text-gray-600">Upside Platform v2.0.0</p>
+            <p class="text-[10px] text-gray-700 mt-1">© 2026 All rights reserved</p>
+        </div>
+    </aside>
+
+<!-- === UNIVERSAL PREMIUM HEADER - SAB PAGES KE LIYE === -->
+<header class="premium-header">
+    <div class="container-fluid h-full">
+        <div class="header-content">
+            <!-- Left Section -->
+            <div class="header-left">
+                <!-- Hamburger - Always visible -->
+                <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <!-- Logo & Title -->
+                <div class="header-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-crown text-white text-sm"></i>
+                    </div>
+                    
+                    <!-- ✅ DESKTOP TITLE - Page name ke hisaab se change karo -->
+                    <div class="desktop-only" style="min-width: 0;">
+                        <h1 class="text-xl font-bold gradient-text truncate">
+                            {% if request.path == '/user-dashboard' %}Dashboard
+                            {% elif request.path == '/profile' %}My Profile
+                            {% elif request.path == '/deposit' %}Deposit Funds
+                            {% elif request.path == '/withdraw' %}Withdraw USDT
+                            {% elif request.path == '/support' %}Support Center
+                            {% elif request.path == '/about' %}About Us
+                            {% elif request.path == '/contact' %}Contact Us
+                            {% elif request.path == '/terms' %}Terms & Conditions
+                            {% elif request.path == '/privacy' %}Privacy Policy
+                            {% elif request.path == '/disclaimer' %}Disclaimer
+                            {% elif request.path == '/packages' %}Investment Packages
+                            {% elif request.path == '/transaction-history' %}Transaction History
+                            {% else %}Upside Platform
+                            {% endif %}
+                        </h1>
+                    </div>
+                    
+                    <!-- ✅ MOBILE TITLE - Sirf "Upside" (sab jagah same) -->
+                    <div class="mobile-only" style="min-width: 0;">
+                        <h1 class="text-lg font-bold gradient-text truncate">Upside</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section -->
+            <div class="header-right">
+                <!-- Time Badge - Desktop Only -->
+                <div class="desktop-only flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm">
+                    <i class="fas fa-calendar-alt text-cyan-400"></i>
+                    <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 15, 2026' }}</span>
+                    <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                    <i class="fas fa-clock text-cyan-400"></i>
+                    <span class="whitespace-nowrap">{{ now.strftime('%H:%M') if now else '14:30' }}</span>
+                </div>
+                
+                <!-- Refresh Button - Desktop par visible, mobile par optional -->
+                <button onclick="location.reload()" 
+                        class="hidden md:flex w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl items-center justify-center transition-all hover:rotate-180 duration-500">
+                    <i class="fas fa-sync-alt text-gray-300"></i>
+                </button>
+                
+                <!-- Logout Button - Icon + text on desktop, icon only on mobile -->
+                <a href="/logout" 
+                   class="flex items-center justify-center gap-2 px-3 md:px-4 py-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 rounded-lg text-sm font-medium transition-all">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="desktop-only-inline">Logout</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <!-- === MAIN CONTENT - PRIVACY POLICY === -->
+    <main class="container-fluid py-6 pb-28 md:pb-8">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-8 animate-up">
+            <span class="usdt-badge mb-4 inline-block">
+                <i class="fas fa-lock"></i>
+                Data Protection
+            </span>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">
+                Privacy <span class="text-cyan-400">Policy</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base mb-4">
+                How we collect, use, and protect your personal information.
+            </p>
+            <div class="last-updated">
+                <i class="fas fa-clock"></i>
+                Last Updated: February 15, 2026
+            </div>
+        </div>
+
+        <!-- Legal Navigation -->
+        <div class="legal-nav flex gap-2 mb-6 overflow-x-auto pb-2">
+            <a href="/terms" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium whitespace-nowrap">Terms</a>
+            <a href="/privacy" class="px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-full text-sm font-medium whitespace-nowrap border border-cyan-500/30">Privacy</a>
+            <a href="/disclaimer" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium whitespace-nowrap">Disclaimer</a>
+        </div>
+
+        <!-- Privacy Content -->
+        <div class="glass-card p-6 md:p-8 animate-up">
+            
+            <!-- Introduction -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-info-circle"></i>
+                    Introduction
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    Upside Platform ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform, website, and services. Please read this policy carefully to understand our views and practices regarding your personal data.
+                </p>
+                <div class="highlight-box mt-4">
+                    <p class="text-sm text-gray-300">
+                        <i class="fas fa-shield-alt text-cyan-400 mr-2"></i>
+                        We comply with Pakistan's data protection laws and international privacy standards including GDPR principles where applicable.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Information We Collect -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-database"></i>
+                    Information We Collect
+                </h2>
+                
+                <h3 class="font-bold text-lg mb-3 mt-4 text-cyan-400">1. Personal Information</h3>
+                <ul class="legal-list">
+                    <li><strong>Full Name</strong> - for account identification and verification</li>
+                    <li><strong>Phone Number</strong> - for account verification, 2FA, and important communications</li>
+                    <li><strong>Email Address</strong> - for notifications, support, and marketing (with consent)</li>
+                    <li><strong>Government ID</strong> - for KYC verification when required by law or for high-value transactions</li>
+                    <li><strong>Date of Birth</strong> - to verify age eligibility (18+)</li>
+                </ul>
+                
+                <h3 class="font-bold text-lg mb-3 mt-4 text-cyan-400">2. Financial Information</h3>
+                <ul class="legal-list">
+                    <li><strong>USDT Wallet Addresses</strong> - for processing deposits and withdrawals (TRC20 network only)</li>
+                    <li><strong>Transaction History</strong> - records of all deposits, withdrawals, and reward credits</li>
+                    <li><strong>Package Selection</strong> - your chosen investment tier and associated terms</li>
+                    <li><strong>Balance Information</strong> - current and historical account balances</li>
+                </ul>
+                
+                <h3 class="font-bold text-lg mb-3 mt-4 text-cyan-400">3. Technical Information</h3>
+                <ul class="legal-list">
+                    <li><strong>IP Address</strong> - for security, fraud prevention, and geographic analysis</li>
+                    <li><strong>Device Information</strong> - browser type, operating system, device identifiers</li>
+                    <li><strong>Usage Data</strong> - pages visited, time spent, ad interactions, click patterns</li>
+                    <li><strong>Cookies and Tracking Technologies</strong> - to enhance user experience and analyze platform usage</li>
+                    <li><strong>Log Data</strong> - server logs, error reports, and diagnostic information</li>
+                </ul>
+                
+                <h3 class="font-bold text-lg mb-3 mt-4 text-cyan-400">4. Communication Information</h3>
+                <ul class="legal-list">
+                    <li><strong>Support Tickets</strong> - records of your inquiries and our responses</li>
+                    <li><strong>Chat Logs</strong> - communications with support team</li>
+                    <li><strong>Feedback and Surveys</strong> - your opinions and suggestions</li>
+                </ul>
+            </div>
+
+            <!-- How We Use Information -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-tasks"></i>
+                    How We Use Your Information
+                </h2>
+                <p class="text-gray-300 mb-3">We use the collected information for the following purposes:</p>
+                <ul class="legal-list">
+                    <li><strong>Account Management:</strong> To create, maintain, and secure your account</li>
+                    <li><strong>Transaction Processing:</strong> To process deposits, withdrawals, and reward credits</li>
+                    <li><strong>Verification:</strong> To verify your identity and prevent fraud</li>
+                    <li><strong>Communication:</strong> To send important updates, security alerts, and support responses</li>
+                    <li><strong>Platform Improvement:</strong> To analyze usage patterns and enhance user experience</li>
+                    <li><strong>Legal Compliance:</strong> To comply with applicable laws and regulations</li>
+                    <li><strong>Dispute Resolution:</strong> To investigate and resolve disputes</li>
+                    <li><strong>Marketing:</strong> To send promotional materials (only with your explicit consent)</li>
+                </ul>
+            </div>
+
+            <!-- Data Sharing -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-share-alt"></i>
+                    Information Sharing & Disclosure
+                </h2>
+                <p class="text-gray-300 mb-3">
+                    We do NOT sell, rent, or trade your personal information. We may share information only in these limited circumstances:
+                </p>
+                <ul class="legal-list">
+                    <li><strong>Legal Requirements:</strong> When required by law, court order, or governmental authority.</li>
+                    <li><strong>Fraud Prevention:</strong> With law enforcement to investigate and prevent illegal activities.</li>
+                    <li><strong>Service Providers:</strong> With trusted third parties who assist in platform operations (hosting, analytics, payment processing) under strict confidentiality agreements.</li>
+                    <li><strong>Business Transfers:</strong> In case of merger, acquisition, or sale of assets (with notice to users).</li>
+                    <li><strong>Consent:</strong> With your explicit consent for specific purposes.</li>
+                </ul>
+                <div class="highlight-box mt-4">
+                    <p class="text-sm text-gray-300">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        We never share your information with marketing or advertising companies for their own use.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Data Security -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Data Security Measures
+                </h2>
+                <ul class="legal-list">
+                    <li><strong>Encryption:</strong> All data transmitted using SSL/TLS encryption (256-bit).</li>
+                    <li><strong>Access Control:</strong> Strict internal access controls and multi-factor authentication.</li>
+                    <li><strong>Regular Audits:</strong> Security reviews, penetration testing, and vulnerability assessments.</li>
+                    <li><strong>Backup:</strong> Regular encrypted backups to prevent data loss.</li>
+                    <li><strong>Monitoring:</strong> 24/7 system monitoring for suspicious activities.</li>
+                    <li><strong>Employee Training:</strong> Regular security awareness training for all staff.</li>
+                </ul>
+                <p class="text-gray-400 mt-3 text-sm">
+                    While we implement industry-standard security measures, no online platform can guarantee 100% security. You are responsible for maintaining the security of your account credentials.
+                </p>
+            </div>
+
+            <!-- Data Retention -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-clock"></i>
+                    Data Retention Period
+                </h2>
+                <p class="text-gray-300">
+                    We retain your information for as long as your account is active and for a reasonable period afterward to comply with legal obligations, resolve disputes, and enforce agreements.
+                </p>
+                <ul class="legal-list mt-3">
+                    <li><strong>Active Accounts:</strong> Retained until account closure</li>
+                    <li><strong>Transaction Records:</strong> 5 years (legal requirement for financial records)</li>
+                    <li><strong>KYC Documents:</strong> 3 years after account closure</li>
+                    <li><strong>Logs:</strong> 6 months</li>
+                    <li><strong>Deleted Accounts:</strong> Anonymized data retained for analytics</li>
+                </ul>
+            </div>
+
+            <!-- Your Rights -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user-check"></i>
+                    Your Rights
+                </h2>
+                <p class="text-gray-300 mb-3">
+                    Depending on your jurisdiction, you may have the following rights regarding your personal data:
+                </p>
+                <ul class="legal-list">
+                    <li><strong>Right to Access:</strong> Request a copy of your personal data.</li>
+                    <li><strong>Right to Rectification:</strong> Update or correct inaccurate information.</li>
+                    <li><strong>Right to Deletion:</strong> Request account deletion (subject to legal holds).</li>
+                    <li><strong>Right to Restriction:</strong> Limit how we use your data.</li>
+                    <li><strong>Right to Data Portability:</strong> Receive your data in a portable format.</li>
+                    <li><strong>Right to Object:</strong> Object to certain data processing (e.g., marketing).</li>
+                    <li><strong>Right to Withdraw Consent:</strong> Withdraw consent at any time.</li>
+                </ul>
+                <p class="text-gray-400 mt-3 text-sm">
+                    To exercise these rights, contact us at privacy@upside.pk. We will respond within 30 days.
+                </p>
+            </div>
+
+            <!-- Cookies Policy -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-cookie-bite"></i>
+                    Cookies & Tracking Technologies
+                </h2>
+                <p class="text-gray-300 mb-3">
+                    We use cookies and similar technologies to:
+                </p>
+                <ul class="legal-list">
+                    <li><strong>Essential Cookies:</strong> Keep you logged in securely and maintain session state.</li>
+                    <li><strong>Preference Cookies:</strong> Remember your settings and preferences.</li>
+                    <li><strong>Analytics Cookies:</strong> Understand how users interact with our platform.</li>
+                    <li><strong>Security Cookies:</strong> Detect fraud and unauthorized access.</li>
+                </ul>
+                <p class="text-gray-400 mt-3 text-sm">
+                    You can disable cookies in your browser settings, but some platform features may not function properly. By continuing to use our platform, you consent to our use of cookies.
+                </p>
+            </div>
+
+            <!-- Children's Privacy -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-child"></i>
+                    Children's Privacy
+                </h2>
+                <p class="text-gray-300">
+                    Our platform is not intended for users under 18 years of age. We do not knowingly collect information from minors. If we discover that a user under 18 has registered, we will immediately delete their account and all associated data. Parents or guardians who believe their child has provided us with information should contact us immediately.
+                </p>
+            </div>
+
+            <!-- International Data Transfers -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-globe"></i>
+                    International Data Transfers
+                </h2>
+                <p class="text-gray-300">
+                    Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your data in accordance with this policy, including standard contractual clauses and data protection agreements.
+                </p>
+                <p class="text-gray-400 mt-2 text-sm">
+                    Our servers are located in Pakistan. By using our platform, you consent to the transfer of your data to Pakistan.
+                </p>
+            </div>
+
+            <!-- Third-Party Links -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-link"></i>
+                    Third-Party Links
+                </h2>
+                <p class="text-gray-300">
+                    Our platform may contain links to third-party websites or services. We are not responsible for the privacy practices or content of these external sites. We encourage you to read the privacy policies of any third-party sites you visit.
+                </p>
+            </div>
+
+            <!-- Changes to Policy -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-edit"></i>
+                    Changes to This Policy
+                </h2>
+                <p class="text-gray-300">
+                    We may update this Privacy Policy periodically to reflect changes in our practices or legal requirements. Material changes will be notified via email or platform announcement at least 30 days before they take effect. Your continued use after changes constitutes acceptance of the revised policy.
+                </p>
+            </div>
+
+            <!-- Data Protection Officer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user-tie"></i>
+                    Data Protection Officer
+                </h2>
+                <p class="text-gray-300">
+                    We have appointed a Data Protection Officer (DPO) to oversee compliance with this policy. You can contact our DPO at:
+                </p>
+                <p class="text-cyan-400 mt-2">
+                    <i class="fas fa-envelope mr-2"></i> dpo@upside.pk<br>
+                    <i class="fas fa-phone mr-2"></i> +92 300 1234567
+                </p>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-headset"></i>
+                    Contact Us
+                </h2>
+                <p class="text-gray-300">
+                    For privacy-related inquiries, complaints, or to exercise your rights, please contact us:
+                </p>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white/5 p-4 rounded-xl">
+                        <p class="text-cyan-400 font-bold mb-2">Email</p>
+                        <p class="text-gray-300">privacy@upside.pk</p>
+                        <p class="text-gray-300">support@upside.pk</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-xl">
+                        <p class="text-cyan-400 font-bold mb-2">Phone</p>
+                        <p class="text-gray-300">+92 300 1234567</p>
+                        <p class="text-gray-300">+92 42 1234567</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-xl md:col-span-2">
+                        <p class="text-cyan-400 font-bold mb-2">Address</p>
+                        <p class="text-gray-300">123 Business Avenue, Gulberg III, Lahore, Pakistan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consent -->
+            <div class="highlight-box text-center mt-6">
+                <i class="fas fa-check-circle text-cyan-400 text-3xl mb-3"></i>
+                <h3 class="text-xl font-bold mb-2">By using Upside, you consent to this Privacy Policy</h3>
+                <p class="text-gray-400 text-sm">Last updated: February 15, 2026</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- === BOTTOM NAVIGATION - MOBILE === -->
+    <nav class="bottom-nav mobile-only">
+        <a href="/" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="/packages" class="nav-item">
+            <i class="fas fa-box"></i>
+            <span>Packages</span>
+        </a>
+        
+        <a href="/contact" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+        </a>
+        
+        <a href="/privacy" class="nav-item active">
+            <i class="fas fa-lock"></i>
+            <span>Privacy</span>
+        </a>
+        
+        {% if session.get('admin_username') %}
+        <a href="/admin/dashboard" class="nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Admin</span>
+        </a>
+        {% elif session.get('user_id') %}
+        <a href="/user-dashboard" class="nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+        {% else %}
+        <a href="/login" class="nav-item">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+        </a>
+        {% endif %}
+    </nav>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.toggle('active');
+                overlay.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+            }
+        };
+
+        window.closeDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.remove('active');
+                overlay.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+
+        // Close drawer on route change
+        window.addEventListener('popstate', window.closeDrawer);
+    </script>
+
+    <style>
+        @media (max-width: 767px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom, 0);
+            }
+        }
+    </style>
+</body>
+</html>

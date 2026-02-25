@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>Disclaimer • Upside Platform</title>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
+    <!-- Tailwind & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Professional System Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ---------- 🎨 CYAN THEME TOKENS ---------- */
+        :root {
+            --primary: #06b6d4;
+            --primary-dark: #0891b2;
+            --primary-light: #22d3ee;
+            --primary-glow: rgba(6, 182, 212, 0.2);
+            --bg-primary: #0a0c10;
+            --bg-secondary: #111317;
+            --bg-card: #1a1d24;
+            --bg-card-hover: #22262e;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-color-hover: rgba(6, 182, 212, 0.3);
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --header-height: 64px;
+            --bottom-nav-height: 72px;
+            --sidebar-width: 280px;
+            --transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ---------- BASE RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ---------- RESPONSIVE CONTAINER ---------- */
+        .container-fluid {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        @media (min-width: 640px) {
+            .container-fluid {
+                max-width: 640px;
+                padding-right: 1.5rem;
+                padding-left: 1.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container-fluid {
+                max-width: 768px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container-fluid {
+                max-width: 1024px;
+                padding-right: 2rem;
+                padding-left: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .container-fluid {
+                max-width: 1280px;
+            }
+        }
+
+          /* ---------- PREMIUM HEADER STYLES ---------- */
+.premium-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(10, 12, 16, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    height: 64px;
+    width: 100%;
+}
+
+.container-fluid {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 100%;
+}
+
+@media (min-width: 640px) {
+    .container-fluid {
+        padding: 0 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .container-fluid {
+        padding: 0 2rem;
+    }
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.logo-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    background: linear-gradient(145deg, #06b6d4, #0891b2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 10px 15px -3px rgba(6, 182, 212, 0.2);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+/* ---------- HAMBURGER MENU ---------- */
+.hamburger-modern {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.hamburger-modern span {
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    background: #fff;
+    border-radius: 2px;
+    left: 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hamburger-modern span:nth-child(1) { top: 4px; }
+.hamburger-modern span:nth-child(2) { top: 11px; width: 70%; }
+.hamburger-modern span:nth-child(3) { top: 18px; }
+
+.hamburger-modern.active span:nth-child(1) {
+    top: 11px;
+    transform: rotate(45deg);
+    background: #06b6d4;
+}
+
+.hamburger-modern.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.hamburger-modern.active span:nth-child(3) {
+    top: 11px;
+    transform: rotate(-45deg);
+    background: #06b6d4;
+}
+
+/* ---------- RESPONSIVE UTILITIES ---------- */
+@media (min-width: 768px) {
+    .desktop-only {
+        display: block !important;
+    }
+    .mobile-only {
+        display: none !important;
+    }
+    .desktop-only-inline {
+        display: inline !important;
+    }
+    .md\:flex {
+        display: flex !important;
+    }
+    .hidden.md\:flex {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .desktop-only {
+        display: none !important;
+    }
+    .mobile-only {
+        display: block !important;
+    }
+    .desktop-only-inline {
+        display: none !important;
+    }
+    .hidden.md\:flex {
+        display: none !important;
+    }
+    .md\:px-4 {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}
+
+/* ---------- MOBILE OPTIMIZATIONS ---------- */
+@media (max-width: 640px) {
+    .header-left {
+        gap: 0.5rem;
+    }
+    .header-logo {
+        gap: 0.25rem;
+    }
+    .logo-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+    .header-right {
+        gap: 0.5rem;
+    }
+    .w-10.h-10 {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+}
+
+@media (max-width: 374px) {
+    .header-content {
+        gap: 0.25rem;
+    }
+    .logo-icon {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    .w-10.h-10 {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+        /* ---------- SIDE DRAWER ---------- */
+        .side-drawer {
+            position: fixed;
+            top: 0;
+            left: -320px;
+            width: 280px;
+            height: 100vh;
+            background: rgba(17, 19, 23, 0.98);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: calc(var(--safe-top) + 20px) 20px 20px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .side-drawer.active {
+            left: 0;
+        }
+
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ---------- LEGAL PAGES STYLES ---------- */
+        .glass-card {
+            background: rgba(17, 19, 23, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 32px;
+            transition: all 0.25s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--primary-glow);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .legal-section {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .legal-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .legal-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .legal-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #d1d5db;
+        }
+
+        .legal-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .legal-numbered {
+            list-style: none;
+            counter-reset: legal-counter;
+            padding: 0;
+        }
+
+        .legal-numbered li {
+            counter-increment: legal-counter;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            color: #d1d5db;
+        }
+
+        .legal-numbered li::before {
+            content: counter(legal-counter) ".";
+            color: var(--primary);
+            font-weight: 600;
+            position: absolute;
+            left: 0;
+        }
+
+        .highlight-box {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box {
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .usdt-badge {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 100px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--primary);
+        }
+
+        .last-updated {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #9ca3af;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 100px;
+        }
+
+        /* ---------- BOTTOM NAVIGATION ---------- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--bottom-nav-height);
+            background: rgba(14, 16, 21, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: var(--safe-bottom);
+            z-index: 40;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 8px 0;
+            color: #9ca3af;
+            transition: all 0.2s ease;
+            position: relative;
+            text-decoration: none;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* ---------- MOBILE FIRST RESPONSIVE ---------- */
+        @media (max-width: 767px) {
+            .premium-header {
+                width: 100%;
+                padding: 0;
+            }
+            
+            .header-content {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+            
+            .mobile-title {
+                max-width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 1.125rem;
+                font-weight: 700;
+            }
+            
+            .glass-card {
+                padding: 1.5rem !important;
+            }
+            
+            .section-title {
+                font-size: 1.25rem;
+            }
+            
+            .legal-list li, .legal-numbered li {
+                font-size: 0.9rem;
+            }
+            
+            .highlight-box, .warning-box {
+                padding: 1rem;
+            }
+            
+            body {
+                padding-bottom: 80px !important;
+            }
+            
+            .bottom-nav {
+                display: flex !important;
+            }
+            
+            .legal-nav {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 0.5rem;
+            }
+            
+            .legal-nav a {
+                white-space: nowrap;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-only {
+                display: none !important;
+            }
+            
+            .desktop-only {
+                display: block !important;
+            }
+            
+            body {
+                padding-bottom: 0 !important;
+            }
+            
+            .bottom-nav {
+                display: none !important;
+            }
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* ---------- UTILITY CLASSES ---------- */
+        .hidden { display: none !important; }
+        .gradient-text {
+            background: linear-gradient(to right, white, #d1d5db);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .side-drawer {
+            left: -320px;
+        }
+        .side-drawer.active {
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- === DEFAULT VALUES FOR UNDEFINED VARIABLES === -->
+    {% set withdrawals_count = withdrawals_count|default(0) %}
+    {% set pending_requests = pending_requests|default([]) %}
+    {% set pending_withdrawals = pending_withdrawals|default([]) %}
+    {% set notifications = notifications|default([]) %}
+    {% set total_users = total_users|default(0) %}
+    {% set active_users = active_users|default(0) %}
+    {% set withdrawals_amount = withdrawals_amount|default(0) %}
+    {% set pending_resets_count = pending_resets_count|default(0) %}
+    {% set notifications_count = notifications_count|default(0) %}
+
+    <!-- === DRAWER OVERLAY === -->
+    <div id="drawerOverlay" class="drawer-overlay" onclick="window.closeDrawer()"></div>
+
+    <!-- === SIDE DRAWER - USER MENU === -->
+    <aside id="sideDrawer" class="side-drawer">
+        <!-- Brand Header -->
+        <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+            <div class="w-12 h-12 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center shadow-xl">
+                <i class="fas fa-crown text-white text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold gradient-text">Upside</h2>
+                <p class="text-xs text-gray-400 mt-0.5">
+                    {% if session.get('admin_username') %}
+                        Administrator
+                    {% elif session.get('user_id') %}
+                        Member
+                    {% else %}
+                        Guest
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <!-- User Profile (if logged in) -->
+        {% if session.get('admin_username') or session.get('user_id') %}
+        <div class="flex items-center gap-3 p-4 bg-white/5 rounded-2xl mb-6">
+            <div class="w-12 h-12 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-full flex items-center justify-center">
+                <span class="text-xl font-bold text-white">
+                    {% if session.get('admin_username') %}
+                        {{ session.get('admin_username', 'A')[0]|upper }}
+                    {% elif session.get('user_name') %}
+                        {{ session.get('user_name', 'U')[0]|upper }}
+                    {% else %}
+                        U
+                    {% endif %}
+                </span>
+            </div>
+            <div class="flex-1">
+                <p class="font-semibold">
+                    {% if session.get('admin_username') %}
+                        {{ session.get('admin_username', 'Admin') }}
+                    {% elif session.get('user_name') %}
+                        {{ session.get('user_name', 'User') }}
+                    {% endif %}
+                </p>
+                <p class="text-xs text-gray-400 flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    Online
+                </p>
+            </div>
+        </div>
+        {% endif %}
+      
+        <!-- Navigation Menu -->
+        <nav class="space-y-1">
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Navigation</p>
+            
+            <a href="/" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-home w-5 text-blue-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Home</span>
+            </a>
+            
+            
+            
+            
+            
+            <a href="/contact" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-envelope w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Contact</span>
+            </a>
+            
+            <a href="/support" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-headset w-5 text-orange-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Support</span>
+            </a>
+            
+            <div class="my-4 border-t border-white/5"></div>
+            
+            <p class="text-xs uppercase tracking-wider text-gray-500 mb-3 px-3">Legal</p>
+            
+            <a href="/terms" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-file-contract w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Terms</span>
+            </a>
+            
+            <a href="/privacy" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-lock w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Privacy</span>
+            </a>
+            
+            <a href="/disclaimer" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <i class="fas fa-exclamation-triangle w-5 text-yellow-400"></i>
+                <span class="font-medium">Disclaimer</span>
+            </a>
+            
+            {% if session.get('admin_username') %}
+            <div class="my-4 border-t border-white/5"></div>
+            <a href="/admin/dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-tachometer-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Admin Dashboard</span>
+            </a>
+            {% elif session.get('user_id') %}
+            <div class="my-4 border-t border-white/5"></div>
+            <a href="/user-dashboard" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-tachometer-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Dashboard</span>
+            </a>
+            {% else %}
+            <div class="my-4 border-t border-white/5"></div>
+            <a href="/login" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-sign-in-alt w-5 text-cyan-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Login</span>
+            </a>
+            <a href="/register" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-all group">
+                <i class="fas fa-user-plus w-5 text-green-400 group-hover:scale-110 transition-transform"></i>
+                <span class="font-medium">Register</span>
+            </a>
+            {% endif %}
+            
+           
+        </nav>
+        <!-- Version Info -->
+        <div class="absolute bottom-4 left-0 right-0 text-center">
+            <p class="text-[11px] text-gray-600">Upside Platform v2.0.0</p>
+            <p class="text-[10px] text-gray-700 mt-1">© 2026 All rights reserved</p>
+        </div>
+    </aside>
+
+    <!-- === PREMIUM HEADER - FULLY RESPONSIVE === -->
+    <header class="premium-header">
+        <div class="container-fluid h-full">
+            <div class="header-content">
+                <!-- Left Section -->
+                <div class="header-left">
+                    <!-- Hamburger - Always visible on mobile -->
+                    <div id="hamburger" class="hamburger-modern" onclick="window.toggleDrawer()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    
+                    <!-- Logo & Title -->
+                    <div class="header-logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-crown text-white text-sm"></i>
+                        </div>
+                        
+                        <!-- Desktop Title -->
+                        <div class="desktop-only" style="min-width: 0;">
+                            <h1 class="text-xl font-bold gradient-text truncate-text">Disclaimer</h1>
+                            <p class="text-xs text-gray-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full flex-shrink-0"></span>
+                                <span class="truncate-text">
+                                    {% if session.get('admin_username') %}
+                                        {{ session.get('admin_username') }}
+                                    {% elif session.get('user_name') %}
+                                        {{ session.get('user_name') }}
+                                    {% else %}
+                                        Guest
+                                    {% endif %}
+                                </span>
+                            </p>
+                        </div>
+                        
+                        <!-- Mobile Title -->
+                        <div class="mobile-only" style="min-width: 0;">
+                            <h1 class="mobile-title">Disclaimer</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section -->
+                <div class="header-right">
+                    <!-- Time Badge - Desktop Only -->
+                    <div class="desktop-only px-4 py-2 bg-white/5 rounded-full border border-white/10 text-sm flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%b %d, %Y') if now else 'Feb 15, 2026' }}</span>
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        <i class="fas fa-clock text-cyan-400"></i>
+                        <span class="whitespace-nowrap">{{ now.strftime('%H:%M') if now else '14:30' }}</span>
+                    </div>
+                    
+                    <!-- Refresh Button -->
+                    <button onclick="location.reload()" 
+                            class="w-10 h-10 bg-white/5 hover:bg-white/10 rounded-xl flex items-center justify-center transition-all hover:rotate-180 duration-500">
+                        <i class="fas fa-sync-alt text-gray-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- === MAIN CONTENT - DISCLAIMER === -->
+    <main class="container-fluid py-6 pb-28 md:pb-8">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-8 animate-up">
+            <span class="usdt-badge mb-4 inline-block">
+                <i class="fas fa-exclamation-triangle"></i>
+                Legal Notice
+            </span>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">
+                <span class="text-cyan-400">Disclaimer</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base mb-4">
+                Important information about platform risks and limitations.
+            </p>
+            <div class="last-updated">
+                <i class="fas fa-clock"></i>
+                Last Updated: February 15, 2026
+            </div>
+        </div>
+
+        <!-- Legal Navigation -->
+        <div class="legal-nav flex gap-2 mb-6 overflow-x-auto pb-2">
+            <a href="/terms" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium whitespace-nowrap">Terms</a>
+            <a href="/privacy" class="px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium whitespace-nowrap">Privacy</a>
+            <a href="/disclaimer" class="px-4 py-2 bg-cyan-500/20 text-cyan-400 rounded-full text-sm font-medium whitespace-nowrap border border-cyan-500/30">Disclaimer</a>
+        </div>
+
+        <!-- Disclaimer Content -->
+        <div class="glass-card p-6 md:p-8 animate-up">
+            
+            <!-- General Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-exclamation-circle"></i>
+                    General Disclaimer
+                </h2>
+                <p class="text-gray-300 leading-relaxed">
+                    The information provided on Upside Platform is for general informational purposes only. All information on the platform is provided in good faith; however, we make no representation or warranty of any kind, express or implied, regarding the accuracy, adequacy, validity, reliability, availability, or completeness of any information.
+                </p>
+                <div class="highlight-box mt-4">
+                    <p class="text-sm text-gray-300">
+                        <i class="fas fa-exclamation-triangle text-yellow-400 mr-2"></i>
+                        USE AT YOUR OWN RISK. The platform is provided "AS IS" without warranties of any kind.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Financial Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Financial & Investment Disclaimer
+                </h2>
+                <ul class="legal-list">
+                    <li><strong>Not Financial Advice:</strong> Information on Upside does not constitute financial advice, investment advice, or trading advice. It is for informational purposes only.</li>
+                    <li><strong>No Guarantees:</strong> We do not guarantee any specific returns, profits, or outcomes from using our platform. Past performance does not indicate future results.</li>
+                    <li><strong>Market Risk:</strong> Cryptocurrency values (including USDT) may fluctuate significantly. You bear all market risks associated with your investments.</li>
+                    <li><strong>Capital at Risk:</strong> You could lose all or part of your invested capital. Never invest more than you can afford to lose.</li>
+                    <li><strong>Consult Professionals:</strong> Always consult with qualified financial advisors, tax professionals, and legal counsel before making investment decisions.</li>
+                    <li><strong>No Fiduciary Relationship:</strong> Your use of the platform does not create a fiduciary or professional relationship between you and Upside.</li>
+                </ul>
+                <div class="warning-box mt-4">
+                    <p class="text-sm text-red-400 font-bold mb-2">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        RISK WARNING
+                    </p>
+                    <p class="text-sm text-gray-300">
+                        Cryptocurrency investments carry high risk. Prices can be volatile. You could lose all invested funds. Only invest what you can afford to lose. Past performance does not guarantee future results.
+                    </p>
+                </div>
+            </div>
+
+            <!-- USDT & Cryptocurrency Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-coins"></i>
+                    USDT & Cryptocurrency Disclaimer
+                </h2>
+                <ul class="legal-list">
+                    <li><strong>Third-Party Asset:</strong> USDT is issued by Tether Limited, a third-party company not affiliated with Upside. We do not control or guarantee the value or stability of USDT.</li>
+                    <li><strong>Network Risks:</strong> TRC20 network transactions may experience delays, failures, or network congestion. We are not responsible for network-related issues.</li>
+                    <li><strong>Regulatory Risk:</strong> Cryptocurrency regulations may change rapidly, potentially affecting platform operations or the legality of crypto transactions in your jurisdiction.</li>
+                    <li><strong>Wallet Addresses:</strong> Always double-check wallet addresses. Transactions to wrong addresses are irreversible and cannot be recovered.</li>
+                    <li><strong>No Reversals:</strong> Cryptocurrency transactions are permanent and irreversible. We cannot reverse or refund transactions once confirmed on the blockchain.</li>
+                    <li><strong>De-pegging Risk:</strong> USDT may de-peg from USD value. We are not responsible for losses due to USDT price fluctuations.</li>
+                </ul>
+            </div>
+
+            <!-- Platform Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-server"></i>
+                    Platform Disclaimer
+                </h2>
+                <ul class="legal-list">
+                    <li><strong>Availability:</strong> We do not guarantee uninterrupted, timely, secure, or error-free service. The platform may be temporarily unavailable for maintenance, updates, or due to technical issues.</li>
+                    <li><strong>Technical Issues:</strong> We are not liable for technical failures, bugs, glitches, or compatibility issues with your device or browser.</li>
+                    <li><strong>Data Accuracy:</strong> While we strive for accuracy, errors may occur in displayed information, including balances, rewards, or transaction records.</li>
+                    <li><strong>Third-Party Dependencies:</strong> Our platform relies on third-party services (hosting, blockchain networks, payment processors). We are not responsible for their failures.</li>
+                    <li><strong>Cyber Security:</strong> No platform is immune to hacking or security breaches. While we implement security measures, we cannot guarantee absolute security.</li>
+                </ul>
+            </div>
+
+            <!-- Withdrawal Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-money-bill-wave"></i>
+                    Withdrawal Disclaimer
+                </h2>
+                <ul class="legal-list">
+                    <li><strong>Processing Time:</strong> Withdrawals may take up to 24 hours to process; delays may occur due to high volume or technical issues.</li>
+                    <li><strong>Early Withdrawal Fee:</strong> A 25% fee applies to withdrawals made before the 6-month lock period. This is non-negotiable.</li>
+                    <li><strong>Minimum Amount:</strong> Minimum withdrawal is 1,000 PKR (approximately 3.57 USDT). Withdrawals below this amount will not be processed.</li>
+                    <li><strong>Network Fees:</strong> Users are responsible for all TRC20 network fees associated with withdrawals. These fees are not controlled by Upside.</li>
+                    <li><strong>Admin Approval:</strong> All withdrawals require manual admin verification and approval. This may cause additional delays.</li>
+                    <li><strong>Incorrect Addresses:</strong> Funds sent to incorrect wallet addresses due to user error cannot be recovered.</li>
+                </ul>
+            </div>
+
+            <!-- Ad Engagement Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-play-circle"></i>
+                    Ad Engagement Disclaimer
+                </h2>
+                <ul class="legal-list">
+                    <li><strong>Ad Availability:</strong> Ads are provided by third-party advertisers; we cannot guarantee ad availability, quality, or appropriateness.</li>
+                    <li><strong>Reward Calculation:</strong> Rewards are based on package value, not per ad. All 5 daily ads must be completed to earn the daily reward.</li>
+                    <li><strong>No Reward for Partial Completion:</strong> Incomplete daily ad sets do not qualify for rewards, even if some ads were watched.</li>
+                    <li><strong>Ad Content:</strong> We are not responsible for the content of third-party advertisements. Ad content is the sole responsibility of advertisers.</li>
+                    <li><strong>Technical Issues:</strong> Ad playback issues (buffering, errors) may prevent reward qualification. We are not liable for such issues.</li>
+                </ul>
+            </div>
+
+            <!-- Earnings Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-dollar-sign"></i>
+                    Earnings Disclaimer
+                </h2>
+                <ul class="legal-list">
+                    <li><strong>No Income Guarantee:</strong> Any examples of earnings or returns are for illustrative purposes only and do not represent guaranteed income.</li>
+                    <li><strong>Individual Results Vary:</strong> Actual earnings depend on multiple factors including package selection, ad completion, and market conditions.</li>
+                    <li><strong>Hypothetical Projections:</strong> Projected returns (e.g., "90% in 6 months") are based on full ad completion and do not guarantee actual results.</li>
+                    <li><strong>Past Performance:</strong> Past earnings of other users do not guarantee your future results.</li>
+                </ul>
+            </div>
+
+            <!-- Third-Party Links -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-link"></i>
+                    Third-Party Links & Services
+                </h2>
+                <p class="text-gray-300">
+                    Our platform may contain links to third-party websites, advertisers, or services that are not owned or controlled by Upside. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites. We do not endorse and are not liable for any third-party content, products, or services.
+                </p>
+            </div>
+
+            <!-- Limitation of Liability -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-gavel"></i>
+                    Limitation of Liability
+                </h2>
+                <p class="text-gray-300 mb-3">
+                    To the maximum extent permitted by law, Upside Platform, its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from:
+                </p>
+                <ul class="legal-list">
+                    <li>Your use or inability to use the platform</li>
+                    <li>Any unauthorized access to or use of our servers and/or any personal information stored therein</li>
+                    <li>Any interruption or cessation of transmission to or from our platform</li>
+                    <li>Any bugs, viruses, trojan horses, or the like that may be transmitted through the platform</li>
+                    <li>Any errors or omissions in any content or for any loss or damage incurred as a result of your use of any content</li>
+                    <li>The defamatory, offensive, or illegal conduct of any third party</li>
+                </ul>
+                <div class="warning-box mt-4">
+                    <p class="text-sm text-red-400">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        IN NO EVENT SHALL OUR TOTAL LIABILITY TO YOU EXCEED THE AMOUNT YOU HAVE PAID US IN THE PAST SIX MONTHS.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Indemnification -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    Indemnification
+                </h2>
+                <p class="text-gray-300">
+                    You agree to defend, indemnify, and hold harmless Upside Platform, its officers, directors, employees, and agents, from and against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses (including but not limited to attorney's fees) arising from:
+                </p>
+                <ul class="legal-list">
+                    <li>Your use of and access to the platform</li>
+                    <li>Your violation of any term of this disclaimer or our Terms of Service</li>
+                    <li>Your violation of any third-party right, including without limitation any copyright, property, or privacy right</li>
+                    <li>Any claim that your use of the platform caused damage to a third party</li>
+                </ul>
+            </div>
+
+            <!-- No Professional Relationship -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-user-tie"></i>
+                    No Professional Relationship
+                </h2>
+                <p class="text-gray-300">
+                    Your use of this platform does not create any professional relationship (financial, legal, investment, or otherwise) between you and Upside. Any information provided is for general informational purposes only and should not be construed as professional advice. You should consult with qualified professionals for advice specific to your situation.
+                </p>
+            </div>
+
+            <!-- Jurisdiction -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Governing Law & Jurisdiction
+                </h2>
+                <p class="text-gray-300">
+                    This disclaimer shall be governed by and construed in accordance with the laws of Pakistan. Any disputes arising under or in connection with this disclaimer or your use of the platform shall be subject to the exclusive jurisdiction of the courts of Lahore, Pakistan. You irrevocably submit to the jurisdiction of such courts.
+                </p>
+            </div>
+
+            <!-- Changes to Disclaimer -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-edit"></i>
+                    Changes to This Disclaimer
+                </h2>
+                <p class="text-gray-300">
+                    We reserve the right to modify this disclaimer at any time. Changes will be effective immediately upon posting on the platform. Your continued use of the platform after changes constitutes acceptance of the modified disclaimer. We will notify users of material changes via email or platform announcement.
+                </p>
+            </div>
+
+            <!-- Severability -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-cut"></i>
+                    Severability
+                </h2>
+                <p class="text-gray-300">
+                    If any provision of this disclaimer is found to be unenforceable or invalid under applicable law, such provision shall be deemed modified to the extent necessary to make it enforceable and valid, and the remaining provisions shall continue in full force and effect.
+                </p>
+            </div>
+
+            <!-- Entire Agreement -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-file-signature"></i>
+                    Entire Agreement
+                </h2>
+                <p class="text-gray-300">
+                    This disclaimer, together with our Terms of Service and Privacy Policy, constitutes the entire agreement between you and Upside regarding your use of the platform and supersedes all prior agreements and understandings.
+                </p>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="legal-section">
+                <h2 class="section-title">
+                    <i class="fas fa-headset"></i>
+                    Contact Us
+                </h2>
+                <p class="text-gray-300">
+                    If you have questions about this disclaimer, please contact us:
+                </p>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white/5 p-4 rounded-xl">
+                        <p class="text-cyan-400 font-bold mb-2">Email</p>
+                        <p class="text-gray-300">legal@upside.pk</p>
+                        <p class="text-gray-300">support@upside.pk</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-xl">
+                        <p class="text-cyan-400 font-bold mb-2">Phone</p>
+                        <p class="text-gray-300">+92 300 1234567</p>
+                        <p class="text-gray-300">+92 42 1234567</p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-xl md:col-span-2">
+                        <p class="text-cyan-400 font-bold mb-2">Address</p>
+                        <p class="text-gray-300">123 Business Avenue, Gulberg III, Lahore, Pakistan</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acceptance -->
+            <div class="warning-box text-center mt-6">
+                <i class="fas fa-exclamation-triangle text-red-400 text-3xl mb-3"></i>
+                <h3 class="text-xl font-bold text-red-400 mb-2">Risk Warning</h3>
+                <p class="text-gray-300 text-sm mb-4">
+                    By using Upside Platform, you acknowledge that you have read, understood, and agree to be bound by this disclaimer. You accept all risks associated with cryptocurrency investments and platform use.
+                </p>
+                <p class="text-gray-400 text-xs">
+                    If you do not agree with any part of this disclaimer, you must not use our platform.
+                </p>
+                <div class="mt-4 text-xs text-gray-500">
+                    Last updated: February 15, 2026
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- === BOTTOM NAVIGATION - MOBILE === -->
+    <nav class="bottom-nav mobile-only">
+        <a href="/" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        
+        <a href="/packages" class="nav-item">
+            <i class="fas fa-box"></i>
+            <span>Packages</span>
+        </a>
+        
+        <a href="/contact" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+        </a>
+        
+        <a href="/disclaimer" class="nav-item active">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Disclaimer</span>
+        </a>
+        
+        {% if session.get('admin_username') %}
+        <a href="/admin/dashboard" class="nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Admin</span>
+        </a>
+        {% elif session.get('user_id') %}
+        <a href="/user-dashboard" class="nav-item">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+        {% else %}
+        <a href="/login" class="nav-item">
+            <i class="fas fa-sign-in-alt"></i>
+            <span>Login</span>
+        </a>
+        {% endif %}
+    </nav>
+
+    <!-- === JAVASCRIPT === -->
+    <script>
+        window.toggleDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.toggle('active');
+                overlay.classList.toggle('active');
+                hamburger.classList.toggle('active');
+                document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+            }
+        };
+
+        window.closeDrawer = function() {
+            const drawer = document.getElementById('sideDrawer');
+            const overlay = document.getElementById('drawerOverlay');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (drawer && overlay && hamburger) {
+                drawer.classList.remove('active');
+                overlay.classList.remove('active');
+                hamburger.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+
+        // Close drawer on route change
+        window.addEventListener('popstate', window.closeDrawer);
+    </script>
+
+    <style>
+        @media (max-width: 767px) {
+            .bottom-nav {
+                padding-bottom: env(safe-area-inset-bottom, 0);
+            }
+        }
+    </style>
+</body>
+</html>

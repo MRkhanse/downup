@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deposit Pending | Upside</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+  
+  <!-- Preload Critical Resources -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background: linear-gradient(145deg, #0a0c10 0%, #0e1217 100%);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    /* ---------- 🎨 CYAN THEME ---------- */
+    :root {
+      --primary: #06b6d4;
+      --primary-dark: #0891b2;
+      --primary-light: #22d3ee;
+      --primary-glow: rgba(6, 182, 212, 0.2);
+    }
+    
+    /* ---------- 📱 SIDE DRAWER ---------- */
+    .side-drawer {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100vh;
+      background: rgba(17, 19, 23, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      z-index: 100;
+      transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 20px;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    .side-drawer.active {
+      left: 0;
+    }
+    
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s ease;
+    }
+    
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* ---------- 🍔 HAMBURGER MENU ---------- */
+    .hamburger {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      cursor: pointer;
+      z-index: 60;
+    }
+    
+    .hamburger span {
+      display: block;
+      position: absolute;
+      height: 2px;
+      width: 100%;
+      background: white;
+      border-radius: 2px;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .hamburger span:nth-child(1) { top: 4px; }
+    .hamburger span:nth-child(2) { top: 11px; width: 70%; }
+    .hamburger span:nth-child(3) { top: 18px; }
+    
+    .hamburger.active span:nth-child(1) {
+      top: 11px;
+      transform: rotate(45deg);
+      background: var(--primary);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(-10px);
+    }
+    
+    .hamburger.active span:nth-child(3) {
+      top: 11px;
+      transform: rotate(-45deg);
+      background: var(--primary);
+    }
+    
+    /* ---------- 📱 BOTTOM NAVIGATION ---------- */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: rgba(17, 19, 23, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding-bottom: env(safe-area-inset-bottom, 0);
+      z-index: 40;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: 8px 0;
+      color: #9ca3af;
+      transition: all 0.2s ease;
+      position: relative;
+      text-decoration: none;
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    
+    .nav-item i {
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+    
+    .nav-item span {
+      font-size: 11px;
+      font-weight: 500;
+    }
+    
+    /* ---------- 🎨 CUSTOM STYLES ---------- */
+    .glass-card {
+      background: rgba(17, 19, 23, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 40px;
+      transition: all 0.25s ease;
+    }
+    
+    .pending-icon {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes progressPulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+    
+    .progress-pulse {
+      animation: progressPulse 1.5s ease-in-out infinite;
+    }
+    
+    .status-badge {
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 100px;
+      padding: 8px 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--primary);
+    }
+    
+    .timer-box {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    
+    .timer-unit {
+      text-align: center;
+      min-width: 60px;
+    }
+    
+    .timer-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+    
+    .timer-label {
+      font-size: 10px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: rgba(55, 65, 81, 0.5);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 100px;
+      animation: progressWidth 2s ease-out;
+    }
+    
+    @keyframes progressWidth {
+      from { width: 0%; }
+      to { width: 70%; }
+    }
+    
+    .disabled-link {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    
+    /* ---------- 📱 MOBILE FIRST RESPONSIVE ---------- */
+    @media (max-width: 767px) {
+      .pending-card {
+        padding: 24px !important;
+        margin: 0 16px !important;
+      }
+      
+      h2.text-3xl {
+        font-size: 1.875rem !important;
+      }
+      
+      .timer-box {
+        flex-direction: column !important;
+        gap: 8px !important;
+      }
+      
+      .timer-unit {
+        min-width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 8px !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border-radius: 12px !important;
+      }
+      
+      .timer-value {
+        font-size: 20px !important;
+      }
+      
+      body {
+        padding-bottom: 80px !important;
+      }
+      
+      .bottom-nav {
+        display: flex !important;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .bottom-nav {
+        display: none !important;
+      }
+      
+      body {
+        padding-bottom: 0 !important;
+      }
+    }
+    
+    /* ---------- UTILITY CLASSES ---------- */
+    .hidden { display: none !important; }
+    .gradient-text {
+      background: linear-gradient(to right, white, #d1d5db);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- === DRAWER OVERLAY === -->
+  <div id="drawerOverlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+
+  <!-- === SIDE DRAWER - USER MENU (DISABLED) === -->
+  <aside id="sideDrawer" class="side-drawer">
+    <!-- User Profile -->
+    <div class="flex items-center gap-3 pb-6 mb-6 border-b border-white/10">
+      <div class="w-14 h-14 bg-gradient-to-br from-cyan-500/50 to-cyan-600/50 rounded-2xl flex items-center justify-center shadow-xl">
+        <span class="text-2xl font-bold text-white/50">{{ user.name[0]|upper if user and user.name else 'U' }}</span>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-gray-500">{{ user.name if user else 'User' }}</h2>
+        <p class="text-xs text-gray-600 mt-1 flex items-center gap-1">
+          <span class="w-2 h-2 bg-yellow-500/50 rounded-full"></span>
+          Pending Approval
+        </p>
+      </div>
+    </div>
+    
+    <!-- Menu Items (All Disabled) -->
+    <nav class="space-y-1">
+      <p class="text-xs uppercase tracking-wider text-gray-700 mb-3 px-3">Main Menu</p>
+      
+      <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl opacity-50 cursor-not-allowed">
+        <i class="fas fa-home w-5 text-gray-600"></i>
+        <span class="font-medium text-gray-500">Dashboard</span>
+        <span class="ml-auto text-xs bg-yellow-500/20 text-yellow-600 px-2 py-1 rounded-full">Pending</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl opacity-50 cursor-not-allowed">
+        <i class="fas fa-plus-circle w-5 text-gray-600"></i>
+        <span class="font-medium text-gray-500">Add Funds</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl opacity-50 cursor-not-allowed">
+        <i class="fas fa-money-bill-transfer w-5 text-gray-600"></i>
+        <span class="font-medium text-gray-500">Withdraw</span>
+      </div>
+      
+      <div class="my-4 border-t border-white/5"></div>
+      
+      <p class="text-xs uppercase tracking-wider text-gray-700 mb-3 px-3">Account</p>
+      
+      <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl opacity-50 cursor-not-allowed">
+        <i class="fas fa-user-circle w-5 text-gray-600"></i>
+        <span class="font-medium text-gray-500">Profile</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl opacity-50 cursor-not-allowed">
+        <i class="fas fa-history w-5 text-gray-600"></i>
+        <span class="font-medium text-gray-500">History</span>
+      </div>
+      
+      <div class="flex items-center gap-3 px-4 py-3.5 rounded-xl opacity-50 cursor-not-allowed">
+        <i class="fas fa-headset w-5 text-gray-600"></i>
+        <span class="font-medium text-gray-500">Support</span>
+      </div>
+      
+      <div class="my-4 border-t border-white/5"></div>
+      
+      <a href="/logout" class="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 transition-all group">
+        <i class="fas fa-sign-out-alt group-hover:rotate-180 transition-transform duration-500"></i>
+        <span class="font-medium">Logout</span>
+      </a>
+    </nav>
+    
+    <!-- Status Message -->
+    <div class="absolute bottom-24 left-0 right-0 px-6">
+      <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 text-center">
+        <i class="fas fa-clock text-yellow-500 mb-2"></i>
+        <p class="text-xs text-yellow-500">Account pending approval</p>
+        <p class="text-[10px] text-gray-600 mt-1">Features will be unlocked once approved</p>
+      </div>
+    </div>
+    
+    <!-- Version Info -->
+    <div class="absolute bottom-8 left-0 right-0 text-center">
+      <p class="text-[11px] text-gray-700">Upside Platform v2.0.0</p>
+      <p class="text-[10px] text-gray-800 mt-1">© 2026 All rights reserved</p>
+    </div>
+  </aside>
+
+  <!-- === MOBILE HEADER === -->
+  <header class="bg-[#111317] border-b border-white/5 sticky top-0 z-40 backdrop-blur-xl">
+    <div class="px-4 md:px-6 lg:px-8 py-3">
+      <div class="flex items-center justify-between">
+        <!-- Left: Hamburger + Logo -->
+        <div class="flex items-center gap-3">
+          <div id="hamburger" class="hamburger mobile-only" onclick="toggleDrawer()">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-gradient-to-br from-cyan-500/50 to-cyan-600/50 rounded-lg flex items-center justify-center">
+              <i class="fas fa-crown text-white/50 text-sm"></i>
+            </div>
+            <h1 class="text-lg md:text-xl font-bold text-gray-500">Upside</h1>
+          </div>
+        </div>
+        
+        <!-- Right: Status Badge -->
+        <div class="flex items-center gap-3">
+          <div class="status-badge">
+            <i class="fas fa-clock"></i>
+            <span>Pending</span>
+          </div>
+          
+          <a href="/logout" class="bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="hidden md:inline">Logout</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- === MAIN CONTENT === -->
+  <div class="min-h-screen flex items-center justify-center px-4 py-6 pb-24 md:pb-8">
+    <div class="glass-card pending-card w-full max-w-2xl p-6 md:p-10 text-center">
+      
+      <!-- Animated Icon -->
+      <div class="mb-8 float-animation">
+        <div class="w-24 h-24 mx-auto bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 rounded-full flex items-center justify-center border border-cyan-500/30">
+          <i class="fas fa-hourglass-half text-5xl text-cyan-400 pending-icon"></i>
+        </div>
+      </div>
+      
+      <!-- Main Heading -->
+      <h2 class="text-3xl md:text-4xl font-bold mb-3" style="color: var(--primary);">Deposit Pending</h2>
+      
+      <!-- Status Line -->
+      <div class="flex items-center justify-center gap-2 mb-6">
+        <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+        <span class="text-yellow-400 text-sm font-medium">Awaiting Admin Verification</span>
+        <span class="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></span>
+      </div>
+      
+      <!-- Message English / Urdu -->
+      <div class="space-y-4 mb-8">
+        <p class="text-gray-300 text-lg">
+          Your deposit request has been submitted successfully.<br>
+          Please wait while admin verifies your payment.
+        </p>
+        
+        <div class="bg-white/5 rounded-2xl p-4">
+          <p class="text-gray-400 text-md">
+            آپ کی جمع کروانے کی درخواست موصول ہو گئی ہے۔<br>
+            براہ کرم ایڈمن کی منظوری کا انتظار کریں۔
+          </p>
+        </div>
+      </div>
+      
+      <!-- Timer / Estimated Time -->
+      <div class="timer-box mb-8">
+        <div class="timer-unit">
+          <div class="timer-value" id="minutes">05</div>
+          <div class="timer-label">Minutes</div>
+        </div>
+        <div class="text-cyan-400 text-2xl font-bold">:</div>
+        <div class="timer-unit">
+          <div class="timer-value" id="seconds">00</div>
+          <div class="timer-label">Seconds</div>
+        </div>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div class="mb-6">
+        <div class="flex justify-between text-xs text-gray-500 mb-2">
+          <span>Processing</span>
+          <span id="progressPercent">70%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 70%;"></div>
+        </div>
+      </div>
+      
+      <!-- Deposit Details Card -->
+      <div class="bg-white/5 rounded-2xl p-5 mb-8 text-left">
+        <h3 class="font-bold text-cyan-400 mb-3 flex items-center gap-2">
+          <i class="fas fa-receipt"></i>
+          Deposit Details
+        </h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between">
+            <span class="text-gray-400">Amount:</span>
+            <span class="font-bold text-white">{{ user.package_amount if user else '0' }} PKR</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Package:</span>
+            <span class="font-bold text-cyan-400">{{ user.selected_package.replace("_"," ").title() if user and user.selected_package else 'N/A' }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Daily Reward:</span>
+            <span class="font-bold text-green-400">{{ user.daily_reward if user else '0' }} PKR</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Transaction ID:</span>
+            <span class="font-mono text-xs bg-black/30 px-2 py-1 rounded">{{ user.deposit_tx_id[:16] if user and user.deposit_tx_id else 'N/A' }}...</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-400">Submitted:</span>
+            <span>{{ user.created_at[:16] if user and user.created_at else 'Just now' }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Action Buttons (All Disabled Except Logout) -->
+      <div class="space-y-3">
+        <button disabled class="w-full bg-gray-700 text-gray-400 py-4 rounded-2xl font-semibold cursor-not-allowed flex items-center justify-center gap-2 opacity-60">
+          <i class="fas fa-hourglass-start"></i>
+          Waiting for Approval
+        </button>
+        
+        <a href="/logout" class="inline-block w-full bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 py-3 rounded-2xl font-medium transition-all">
+          <i class="fas fa-sign-out-alt mr-2"></i>
+          Logout
+        </a>
+      </div>
+      
+      <!-- Support Link -->
+      <p class="text-gray-600 text-xs mt-6">
+        <i class="fas fa-headset text-cyan-400/50 mr-1"></i>
+        Need help? <a href="/support" class="text-cyan-400/70 hover:text-cyan-400">Contact Support</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- === BOTTOM NAVIGATION - MOBILE (ALL DISABLED) === -->
+  <nav class="bottom-nav mobile-only">
+    <div class="nav-item">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </div>
+    
+    <div class="nav-item">
+      <i class="fas fa-plus-circle"></i>
+      <span>Deposit</span>
+    </div>
+    
+    <div class="nav-item">
+      <i class="fas fa-money-bill-transfer"></i>
+      <span>Withdraw</span>
+    </div>
+    
+    <div class="nav-item">
+      <i class="fas fa-user"></i>
+      <span>Profile</span>
+    </div>
+    
+    <div class="nav-item">
+      <i class="fas fa-headset"></i>
+      <span>Support</span>
+    </div>
+  </nav>
+
+  <!-- === ADVANCED APPROVAL CHECK SCRIPT === -->
+  <script>
+    // Drawer controls
+    function toggleDrawer() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      const hamburger = document.getElementById('hamburger');
+      
+      drawer.classList.toggle('active');
+      overlay.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      document.body.style.overflow = drawer.classList.contains('active') ? 'hidden' : '';
+    }
+    
+    function closeDrawer() {
+      const drawer = document.getElementById('sideDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      const hamburger = document.getElementById('hamburger');
+      
+      drawer.classList.remove('active');
+      overlay.classList.remove('active');
+      hamburger.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // ===== ADVANCED APPROVAL CHECK =====
+    const CHECK_INTERVAL = 5000; // 5 seconds
+    const MAX_RETRIES = 72; // 6 minutes total (72 * 5s = 360s = 6min)
+    let retryCount = 0;
+    
+    function checkApprovalStatus() {
+      retryCount++;
+      
+      // Show checking indicator
+      const statusIndicator = document.createElement('div');
+      statusIndicator.id = 'checkingIndicator';
+      statusIndicator.className = 'fixed top-4 right-4 bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 px-4 py-2 rounded-full text-xs z-50 flex items-center gap-2';
+      statusIndicator.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Checking status...';
+      
+      if (!document.getElementById('checkingIndicator')) {
+        document.body.appendChild(statusIndicator);
+      }
+      
+      fetch('/check-approval-status')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Approval check #' + retryCount + ':', data);
+          
+          // Remove indicator
+          const indicator = document.getElementById('checkingIndicator');
+          if (indicator) indicator.remove();
+          
+          if (data.approved === true) {
+            // Show success message
+            showNotification('✅ Account Approved! Redirecting...', 'success');
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+              window.location.href = '/user-dashboard';
+            }, 1500);
+          } 
+          else if (data.rejected === true) {
+            // Show rejection message
+            showNotification('❌ Deposit Rejected. Redirecting...', 'error');
+            
+            // Redirect to rejection page
+            setTimeout(() => {
+              window.location.href = '/deposit-rejected';
+            }, 1500);
+          }
+          else if (retryCount >= MAX_RETRIES) {
+            // Show timeout message but keep checking in background
+            console.log('Max retries reached, still waiting...');
+            const timeoutMsg = document.getElementById('timeoutMessage');
+            if (!timeoutMsg) {
+              const msg = document.createElement('div');
+              msg.id = 'timeoutMessage';
+              msg.className = 'fixed bottom-24 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 p-4 rounded-2xl text-sm z-50';
+              msg.innerHTML = '<i class="fas fa-clock mr-2"></i> Still waiting for admin approval. You can keep this page open or check back later.';
+              document.body.appendChild(msg);
+              
+              setTimeout(() => {
+                if (msg) msg.remove();
+              }, 8000);
+            }
+          }
+        })
+        .catch(error => {
+          console.error('Error checking approval:', error);
+          
+          // Remove indicator
+          const indicator = document.getElementById('checkingIndicator');
+          if (indicator) indicator.remove();
+          
+          // Show error but don't stop checking
+          const errorMsg = document.getElementById('errorMessage');
+          if (!errorMsg) {
+            const msg = document.createElement('div');
+            msg.id = 'errorMessage';
+            msg.className = 'fixed bottom-24 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-red-500/20 border border-red-500/30 text-red-400 p-4 rounded-2xl text-sm z-50';
+            msg.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Connection issue. Retrying...';
+            document.body.appendChild(msg);
+            
+            setTimeout(() => {
+              if (msg) msg.remove();
+            }, 3000);
+          }
+        });
+    }
+    
+    // Show notification
+    function showNotification(message, type) {
+      const notification = document.createElement('div');
+      notification.className = `fixed top-4 right-4 left-4 md:left-auto md:w-96 z-50 p-4 rounded-2xl shadow-2xl animate-slideIn ${
+        type === 'success' 
+          ? 'bg-gradient-to-r from-green-500/90 to-green-600/90 text-white' 
+          : 'bg-gradient-to-r from-red-500/90 to-red-600/90 text-white'
+      }`;
+      notification.innerHTML = `
+        <div class="flex items-center gap-3">
+          <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} text-xl"></i>
+          <span class="text-sm font-medium">${message}</span>
+        </div>
+      `;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.style.transition = 'opacity 0.5s';
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 500);
+      }, 3000);
+    }
+    
+    // Timer countdown (simulated)
+    function updateTimer() {
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+      const progressFill = document.getElementById('progressFill');
+      const progressPercent = document.getElementById('progressPercent');
+      
+      if (!minutesEl || !secondsEl) return;
+      
+      let minutes = 5;
+      let seconds = 0;
+      
+      setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            // Reset timer
+            minutes = 5;
+            seconds = 0;
+          } else {
+            minutes--;
+            seconds = 59;
+          }
+        } else {
+          seconds--;
+        }
+        
+        minutesEl.textContent = minutes.toString().padStart(2, '0');
+        secondsEl.textContent = seconds.toString().padStart(2, '0');
+        
+        // Update progress (decreases over time)
+        const totalSeconds = 5 * 60;
+        const elapsedSeconds = (5 - minutes) * 60 + (60 - seconds);
+        const percent = Math.max(30, Math.min(90, 90 - (elapsedSeconds / totalSeconds * 60)));
+        
+        if (progressFill && progressPercent) {
+          progressFill.style.width = percent + '%';
+          progressPercent.textContent = Math.round(percent) + '%';
+        }
+      }, 1000);
+    }
+    
+    // Start checking
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initial check
+      checkApprovalStatus();
+      
+      // Set interval for continuous checking
+      setInterval(checkApprovalStatus, CHECK_INTERVAL);
+      
+      // Start timer
+      updateTimer();
+      
+      // Prevent navigation to other pages
+      document.querySelectorAll('a:not([href="/logout"]):not([href="/support"])').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          showNotification('Please wait for admin approval first', 'error');
+        });
+      });
+      
+      // Disable all forms
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          showNotification('Cannot submit while pending approval', 'error');
+        });
+      });
+    });
+    
+    // Prevent back button
+    history.pushState(null, null, location.href);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, location.href);
+    });
+  </script>
+
+  <style>
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    .animate-slideIn {
+      animation: slideIn 0.3s ease-out;
+    }
+    
+    @media (max-width: 767px) {
+      .bottom-nav {
+        padding-bottom: env(safe-area-inset-bottom, 0);
+      }
+    }
+    
+    /* Disable all interactive elements except logout */
+    a:not([href="/logout"]):not([href="/support"]), 
+    button:not([onclick*="toggleDrawer"]):not([onclick*="closeDrawer"]),
+    input, select, textarea {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    
+    /* Allow logout and support */
+    a[href="/logout"], a[href="/support"] {
+      pointer-events: auto;
+      opacity: 1;
+    }
+    
+    /* Allow drawer toggle */
+    #hamburger, .drawer-overlay {
+      pointer-events: auto;
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit Rejected</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+    <nav class="bg-gray-800 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-bold">Deposit Status</h1>
+                <p class="text-sm text-gray-400">Welcome, {{ user.name }}</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="/user-dashboard" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg">Dashboard</a>
+                <a href="/logout" class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-6">
+        <div class="bg-gray-800 rounded-xl overflow-hidden">
+            <div class="p-6 border-b border-red-700 bg-red-900/20">
+                <div class="flex items-center">
+                    <i class="fas fa-times-circle text-red-400 text-2xl mr-4"></i>
+                    <div>
+                        <h2 class="text-xl font-bold">Deposit Rejected</h2>
+                        <p class="text-gray-400">Your deposit request was not approved</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-8">
+                <!-- User Details -->
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-900/50 p-6 rounded-lg">
+                        <h3 class="font-bold mb-4 text-lg">Your Details</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Name:</span>
+                                <span class="font-medium">{{ user.name }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Phone:</span>
+                                <span class="font-medium">{{ user.phone }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Package:</span>
+                                <span class="font-medium text-blue-400">{{ user.selected_package.replace('_', ' ').title() }}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Amount:</span>
+                                <span class="font-bold">{{ "{:,}".format(user.package_amount) }} PKR</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900/50 p-6 rounded-lg">
+                        <h3 class="font-bold mb-4 text-lg">Transaction Info</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Transaction ID:</span>
+                                <code class="font-mono bg-gray-800 px-2 py-1 rounded">{{ user.deposit_tx_id }}</code>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Status:</span>
+                                <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm">REJECTED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Message -->
+                <div class="text-center mb-8">
+                    <div class="text-red-400 text-6xl mb-4">✗</div>
+                    <h3 class="text-2xl font-bold mb-2">Deposit Not Approved</h3>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        Your deposit submission was reviewed and rejected by the admin team.
+                        Please submit a new deposit with correct details.
+                    </p>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/deposit" 
+                       class="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-lg font-bold text-center">
+                        <i class="fas fa-redo mr-2"></i>Submit New Deposit
+                    </a>
+                    
+                    <a href="/contact" 
+                       class="border border-gray-700 hover:border-gray-600 py-3 px-8 rounded-lg font-medium text-center">
+                        <i class="fas fa-headset mr-2"></i>Contact Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
